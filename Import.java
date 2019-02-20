@@ -105,5 +105,26 @@ public class Import
 			  							//line 110. CSV file may need to be
 			  							//Modified
 		}
+		//Calls the method Name and saves the returned file path to a string.
+		String filePath = Name();
+		//I/O Exception handling; if the user did not select anything and closed the window it is handled in the if statement.
+		if (filePath == null)
+				System.out.println("You cancelled the choice");
+		else
+				System.out.println("You chose "+filePath);
+
+		
 	}
+	
+	//This method has the user select the file they wish to view and returns the filepath name.
+		public static String Name() {
+			final JFrame frame = new JFrame();
+			FileDialog dialog = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
+			dialog.setDirectory("C:\\Users\\hdhar\\Desktop");
+			dialog.setFile("*.csv");
+			dialog.setVisible(true);
+			String filename = dialog.getDirectory() + dialog.getFile();
+			frame.dispose();
+			return filename;
+		}
 }
