@@ -38,4 +38,3 @@ public class KeplerGUI extends Application{
 	}
 
 }//end KeplerGUI
-}//end KeplerGUI

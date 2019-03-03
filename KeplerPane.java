@@ -12,11 +12,13 @@ import javafx.scene.layout.Pane;
 	 */
 	public class KeplerPane extends Pane {
 
+		private boolean pressed = false;
 		private Button Earth;
 		private Button Exit;
 		private Button Help;
 		private Button Import;
 		private Button Options;
+		private Button btmm = new Button("Main Menu");
 		private MenuItem[] planet = new MenuItem[9];
 		MenuItem star = new MenuItem("Sun");
 		MenuBar menuBar = new MenuBar();
@@ -50,6 +52,9 @@ import javafx.scene.layout.Pane;
 			
 			Exit.setLayoutX(250);
 			Exit.setLayoutY(280);
+			Exit.setOnAction( e-> {
+				System.exit(0);
+				});
 			
 			getChildren().addAll(Earth, Exit, Help, Import, Options);
 			Earth.setOnAction( e-> {
@@ -59,26 +64,47 @@ import javafx.scene.layout.Pane;
 		
 	public void Default() {
 		getChildren().clear();
-		start();
-		earthLists();
+			if (pressed == false) {
+				menuBar.getMenus().clear();
+				Planets.getItems().clear();
+				Stars.getItems().clear();
+				earthLists();
+				pressed = true;
+				mainMenu();
+			}
+			
 		}
 	
 	public void earthLists() {
-	//	Planets = new MenuBar();
-		menuBar.getMenus().addAll(Planets, Stars);
-		getChildren().add(menuBar);
-		menuBar.setLayoutY(10);
-		menuBar.setLayoutX(400);
 			for(int i =0; i < planetName.length; i++) {
 				planet[i] = new MenuItem(planetName[i]);
 				Planets.getItems().add(planet[i]);
-			}
+				}
 			Stars.getItems().add(star);
 			
-			planet[2].setOnAction( e-> {
+			menuBar.getMenus().addAll(Planets, Stars);
+			getChildren().add(menuBar);
+			menuBar.setLayoutY(10);
+			menuBar.setLayoutX(400);
 			
+			planet[2].setOnAction( e-> {
+				getChildren().remove(menuBar);
 			});
 		
 		}
+	
+	public void mainMenu() {
+		btmm.setLayoutX(0);
+		btmm.setLayoutY(0);
+		getChildren().add(btmm);
+		
+		btmm.setOnAction(e-> {
+			getChildren().clear();
+			start();
+			pressed = false;
+		});
+		
+		
+	}
 
 }//end KeplerPane
