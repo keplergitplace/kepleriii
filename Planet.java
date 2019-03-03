@@ -1,4 +1,4 @@
-
+import javafx.scene.shape.Circle;
 
 /**
  * @author Owner
@@ -7,8 +7,21 @@
  */
 public class Planet extends CelestialObject {
 
+	public Circle[] planets;
+	
 	public Planet(){
-
+		planets = Circle[8];
+		
+		for (int i = 0; i < 8; i++) {
+			planets[i].setRadius((m_Manager.planetRad[i]) * 10);
+			
+			planets[i].setLayoutX((m_Manager.semiMajor[i]) * 10);
+			
+			planets[i].setLayoutY(540);
+			
+			getChildren().add(planets[i]);
+		}
+		
 	}
 
 	public void finalize() throws Throwable {
