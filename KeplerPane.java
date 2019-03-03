@@ -19,6 +19,7 @@ public class KeplerPane {
 	private MenuList Planets;
 	private Button SandboxMode;
 	private MenuList Stars;
+	public genericPane;
 
 	public KeplerPane(){
 		genericPane = new Pane();
