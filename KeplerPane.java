@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
