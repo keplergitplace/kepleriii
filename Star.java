@@ -9,12 +9,13 @@ import javafx.scene.shape.Circle;
 public class Star extends CelestialObject {
 	public Circle star;
 	
-	public Star(){
+	public Circle earthSystem(){
 		star = new Circle();
 		
-		star.setRadius((m_Manager.sRadius) * 10);
-		star.setLayoutX(0);
-		star.setLayout(540);
+		star.setRadius((sRadius) * 10);
+		star.setLayoutX(-950);
+		star.setLayoutY(540);
+		return star;
 	}
 
 	

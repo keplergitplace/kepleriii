@@ -7,26 +7,26 @@ import javafx.scene.shape.Circle;
  */
 public class Planet extends CelestialObject {
 
-	public Circle[] planets;
+	//public Circle[] planets = new Circle[8];
 	
-	public Planet(){
-		planets = Circle[8];
+	public Circle earthSystem(int i){
+		Circle planets = new Circle();
+			
+			planets.setRadius(getPlanetRad(i)*5);
+			
+			System.out.println("" + planets.getRadius());
 		
-		for (int i = 0; i < 8; i++) {
-			planets[i].setRadius((m_Manager.planetRad[i]) * 10);
+			planets.setLayoutX(semiMajor[i]/50);
+			System.out.println("" + planets.getLayoutX());
 			
-			planets[i].setLayoutX((m_Manager.semiMajor[i]) * 10);
+			planets.setLayoutY(540);
 			
-			planets[i].setLayoutY(540);
-			
-			getChildren().add(planets[i]);
-		}
+			return planets;
 		
 	}
 
-	public void finalize() throws Throwable {
 
-	}
+
 	public void setColor(){
 
 	}

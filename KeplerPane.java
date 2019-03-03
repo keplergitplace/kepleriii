@@ -4,6 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 	/**
 	 * @author Joint Project
@@ -12,12 +13,14 @@ import javafx.scene.layout.Pane;
 	 */
 	public class KeplerPane extends Pane {
 
+		Manager mgr = new Manager();
 		private boolean pressed = false;
 		private Button Earth;
 		private Button Exit;
 		private Button Help;
 		private Button Import;
 		private Button Options;
+		private Circle plt = new Circle();
 		private Button btmm = new Button("Main Menu");
 		private MenuItem[] planet = new MenuItem[9];
 		MenuItem star = new MenuItem("Sun");
@@ -64,6 +67,11 @@ import javafx.scene.layout.Pane;
 		
 	public void Default() {
 		getChildren().clear();
+		for (int i = 0; i < 8; i++) {
+		plt =  mgr.addPlanets(i);
+		getChildren().add(plt);
+		}
+		getChildren().add(mgr.addStars());
 			if (pressed == false) {
 				menuBar.getMenus().clear();
 				Planets.getItems().clear();
@@ -84,8 +92,8 @@ import javafx.scene.layout.Pane;
 			
 			menuBar.getMenus().addAll(Planets, Stars);
 			getChildren().add(menuBar);
-			menuBar.setLayoutY(10);
-			menuBar.setLayoutX(400);
+			menuBar.setLayoutY(0);
+			menuBar.setLayoutX(200);
 			
 			planet[2].setOnAction( e-> {
 				getChildren().remove(menuBar);
