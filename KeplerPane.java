@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 	 * @version 1.0
 	 * @created 13-Feb-2019 5:09:33 PM
 	 */
+
 	public class KeplerPane extends Pane {
 
 		Manager mgr = new Manager();
@@ -31,10 +32,12 @@ import javafx.scene.text.Text;
 		private String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		private Button SandboxMode;
 
+
 		public KeplerPane(){
 			start();
 		}
 		
+		// initiates buttons for the main menu
 		public void start(){
 			Earth = new Button("Earth");
 			Exit = new Button("Exit");
@@ -125,6 +128,7 @@ import javafx.scene.text.Text;
 		
 		}
 	
+	// initiates the back to main menu button
 	public void mainMenu() {
 		btmm.setLayoutX(30);
 		btmm.setLayoutY(15);
@@ -132,6 +136,7 @@ import javafx.scene.text.Text;
 		btmm.setScaleY(1.5);
 		getChildren().add(btmm);
 		
+		// will respawn all the buttons in the start method
 		btmm.setOnAction(e-> {
 			getChildren().clear();
 			start();
