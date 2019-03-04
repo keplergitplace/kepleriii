@@ -5,6 +5,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 	/**
 	 * @author Joint Project
@@ -72,7 +73,11 @@ import javafx.scene.shape.Circle;
 		getChildren().add(plt);
 		}
 		getChildren().add(mgr.addStars());
-			if (pressed == false) {
+		Text scale = new Text("Object size to scale. Distance sun-mercury not to scale/ distances not to scale with planet size.");
+		scale.setLayoutY(20);
+		scale.setLayoutX(400);
+		getChildren().add(scale);
+		if (pressed == false) {
 				menuBar.getMenus().clear();
 				Planets.getItems().clear();
 				Stars.getItems().clear();

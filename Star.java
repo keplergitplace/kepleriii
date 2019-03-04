@@ -1,3 +1,4 @@
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
@@ -11,9 +12,9 @@ public class Star extends CelestialObject {
 	
 	public Circle earthSystem(){
 		star = new Circle();
-		
+		star.setFill(Color.ORANGE);
 		star.setRadius((sRadius) * 10);
-		star.setLayoutX(-950);
+		star.setLayoutX(-1070);
 		star.setLayoutY(540);
 		return star;
 	}

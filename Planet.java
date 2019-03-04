@@ -14,11 +14,8 @@ public class Planet extends CelestialObject {
 			
 			planets.setRadius(getPlanetRad(i)*5);
 			
-			System.out.println("" + planets.getRadius());
-		
-			planets.setLayoutX(semiMajor[i]/50);
-			System.out.println("" + planets.getLayoutX());
-			
+			planets.setLayoutX(semiMajor[i]/375);
+					
 			planets.setLayoutY(540);
 			
 			return planets;
