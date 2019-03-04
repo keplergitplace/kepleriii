@@ -14,8 +14,8 @@ public class CelestialObject{
 	String yearDiscovered[] = {"Antiquity", "Antiquity", "Antiquity", "Antiquity", "Anitquity", "Anitquity", "Anitquity", "Anitquity",}; 
 	double orbitPeriod[] = {88, 225, 365, 687, 4380, 10585, 30660, 60225};
 	//double semiMajor[] = {0.387, 0.723, 1, 1.524, 5.2044, 9.5826, 19.1923, 30.11};//compared to earth
-	double semiMajor[] = {9108.74, 17017.1, 23538.8, 35870.1, 122494.9, 225543.74, 451725.3, 708693};
-	//double semiMajor[] = {9108.74, 17017.1, 23538.8, 35870.1, 61247.45, 112711.87, 225862.65, 354346.5};// 1 = 1 earth radius = 6357km
+	double semiMajor[] = {9108.74, 17017.1, 23538.8, 35870.1, 122494.9, 225543.74, 451725.3, 708693}; 1 = 1 earth radius
+	//double semiMajor[] = {9108.74, 17017.1, 23538.8, 35870.1, 61247.45, 112711.87, 225862.65, 354346.5};// 1 = 1 earth radius
 	double eccentricity[] = {0.205, 0.007, 0.0167, 0.0934, 0.048, 0.054, 0.0472, 0.0086};
 	double planetMass[] = { 0.0553, 0.815, 1, 0.107, 317.8, 95.2, 14.5, 17.1}; //compared to earth
 	double planetRad[] = { 0.383, 0.949, 1, 0.532, 11.21, 9.45, 4.01, 3.88}; //compared to earth	

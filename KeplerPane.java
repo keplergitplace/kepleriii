@@ -42,20 +42,36 @@ import javafx.scene.text.Text;
 			Import = new Button("Import");
 			Options = new Button("Options");
 			
-			Import.setLayoutX(250);
+			Import.setLayoutX(940);
 			Import.setLayoutY(120);
+			Import.setScaleX(3);
+			Import.setScaleY(3);
+			Import.setMinSize(100,0);
 			
-			Earth.setLayoutX(250);
-			Earth.setLayoutY(160);
+			Earth.setLayoutX(940);
+			Earth.setLayoutY(220);
+			Earth.setScaleX(3);
+			Earth.setScaleY(3);
+			Earth.setMinSize(100,0);
 			
-			Help.setLayoutX(250);
-			Help.setLayoutY(200);
+			Help.setLayoutX(940);
+			Help.setLayoutY(320);
+			Help.setScaleX(3);
+			Help.setScaleY(3);
+			Help.setMinSize(100,0);
 			
-			Options.setLayoutX(250);
-			Options.setLayoutY(240);
+			Options.setLayoutX(940);
+			Options.setLayoutY(420);
+			Options.setScaleX(3);
+			Options.setScaleY(3);
+			Options.setMinSize(100,0);
 			
-			Exit.setLayoutX(250);
-			Exit.setLayoutY(280);
+			Exit.setLayoutX(940);
+			Exit.setLayoutY(520);
+			Exit.setScaleX(3);
+			Exit.setScaleY(3);
+			Exit.setMinSize(100,0);
+			
 			Exit.setOnAction( e-> {
 				System.exit(0);
 				});
@@ -73,9 +89,11 @@ import javafx.scene.text.Text;
 		getChildren().add(plt);
 		}
 		getChildren().add(mgr.addStars());
-		Text scale = new Text("Object size to scale. Distance sun-mercury not to scale/ distances not to scale with planet size.");
-		scale.setLayoutY(20);
-		scale.setLayoutX(400);
+		Text scale = new Text("Size ratio to scale. Distance ratio to scale from object centerpoint to object centerpoint.\nObjects appear larger than they are by a factor of 5.");
+		scale.setLayoutY(40);
+		scale.setLayoutX(600);
+		scale.setScaleX(1.5);
+		scale.setScaleY(1.5);
 		getChildren().add(scale);
 		if (pressed == false) {
 				menuBar.getMenus().clear();
@@ -97,9 +115,10 @@ import javafx.scene.text.Text;
 			
 			menuBar.getMenus().addAll(Planets, Stars);
 			getChildren().add(menuBar);
-			menuBar.setLayoutY(0);
-			menuBar.setLayoutX(200);
-			
+			menuBar.setLayoutY(15);
+			menuBar.setLayoutX(225);
+			menuBar.setScaleX(1.5);
+			menuBar.setScaleY(1.5);
 			planet[2].setOnAction( e-> {
 				getChildren().remove(menuBar);
 			});
@@ -107,8 +126,10 @@ import javafx.scene.text.Text;
 		}
 	
 	public void mainMenu() {
-		btmm.setLayoutX(0);
-		btmm.setLayoutY(0);
+		btmm.setLayoutX(30);
+		btmm.setLayoutY(15);
+		btmm.setScaleX(1.5);
+		btmm.setScaleY(1.5);
 		getChildren().add(btmm);
 		
 		btmm.setOnAction(e-> {
