@@ -87,17 +87,19 @@ import javafx.scene.text.Text;
 		
 	public void Default() {
 		getChildren().clear();
+		//get planet info from "planet" class and display
 		for (int i = 0; i < 8; i++) {
 		plt =  mgr.addPlanets(i);
 		getChildren().add(plt);
 		}
-		getChildren().add(mgr.addStars());
+		getChildren().add(mgr.addStars());//get star info from "star" class and display
 		Text scale = new Text("Size ratio to scale. Distance ratio to scale from object centerpoint to object centerpoint.\nObjects appear larger than they are by a factor of 5.");
 		scale.setLayoutY(40);
 		scale.setLayoutX(600);
 		scale.setScaleX(1.5);
 		scale.setScaleY(1.5);
 		getChildren().add(scale);
+		//prevent endless addition of items to menu bar if user selects the default view multiple times in one session.
 		if (pressed == false) {
 				menuBar.getMenus().clear();
 				Planets.getItems().clear();
@@ -108,7 +110,7 @@ import javafx.scene.text.Text;
 			}
 			
 		}
-	
+	//create drop down lists
 	public void earthLists() {
 			for(int i =0; i < planetName.length; i++) {
 				planet[i] = new MenuItem(planetName[i]);
