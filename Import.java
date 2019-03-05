@@ -137,11 +137,13 @@ public class Import
 	}
 	
 	/*
-	 * @Purpose: This method has the user select the file they wish to view and returns the filepath name.
+	 * @Purpose: This method has the user select the file they wish to view.
+	 * @Return: The full filepath name of the selected file.
 	 */
 	public static String Name() {
 		final JFrame frame = new JFrame();
 		FileDialog dialog = new FileDialog(frame, "Choose a file", FileDialog.LOAD);
+		//Starting user in a default C drive directory that most computers will have.
 		dialog.setDirectory("C:\\Users\\");
 		dialog.setFile("*.csv");
 		dialog.setVisible(true);
@@ -150,7 +152,7 @@ public class Import
 		return filename;
 	}
 	
-	//The main method is uded purely for testing. Will be commented out for final product
+	//The main method is used purely for testing. Will be commented out for final product
 	public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.
