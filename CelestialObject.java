@@ -4,6 +4,10 @@ import javafx.scene.shape.Circle;
  * @author Owner
  * @version 1.0
  * @created 13-Feb-2019 5:09:21 PM
+ *
+ * This class holds all of the attributes for the Star and Planet classes
+ * @see Planet
+ * @see Star
  */
 public class CelestialObject{
 
@@ -33,15 +37,30 @@ public class CelestialObject{
 	private double orbitalRadius;
 	private double orbitalVelocity;
 	private double planetaryRadius;
-
+	
+	/**
+	 * Getter for planet radius
+	 * @param i   int which holds the index for the specified location in the array
+	 * @return planetRad[i]   double which holds the planet radius
+	 */
 	public double getPlanetRad(int i) {
 		return planetRad[i];
 	}
 	
+	/**
+	 * Getter for semimajor axis
+	 * @param i    int which holds the index for the specified location in the array
+	 * @return semiMajor[i]    double which holds the planet semimajor axis
+	 */
 	public double getSemiMajor(int i) {
 		return semiMajor[i];
 	}
 	
+	/**
+	 * Getter for sun radius
+	 * @param void
+	 * @return sRadius   double which holds the sun radius
+	 */
 	public double getsRadius() {
 		return sRadius;
 	}

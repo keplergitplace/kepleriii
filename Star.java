@@ -6,6 +6,9 @@ import javafx.scene.shape.Circle;
  * @author Owner
  * @version 1.0
  * @created 13-Feb-2019 5:09:37 PM
+ * 
+ * This is the specific class for Stars
+ * @see CelestialObject
  */
 public class Star extends CelestialObject {
 	public Circle star;

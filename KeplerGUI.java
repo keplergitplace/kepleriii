@@ -17,13 +17,11 @@ public class KeplerGUI extends Application{
 	private Stage mainStage;
 	private Scene mmScene;
 	
-
-	// main for testing window (might need to be changed to different main)
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	// window function
+	
+	/** The window function
+	 * @param mmStage, keplerPane
+	 * @see KeplerPane
+	 */
 	public void start(Stage mmStage) throws Exception {
 		// Set the stage for main menu
 		mainStage = mmStage;
@@ -34,6 +32,13 @@ public class KeplerGUI extends Application{
 		mainStage.setTitle("Kepler III");
 		//display GUI
 		mainStage.show();
+		
+	/** Main for testing window
+	 * 
+	 */
+	public static void main(String[] args) {
+			launch(args);
+		}
 
 	}
 

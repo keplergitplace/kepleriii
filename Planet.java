@@ -4,6 +4,9 @@ import javafx.scene.shape.Circle;
  * @author Owner
  * @version 1.0
  * @created 13-Feb-2019 5:09:35 PM
+ * 
+ * This is the specific class for planets
+ * @see CelestialObject
  */
 public class Planet extends CelestialObject {
 

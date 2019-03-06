@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 	/**
+	 * This class creates the images for the planets and star and places them in a pane
 	 * @author Joint Project
 	 * @version 1.0
 	 * @created 13-Feb-2019 5:09:33 PM
@@ -37,7 +38,9 @@ import javafx.scene.text.Text;
 			start();
 		}
 		
-		// initiates buttons for the main menu
+		/** Initiates buttons for the main menu
+		 * @param void
+		 */
 		public void start(){
 			Earth = new Button("Earth");
 			Exit = new Button("Exit");
@@ -85,6 +88,10 @@ import javafx.scene.text.Text;
 			});
 		}
 		
+	/**
+	 * This method clears the pane and re-populates it with the planets for the Earth data
+	 * @see #start()
+	 */
 	public void Default() {
 		getChildren().clear();
 		//get planet info from "planet" class and display
@@ -110,7 +117,9 @@ import javafx.scene.text.Text;
 			}
 			
 		}
-	//create drop down lists
+	/** Creates drop down lists
+	 * 
+	 */
 	public void earthLists() {
 			for(int i =0; i < planetName.length; i++) {
 				planet[i] = new MenuItem(planetName[i]);
@@ -130,7 +139,9 @@ import javafx.scene.text.Text;
 		
 		}
 	
-	// initiates the back to main menu button
+	/** Initiates the back to main menu button
+	 * 
+	 */
 	public void mainMenu() {
 		btmm.setLayoutX(30);
 		btmm.setLayoutY(15);

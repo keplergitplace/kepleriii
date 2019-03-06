@@ -1,7 +1,7 @@
 /**
+ * The import class will open a csv file and parse through the data
  * @author Sayan, Harrison
  * @Date: 3/3/2019
- * @Purpose: The import class will open a csv file and parse through the data
  * @version: 1.3
  */
 import java.awt.FileDialog;
@@ -32,8 +32,10 @@ public class Import
 	public static ArrayList<String> sMass = new ArrayList<String>();
 	public static ArrayList<String> sAge = new ArrayList<String>();
 	
-	/*
-	 * @Purpose: To store default data from the exoplanets.csv data
+	/**
+	 * Method store default data from the exoplanets.csv data
+	 * @param void
+	 * @throws IOException	if a reading exception occured
 	 */
 	public static void storeAllDefault() throws Exception //First Attempt
 	{
@@ -48,15 +50,17 @@ public class Import
 		//System.out.println(planetData.get(110)); //Planet Data does not start till line 110
 	}
 	
-	/*
-	 * @Purpose: return the Arraylist of Planet Data
+	/**
+	 * Return the Arraylist of Planet Data
+	 * @param void
+	 * @return planetData	an Arraylist of the planet data
 	 */
 	public static ArrayList<String> getAll()
 	{
 		return planetData;
 	}
 	
-	/**public static void parseData() //Failed Experiment
+	/*public static void parseData() //Failed Experiment
 	{
 		String line = "";
 		System.out.println("Starting Parse Data");
@@ -69,8 +73,9 @@ public class Import
 		}
 	}*/
 	
-	/*
-	 * @Purpose: Stores default values for exoplanets.csv
+	/**
+	 * Stores default values for exoplanets.csv
+	 * @param void
 	 */
 	public static void storeDataDefault() throws Exception
 	{
@@ -102,9 +107,10 @@ public class Import
 			reader.close();
 	}
 	
-	/*
-	 * @Purpose: Stores default values from the parameter name
-	 * @Parameter: String Name
+	/**
+	 * Stores default values from the parameter name
+	 * @param String Name
+	 * @throws IOException	if a writing exception occurs
 	 */
 	public static void storeData(String name) throws Exception
 	{
@@ -136,9 +142,10 @@ public class Import
 			reader.close();
 	}
 	
-	/*
-	 * @Purpose: This method has the user select the file they wish to view.
-	 * @Return: The full filepath name of the selected file.
+	/**
+	 * This method has the user select the file they wish to view.
+	 * @param void
+	 * @return filename	  String which holds the full filepath name of the selected file.
 	 */
 	public static String Name() {
 		final JFrame frame = new JFrame();
@@ -152,7 +159,9 @@ public class Import
 		return filename;
 	}
 	
-	//The main method is used purely for testing. Will be commented out for final product
+	/** The main method is used purely for testing. Will be commented out for final product
+	 * @param void
+	 */
 	public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.
@@ -174,7 +183,7 @@ public class Import
 		}
 		
 		//This is for testing of the default method. Not used for functionality
-		/**try {
+		/*try {
 			storeDataDefault();
 			//storeAllDefault();
 		}catch(Exception e1){
