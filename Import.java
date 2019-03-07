@@ -115,7 +115,7 @@ public class Import
 	public static void storeData(String name) throws Exception
 	{
 			//Import.planetData.clear();
-			BufferedReader reader = new BufferedReader(new FileReader("exoplanets.csv"));
+			BufferedReader reader = new BufferedReader(new FileReader(name));
 			String line;
 			while ((line = reader.readLine()) != null)
 			{
