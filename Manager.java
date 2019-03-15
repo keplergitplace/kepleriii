@@ -18,6 +18,12 @@ public class Manager {
 		return star.earthSystem();
 	}
 	
+	public String[] earthData(int i) {
+		return planet.earthData(i);
+	}
+	public String[] sunData() {
+		return star.sunData();
+	}
 	public void calcGravitationalModel(){
 
 	}

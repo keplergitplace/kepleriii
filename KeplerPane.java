@@ -38,6 +38,7 @@ public class KeplerPane extends Pane {
 	Menu Planets = new Menu("Planets");
 	Menu Stars = new Menu("Stars");
 	private String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
+	Text[] display = new Text[4];
 	private Button SandboxMode;
 
 
@@ -58,7 +59,7 @@ public class KeplerPane extends Pane {
 				BackgroundSize.DEFAULT); 
 		Background background = new Background(backgroundimage);
 		setBackground(background);
-		
+
 		Text welcome = new Text("Welcome to Kepler III");
 		welcome.setFill(Color.WHITE);
 		welcome.setLayoutX(900);
@@ -66,7 +67,7 @@ public class KeplerPane extends Pane {
 		welcome.setScaleX(3);
 		welcome.setScaleY(3);
 		getChildren().add(welcome);
-		
+
 		Earth = new Button("Earth");
 		Exit = new Button("Exit");
 		Help = new Button("Help");
@@ -159,10 +160,167 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(225);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
-		planet[2].setOnAction( e-> {
-			getChildren().remove(menuBar);
-		});
+		planet[0].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(0);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
 
+		});
+		planet[1].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(1);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[2].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(2);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[3].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(3);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[4].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(4);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[5].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(5);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[6].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(6);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		planet[7].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.earthData(7);
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+
+		});
+		star.setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.sunData();
+			for ( int i =0; i < display.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+		});
 	}
 
 	/** Initiates the back to main menu button

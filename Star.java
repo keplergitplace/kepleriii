@@ -11,20 +11,26 @@ import javafx.scene.shape.Circle;
  * @see CelestialObject
  */
 public class Star extends CelestialObject {
+	private double ssGravity = 274; // m/s^2
+	private double sLumin = 1;
+	private double sRadius = 109; // compared to earth radius
+	private double sMass =  333000; //compared to earth mass
+	private double sAge = 4.603; // billions of years, literal age is too large
 	public Circle star;
-
+	
 	public Circle earthSystem(){
 		star = new Circle();
 		star.setFill(Color.ORANGE);
-		star.setRadius(getsRadius() * 5);
+		star.setRadius(sRadius * 5);
 		star.setLayoutX(-530);
 		star.setLayoutY(540);
 		return star;
 	}
 
-
-	public void setColor(){
-
+	public String[] sunData() {
+		String info[] = {"Gravity: " + ssGravity + " m/s^2", "Radius: " + sRadius + " in Earth Radii", 
+				"Mass: " + sMass + " in Earth Masses", "Age: " + sAge + " billion years" };
+		return(info);
 	}
 
 	public void setMass(){
