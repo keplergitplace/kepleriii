@@ -162,7 +162,7 @@ public class Import
 	/** The "main" method of the Import function, call this to run everything else.
 	 * @param void
 	 */
-	public static void Import
+	public static void run()
 	{
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();
