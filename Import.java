@@ -159,10 +159,10 @@ public class Import
 		return filename;
 	}
 	
-	/** The main method is used purely for testing. Will be commented out for final product
+	/** The "main" method of the Import function, call this to run everything else.
 	 * @param void
 	 */
-	public static void main(String[] args)
+	public static void Import
 	{
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();
