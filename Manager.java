@@ -9,6 +9,9 @@ public class Manager {
 	
 	Planet planet = new Planet();
 	Star star = new Star(); 
+	Import data = new Import();
+	
+	private String[] math;
 	
 	
 	public Circle addPlanets(int i) {
@@ -24,6 +27,19 @@ public class Manager {
 	public String[] sunData() {
 		return star.sunData();
 	}
+	
+	public void importData() {
+		data.run();
+	}
+	
+	/*public void mathData(int i) {
+		math = data.mathData(i);
+	}
+	
+	public String[] keplerData(int i) {
+		return data.sendData(i);
+	}*/
+	
 	public void calcGravitationalModel(){
 
 	}

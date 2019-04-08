@@ -26,13 +26,13 @@ public class KeplerGUI extends Application{
 	 */
 	public void start(Stage mmStage) throws Exception {
 		// set up music player
-		//C:\Users\Owner\Desktop\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3 fortunate son
-		//C:\Users\Owner\Desktop\Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3 Interstellar
-		String path = "C:\\Users\\Owner\\Desktop\\Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+		String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+		//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
 		Media music = new Media(new File(path).toURI().toString());
 		MediaPlayer song = new MediaPlayer(music);
 		song.setVolume(10);
 		song.setAutoPlay(true);
+		song.setCycleCount(MediaPlayer.INDEFINITE);
 
 		// Set the stage for main menu
 		mainStage = mmStage;

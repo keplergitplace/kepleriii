@@ -21,8 +21,8 @@ public class Star extends CelestialObject {
 	public Circle earthSystem(){
 		star = new Circle();
 		star.setFill(Color.ORANGE);
-		star.setRadius(sRadius * 5);
-		star.setLayoutX(-530);
+		star.setRadius(sRadius);
+		star.setLayoutX(960);
 		star.setLayoutY(540);
 		return star;
 	}

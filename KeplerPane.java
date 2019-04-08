@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -37,10 +38,9 @@ public class KeplerPane extends Pane {
 	MenuBar menuBar = new MenuBar();
 	Menu Planets = new Menu("Planets");
 	Menu Stars = new Menu("Stars");
-	private String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 	Text[] display = new Text[4];
+	Label[] labels = new Label[8];
 	private Button SandboxMode;
-
 
 	public KeplerPane(){
 		start();
@@ -107,7 +107,6 @@ public class KeplerPane extends Pane {
 		Exit.setOnAction( e-> {
 			System.exit(0);
 		});
-
 		getChildren().addAll(Earth, Exit, Help, Import, Options);
 		Earth.setOnAction( e-> {
 			setBackground(null);
@@ -121,13 +120,19 @@ public class KeplerPane extends Pane {
 	 */
 	public void Default() {
 		getChildren().clear();
+		String solarSystem[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Satrun", "Uranus", "Neptune"};
 		//get planet info from "planet" class and display
+		//label planets using "labels" array and set location to planet location
 		for (int i = 0; i < 8; i++) {
+			labels[i] = new Label(solarSystem[i]);
 			plt =  mgr.addPlanets(i);
-			getChildren().add(plt);
+			labels[i].setLayoutX(mgr.addPlanets(i).getLayoutX());
+			labels[i].setLayoutY(mgr.addPlanets(i).getLayoutY());
+			labels[i].setTextFill(Color.RED);
+			getChildren().addAll(plt, labels[i]);
 		}
 		getChildren().add(mgr.addStars());//get star info from "star" class and display
-		Text scale = new Text("Size ratio to scale. Distance ratio to scale from object centerpoint to object centerpoint.\nObjects appear larger than they are by a factor of 5.");
+		Text scale = new Text("All measurements to scale to scale");
 		scale.setLayoutY(40);
 		scale.setLayoutX(600);
 		scale.setScaleX(1.5);
@@ -142,12 +147,12 @@ public class KeplerPane extends Pane {
 			pressed = true;
 			mainMenu();
 		}
-
 	}
 	/** Creates drop down lists
 	 * 
 	 */
 	public void earthLists() {
+		String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		for(int i =0; i < planetName.length; i++) {
 			planet[i] = new MenuItem(planetName[i]);
 			Planets.getItems().add(planet[i]);
@@ -173,7 +178,7 @@ public class KeplerPane extends Pane {
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
 
@@ -194,7 +199,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		planet[2].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -212,7 +216,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		planet[3].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -230,7 +233,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		planet[4].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -248,8 +250,8 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
+
 		planet[5].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -266,7 +268,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		planet[6].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -284,7 +285,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		planet[7].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -302,7 +302,6 @@ public class KeplerPane extends Pane {
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-
 		});
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -322,7 +321,6 @@ public class KeplerPane extends Pane {
 			}
 		});
 	}
-
 	/** Initiates the back to main menu button
 	 * 
 	 */
@@ -333,14 +331,12 @@ public class KeplerPane extends Pane {
 		btmm.setScaleY(1.5);
 		getChildren().add(btmm);
 
-		// will respawn all the buttons in the start method
+		// will redraw all the buttons in the start method
 		btmm.setOnAction(e-> {
 			getChildren().clear();
 			start();
 			pressed = false;
 		});
-
-
 	}
 
 }//end KeplerPane
