@@ -169,7 +169,7 @@ public class Import
 			//orbitPeriodNum.add(Double.parseDouble(orbitPeriod.get(i)));
 			if(semiMajor.get(i).length()!=0)
 			{
-				semiMajorNum.add(Double.parseDouble(semiMajor.get(i)));
+				semiMajorNum.add(35870.1*(Double.parseDouble(semiMajor.get(i))));
 			}
 			else
 			{
@@ -402,16 +402,16 @@ public class Import
 	/** The "main" method of the Import function, call this to run everything else.
 	 * @param void
 	 */
-	//public static void run()
 	public void run()
+	//public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();
 		//I/O Exception handling; if the user did not select anything and closed the window it is handled in the if statement.
-		if (filePath == null)
+		/*if (filePath == null)
 			System.out.println("You cancelled the choice");
 		else
-			System.out.println("You chose "+filePath);
+			System.out.println("You chose "+filePath);*/
 
 		try {//Reading File
 			storeData(filePath);
@@ -435,10 +435,10 @@ public class Import
 		convertToSRadiusDouble();
 		convertToSMassDouble();
 
-		for(int j = 1;j<orbitPeriodNum.size();j++)
+		/*for(int j = 1;j<orbitPeriodNum.size();j++)
 		{
-			System.out.println(planetRadNum.get(j));
-		}
+			System.out.println(orbitPeriodNum.get(j));
+		}*/
 
 		//This is for testing of the default method. Not used for functionality
 		/*try {
