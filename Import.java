@@ -380,6 +380,7 @@ public class Import
 			//sAge.add(splitLin[100]);
 		}
 		reader.close();
+		System.out.println("This is working!");
 	}
 
 	/**
@@ -399,10 +400,31 @@ public class Import
 		return filename;
 	}
 
+	public void runDefault(String filePath) {
+		try {//Reading File
+			storeData(filePath);
+		}catch(Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		convertToOrbitDouble();
+		convertToEccentricityDouble();
+		convertToPlanetRadDouble();
+		convertToPlanetDistanceDouble();
+		convertToPlanetDensityDouble();
+		convertToPlanetMassDouble();
+		convertToSemiDouble();
+		convertToSsGravityDouble();
+		convertToSLuminDouble();
+		convertToSRadiusDouble();
+		convertToSMassDouble();
+	}
+	
 	/** The "main" method of the Import function, call this to run everything else.
 	 * @param void
 	 */
-	public void run()
+	
+	public void runOwnFile()
 	//public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.

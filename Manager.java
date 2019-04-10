@@ -28,8 +28,12 @@ public class Manager {
 		return star.sunData();
 	}
 	
-	public void importData() {
-		data.run();
+	public void importDataImport() {
+		data.runDefault("exoplanets.csv");
+	}
+	
+	public void importDataOwnFile() {
+		data.runOwnFile();
 	}
 	
 	/*public void mathData(int i) {
