@@ -40,4 +40,5 @@ public class Star extends CelestialObject {
 	public void setRadius(){
 
 	}
+	
 }//end Star

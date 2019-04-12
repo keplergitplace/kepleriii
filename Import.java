@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 public class Import 
 {
 	/**Static Variables*/
+	public static String fileName="";
+	public String gFileName;
+	
 	public static ArrayList<String> planetData = new ArrayList<String>();
 	public static ArrayList<String> hostName = new ArrayList<String>();
 	public static ArrayList<String> planetLetter = new ArrayList<String>();
@@ -395,9 +398,10 @@ public class Import
 		dialog.setDirectory("C:\\Users\\");
 		dialog.setFile("*.csv");
 		dialog.setVisible(true);
-		String filename = dialog.getDirectory() + dialog.getFile();
+		//String filename = dialog.getDirectory() + dialog.getFile();
+		fileName = dialog.getDirectory()+dialog.getFile();
 		frame.dispose();
-		return filename;
+		return fileName;
 	}
 
 	public void runDefault(String filePath) {
@@ -440,7 +444,7 @@ public class Import
 		}catch(Exception e1) {
 			e1.printStackTrace();
 		}
-		/*for(String line:orbitPeriod) //Printing the data called
+		/*for(String line:hostName) //Printing the data called
 		{
 			System.out.println(line);
 		}*/
