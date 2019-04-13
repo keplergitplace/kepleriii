@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -26,6 +27,8 @@ public class KeplerPane extends Pane {
 
 	Manager mgr = new Manager();
 	private boolean pressed = false;
+	private boolean runImport = true;
+	private boolean runOwnImport = true;
 	private Button Earth;
 	private Button Exit;
 	private Button Help;
@@ -34,12 +37,13 @@ public class KeplerPane extends Pane {
 	private Circle plt[];
 	private Circle str;
 	private Button btmm = new Button("Main Menu");
-	private MenuItem[] planet = new MenuItem[9];
-	MenuItem star = new MenuItem("Sun");
+	private MenuItem[] planet;
+	private String keplerSystemName;
+	MenuItem star;
 	MenuBar menuBar = new MenuBar();
 	Menu Planets = new Menu("Planets");
 	Menu Stars = new Menu("Stars");
-	Text[] display = new Text[4];
+	Text[] display;
 	Label[] labels = new Label[8];
 	private Button SandboxMode;
 
@@ -159,12 +163,14 @@ public class KeplerPane extends Pane {
 	 */
 	public void earthLists() {
 		String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
+		planet = new MenuItem[9];
 		for(int i =0; i < planetName.length; i++) {
 			planet[i] = new MenuItem(planetName[i]);
 			Planets.getItems().add(planet[i]);
 		}
+		star = new MenuItem("Sun");
 		Stars.getItems().add(star);
-
+		display = new Text[4];
 		menuBar.getMenus().addAll(Planets, Stars);
 		getChildren().add(menuBar);
 		menuBar.setLayoutY(15);
@@ -405,28 +411,223 @@ public class KeplerPane extends Pane {
 		});
 	}
 
-	
+
 	public void importButton() {
 		Button defaultButton = new Button("Program Default");
 		defaultButton.setLayoutX(300);
 		defaultButton.setLayoutY(300);
 		defaultButton.setOnAction(e -> {
 			getChildren().clear();
-			
-			mgr.importDataImport();
-			
-			
+			setBackground(null);
+			if(runImport == true) {
+				mgr.importDataImport();
+				mgr.getHostNameArray();
+				runImport = false;
+			}
+			drawKeplerData();
+			mainMenu();
 		});
-		
+
 		Button ownFileButton = new Button("Own File");
 		ownFileButton.setLayoutX(500);
 		ownFileButton.setLayoutY(300);
 		ownFileButton.setOnAction(e -> {
 			getChildren().clear();
-			
-			mgr.importDataOwnFile();
+			setBackground(null);
+			if(runOwnImport == true) {
+				mgr.importDataOwnFile();
+				runOwnImport = false;
+			}
+			drawKeplerData();
+			mainMenu();
 		});
-		
 		getChildren().addAll(defaultButton, ownFileButton);
+	}
+
+	public void drawKeplerData() {
+		Button systemInput = new Button("Input Star System");
+		TextField System = new TextField();
+		System.setPromptText("Input Star Sytem");
+		System.setLayoutX(600);
+		System.setLayoutY(50);
+		systemInput.setLayoutX(800);
+		systemInput.setLayoutY(50);
+		getChildren().addAll(System, systemInput);
+		systemInput.setOnAction( e-> {
+			keplerSystemName = String.valueOf(System.getText());
+			mgr.generatePlanetList(keplerSystemName);
+			getChildren().clear();
+			mainMenu();
+			menuBar.getMenus().clear();
+			Planets.getItems().clear();
+			Stars.getItems().clear();
+			drawKeplerDataCont();
+			drawKeplerData();
+		});
+	}
+
+	public void drawKeplerDataCont() {
+		plt = new Circle[mgr.planetList.size()];
+		String keplerSystem[] = new String[mgr.planetList.size()];
+		planet = new MenuItem[mgr.planetList.size()];
+		for(int i = 0; i < mgr.planetList.size(); i++) {
+			keplerSystem[i] = mgr.planetList.get(i);
+		}
+		int num = mgr.getIndex(keplerSystemName);
+		for (int i = 0; i < mgr.planetList.size(); i++) {
+			labels[i] = new Label(keplerSystem[i]);
+			plt[i] = mgr.keplerPlanetData(i + num);
+			labels[i].setLayoutX(mgr.keplerPlanetData(i + num).getLayoutX());
+			labels[i].setLayoutY(mgr.keplerPlanetData(i + num).getLayoutY());
+			labels[i].setTextFill(Color.RED);
+			getChildren().addAll(plt[i], labels[i]);
+		}
+		for(int i = 0; i < keplerSystem.length; i++) {
+			planet[i] = new MenuItem(keplerSystem[i]);
+			Planets.getItems().add(planet[i]);
+		}
+		star = new MenuItem(mgr.listStrName(num));
+		Stars.getItems().add(star);
+		display = new Text[4];
+		menuBar.getMenus().addAll(Planets, Stars);
+		getChildren().add(menuBar);
+		menuBar.setLayoutY(15);
+		menuBar.setLayoutX(225);
+		menuBar.setScaleX(1.5);
+		menuBar.setScaleY(1.5);
+		planet[0].setOnAction( e-> {
+			for(int i = 0; i < display.length; i++) {
+				getChildren().remove(display[i]);
+			}
+			String dat[] = mgr.keplerData(num);
+			for ( int i =0; i < dat.length; i ++) {
+				display[i] = new Text(dat[i]);
+			}
+			int x = 200;
+			int y = 100;
+			for (int i = 0; i < display.length; i++) {
+				display[i].setLayoutX(x);
+				display[i].setLayoutY(y);
+				getChildren().add(display[i]);
+				y = y + 20;
+			}
+			for(int i = 0; i < plt.length; i++) {
+				getChildren().removeAll(plt[i], labels[i]);
+			}
+			getChildren().remove(str);
+			getChildren().addAll(plt[0], labels[0]);
+			labels[0].setLayoutX(960);
+			plt[0].setLayoutX(960);
+		});
+		try {
+			planet[1].setOnAction( e-> {
+				for(int i = 0; i < display.length; i++) {
+					getChildren().remove(display[i]);
+				}
+				String dat[] = mgr.keplerData(num + 1);
+				for ( int i =0; i < dat.length; i ++) {
+					display[i] = new Text(dat[i]);
+				}
+				int x = 200;
+				int y = 100;
+				for (int i = 0; i < display.length; i++) {
+					display[i].setLayoutX(x);
+					display[i].setLayoutY(y);
+					getChildren().add(display[i]);
+					y = y + 20;
+				}
+				for(int i = 0; i < plt.length; i++) {
+					getChildren().removeAll(plt[i], labels[i]);
+				}
+				getChildren().remove(str);
+				getChildren().addAll(plt[1], labels[1]);
+				labels[1].setLayoutX(960);
+				plt[1].setLayoutX(960);
+			});
+		} catch (Exception e) {
+
+		}
+		try {
+			planet[2].setOnAction( e-> {
+				for(int i = 0; i < display.length; i++) {
+					getChildren().remove(display[i]);
+				}
+				String dat[] = mgr.keplerData(num + 2);
+				for ( int i =0; i < dat.length; i ++) {
+					display[i] = new Text(dat[i]);
+				}
+				int x = 200;
+				int y = 100;
+				for (int i = 0; i < display.length; i++) {
+					display[i].setLayoutX(x);
+					display[i].setLayoutY(y);
+					getChildren().add(display[i]);
+					y = y + 20;
+				}
+				for(int i = 0; i < plt.length; i++) {
+					getChildren().removeAll(plt[i], labels[i]);
+				}
+				getChildren().remove(str);
+				getChildren().addAll(plt[2], labels[2]);
+				labels[2].setLayoutX(960);
+				plt[2].setLayoutX(960);
+			});
+		}catch (Exception e) {
+
+		} try {
+			planet[3].setOnAction( e-> {
+				for(int i = 0; i < display.length; i++) {
+					getChildren().remove(display[i]);
+				}
+				String dat[] = mgr.keplerData(num + 3);
+				for ( int i =0; i < dat.length; i ++) {
+					display[i] = new Text(dat[i]);
+				}
+				int x = 200;
+				int y = 100;
+				for (int i = 0; i < display.length; i++) {
+					display[i].setLayoutX(x);
+					display[i].setLayoutY(y);
+					getChildren().add(display[i]);
+					y = y + 20;
+				}
+				for(int i = 0; i < plt.length; i++) {
+					getChildren().removeAll(plt[i], labels[i]);
+				}
+				getChildren().remove(str);
+				getChildren().addAll(plt[3], labels[3]);
+				labels[3].setLayoutX(960);
+				plt[3].setLayoutX(960);
+			});
+		}catch (Exception e) {
+
+		} try {
+			planet[4].setOnAction( e-> {
+				for(int i = 0; i < display.length; i++) {
+					getChildren().remove(display[i]);
+				}
+				String dat[] = mgr.keplerData(num + 4);
+				for ( int i =0; i < dat.length; i ++) {
+					display[i] = new Text(dat[i]);
+				}
+				int x = 200;
+				int y = 100;
+				for (int i = 0; i < display.length; i++) {
+					display[i].setLayoutX(x);
+					display[i].setLayoutY(y);
+					getChildren().add(display[i]);
+					y = y + 20;
+				}
+				for(int i = 0; i < plt.length; i++) {
+					getChildren().removeAll(plt[i], labels[i]);
+				}
+				getChildren().remove(str);
+				getChildren().addAll(plt[4], labels[4]);
+				labels[4].setLayoutX(960);
+				plt[4].setLayoutX(960);
+			});
+		}catch (Exception e) {
+
+		}	
 	}
 }//end KeplerPane

@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 public class Import 
 {
 	/**Static Variables*/
@@ -172,7 +175,7 @@ public class Import
 			//orbitPeriodNum.add(Double.parseDouble(orbitPeriod.get(i)));
 			if(semiMajor.get(i).length()!=0)
 			{
-				semiMajorNum.add(35870.1*(Double.parseDouble(semiMajor.get(i))));
+				semiMajorNum.add(960 + (35870.1*(Double.parseDouble(semiMajor.get(i)))));
 			}
 			else
 			{
@@ -383,7 +386,6 @@ public class Import
 			//sAge.add(splitLin[100]);
 		}
 		reader.close();
-		System.out.println("This is working!");
 	}
 
 	/**
@@ -402,6 +404,44 @@ public class Import
 		fileName = dialog.getDirectory()+dialog.getFile();
 		frame.dispose();
 		return fileName;
+	}
+	
+	public Circle sendPlanetData(int i) {
+		Circle planets = new Circle();
+		planets.setRadius(planetRadNum.get(i));
+		planets.setLayoutX(960 + semiMajorNum.get(i));
+		planets.setLayoutY(540);
+		return planets;
+	}
+	
+	public Circle sendStarData(int i) {
+		Circle star = new Circle();
+		star.setRadius(sRadiusNum.get(i));
+		star.setFill(Color.ORANGE);
+		star.setLayoutX(960);
+		star.setLayoutY(540);
+		return star;
+	}
+	
+	public String[] keplerData(int i) {
+		String info[] = {/*"Host Name " + hostName.get(i), */"Planet Name: " + planetName.get(i), "Discover Method: " + discoveryMethod.get(i), 
+				"Year Discovered: " + yearDisc.get(i), "Orbital Period: " + orbitPeriod.get(i) + " Days"};
+		return info;
+	}
+	
+	public String[] listPltNames(int i) {
+		String info[] = {planetName.get(i), planetName.get(i+1)};
+		return info;
+	}
+	
+	public String listStrName(int i) {
+		String info = hostName.get(i);
+		return info;
+	}
+	
+	public int getIndex(String name) {
+		int loc = hostName.indexOf(name);
+		return loc;
 	}
 
 	public void runDefault(String filePath) {

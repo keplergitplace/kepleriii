@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javafx.scene.shape.Circle;
 
 /**
@@ -35,6 +34,18 @@ public class Manager {
 	
 	public void importDataImport() {
 		data.runDefault("exoplanets.csv");
+	}
+	
+	public String[] listPltNames(int i) {
+		return data.listPltNames(i);
+	}
+	
+	public String listStrName(int i) {
+		return data.listStrName(i);
+	}
+		
+	public int getIndex(String name) {
+		return data.getIndex(name);
 	}
 	
 	public void importDataOwnFile() {
@@ -76,6 +87,7 @@ public class Manager {
 	 */
 	public void generatePlanetList(String hostName)
 	{
+		planetList.clear();
 		for(int count = 1; count<Import.hostName.size();count++)
 		{
 			if(Import.hostName.get(count).contentEquals(hostName))
@@ -87,11 +99,19 @@ public class Manager {
 	
 	/*public void mathData(int i) {
 		math = data.mathData(i);
+	}*/
+	
+	public Circle keplerPlanetData(int i) {
+		return data.sendPlanetData(i);
+	}
+	
+	public Circle keplerStarData(int i) {
+		return data.sendStarData(i);
 	}
 	
 	public String[] keplerData(int i) {
-		return data.sendData(i);
-	}*/
+		return data.keplerData(i);
+	}
 	
 	public void calcGravitationalModel(){
 
@@ -99,23 +119,5 @@ public class Manager {
 
 	public double getG(){
 		return 0;
-	}
-	
-	public static void main(String[] args)
-	{
-		Manager m = new Manager();
-		
-		m.importDataOwnFile();
-		m.getHostNameArray();
-		/*for(String line:m.hostList) //Printing the data called
-		{
-			System.out.println(line);
-		}*/
-		
-		/*m.generatePlanetList("24 Sex");
-		for(String line:m.planetList) //Printing the data called
-		{
-			System.out.println(line);
-		}*/
 	}
 }//end Manager
