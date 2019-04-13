@@ -1,4 +1,6 @@
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import java.io.File;
@@ -16,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 public class KeplerGUI extends Application{
 
 	KeplerPane keplerPane = new KeplerPane();
+	//private SandBox sbPane = new SandBox();
 	private Stage mainStage;
 	private Scene mmScene;
 
@@ -33,6 +36,22 @@ public class KeplerGUI extends Application{
 		song.setVolume(10);
 		song.setAutoPlay(true);
 		song.setCycleCount(MediaPlayer.INDEFINITE);
+		
+		keplerPane.Options.setOnAction(e -> {
+			keplerPane.getChildren().clear();
+			
+			Button muteB = new Button("Mute/Unmute Audio");
+			
+			muteB.setOnAction(e1 -> {
+				if(song.isMute()) {
+					song.setMute(false);;
+				}else {
+					song.setMute(true);
+				}
+			});
+			
+			keplerPane.getChildren().add(muteB);
+		});
 
 		// Set the stage for main menu
 		mainStage = mmStage;
