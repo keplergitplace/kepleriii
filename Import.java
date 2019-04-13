@@ -337,18 +337,18 @@ public class Import
 			discoveryMethod.add(splitLin[3]);
 			cFlag.add(splitLin[4]);
 			yearDisc.add(splitLin[5]);
-			orbitPeriod.add(splitLin[6]);//Need double
-			semiMajor.add(splitLin[11]);//Need Double
-			eccentricity.add(splitLin[16]);//Need Double
-			planetMass.add(splitLin[21]);//Need double
-			planetRad.add(splitLin[27]);//Need Double
-			planetDensity.add(splitLin[32]);//Need Double
-			planetDistance.add(splitLin[52]);//Need Double
-			//ssGravity.add(splitLin[74]); //Errors will occur due to no data. 
-			//sLumin.add(splitLin[79]);
-			//sRadius.add(splitLin[89]);
-			//sMass.add(splitLin[84]);
-			//sAge.add(splitLin[100]);
+			orbitPeriod.add(splitLin[6]);//Need Double
+			semiMajor.add(splitLin[8]);//Need Double
+			eccentricity.add(splitLin[10]);//Need Double
+			planetMass.add(splitLin[12]);//Need Double
+			planetRad.add(splitLin[15]);//Need Double
+			planetDensity.add(splitLin[17]);//Need Double
+			//planetDistance.add(splitLin[28]);//Need Double //DO NOT USE
+			ssGravity.add(splitLin[40]); //Errors will occur due to no data. 
+			sLumin.add(splitLin[42]);
+			sRadius.add(splitLin[46]);
+			sMass.add(splitLin[44]);
+			sAge.add(splitLin[51]);
 		}
 		reader.close();
 	}
@@ -373,17 +373,48 @@ public class Import
 			cFlag.add(splitLin[4]);
 			yearDisc.add(splitLin[5]);
 			orbitPeriod.add(splitLin[6]);//Need Double
-			semiMajor.add(splitLin[11]);//Need Double
-			eccentricity.add(splitLin[16]);//Need Double
-			planetMass.add(splitLin[21]);//Need Double
-			planetRad.add(splitLin[27]);//Need Double
-			planetDensity.add(splitLin[32]);//Need Double
-			planetDistance.add(splitLin[52]);//Need Double
-			//ssGravity.add(splitLin[74]); //Errors will occur due to no data. 
-			//sLumin.add(splitLin[79]);
-			//sRadius.add(splitLin[89]);
-			//sMass.add(splitLin[84]);
-			//sAge.add(splitLin[100]);
+			semiMajor.add(splitLin[8]);//Need Double
+			eccentricity.add(splitLin[10]);//Need Double
+			planetMass.add(splitLin[12]);//Need Double
+			planetRad.add(splitLin[15]);//Need Double
+			planetDensity.add(splitLin[17]);//Need Double
+			//planetDistance.add(splitLin[28]);//Need Double //DO NOT USE
+			//ssGravity.add(splitLin[40]); //Errors will occur due to no data. 
+			//sLumin.add(splitLin[42]);
+			//sRadius.add(splitLin[46]);
+			//sMass.add(splitLin[44]);
+			//sAge.add(splitLin[51]);
+			if((splitLin[40].length() != 0)&&(splitLin[40].length()<5))
+				ssGravity.add(splitLin[40]);
+			else
+				ssGravity.add("0");
+			if((splitLin[42].length() != 0)&&(splitLin[42].length()<5))
+				sLumin.add(splitLin[42]);
+			else
+				sLumin.add("0");
+			if((splitLin[46].length() != 0)&&(splitLin[46].length()<5))
+				sRadius.add(splitLin[46]);
+			else
+				sRadius.add("0");
+			if((splitLin[44].length() != 0)&&(splitLin[44].length()<5))
+				sMass.add(splitLin[44]);
+			else
+				sMass.add("0");
+			if((splitLin[51].length() != 0)&&(splitLin[51].length()<5))
+				sAge.add(splitLin[51]);
+			else
+				sAge.add("0");
+			
+			/*if((splitLin[46].length()==0))
+				sRadius.add("0");
+			else
+				sRadius.add(splitLin[46]);*/
+			/*if(splitLin[46].equals(null))
+				sRadius.add("0");
+			else if((splitLin[46].length()==0)||(splitLin[46].length()>7))
+				sRadius.add("0");
+			else
+				sRadius.add(splitLin[46]);*/
 		}
 		reader.close();
 	}
@@ -468,8 +499,8 @@ public class Import
 	 * @param void
 	 */
 	
-	public void runOwnFile()
-	//public static void main(String[] args)
+	//public void runOwnFile()
+	public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();
@@ -484,10 +515,11 @@ public class Import
 		}catch(Exception e1) {
 			e1.printStackTrace();
 		}
-		/*for(String line:hostName) //Printing the data called
+		for(String line:sAge) //Printing the data called
 		{
 			System.out.println(line);
-		}*/
+		}
+		
 
 		convertToOrbitDouble();
 		convertToEccentricityDouble();
