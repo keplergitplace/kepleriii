@@ -232,7 +232,7 @@ public class Import
 			//orbitPeriodNum.add(Double.parseDouble(orbitPeriod.get(i)));
 			if(sRadius.get(i).length()!=0)
 			{
-				sRadiusNum.add(Double.parseDouble(sRadius.get(i)));
+				sRadiusNum.add(109 * Double.parseDouble(sRadius.get(i)));
 			}
 			else
 			{
@@ -251,7 +251,7 @@ public class Import
 			//orbitPeriodNum.add(Double.parseDouble(orbitPeriod.get(i)));
 			if(sRadius.get(i).length()!=0)
 			{
-				sMassNum.add(Double.parseDouble(sMass.get(i)));
+				sMassNum.add(33000* Double.parseDouble(sMass.get(i)));
 			}
 			else
 			{
@@ -451,12 +451,19 @@ public class Import
 		star.setFill(Color.ORANGE);
 		star.setLayoutX(960);
 		star.setLayoutY(540);
+		//System.out.println(sRadiusNum.get(i));
 		return star;
 	}
 	
 	public String[] keplerData(int i) {
 		String info[] = {/*"Host Name " + hostName.get(i), */"Planet Name: " + planetName.get(i), "Discover Method: " + discoveryMethod.get(i), 
 				"Year Discovered: " + yearDisc.get(i), "Orbital Period: " + orbitPeriod.get(i) + " Days"};
+		return info;
+	}
+	
+	public String[] kStarInfo(int i) {
+		String info[] = {"Gravity: " + ssGravity.get(i) + " log10 cm/s^2", "Radius: " + sRadius.get(i) + " solar radii", "Mass "
+				+ sMass.get(i) + " * solar mass", "Age " + sAge.get(i) + " Billion Years"};
 		return info;
 	}
 	
@@ -499,8 +506,8 @@ public class Import
 	 * @param void
 	 */
 	
-	//public void runOwnFile()
-	public static void main(String[] args)
+	public void runOwnFile()
+	//public static void main(String[] args)
 	{
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();

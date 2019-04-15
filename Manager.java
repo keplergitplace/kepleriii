@@ -14,7 +14,6 @@ public class Manager {
 	public String fileName;
 	public ArrayList<String> hostList = new ArrayList<String>();
 	public ArrayList<String> planetList = new ArrayList<String>();
-	
 	private String[] math;
 	
 	
@@ -33,7 +32,7 @@ public class Manager {
 	}
 	
 	public void importDataImport() {
-		data.runDefault("exoplanets.csv");
+		data.runDefault("exoplanets2.csv");
 	}
 	
 	public String[] listPltNames(int i) {
@@ -51,7 +50,14 @@ public class Manager {
 	public void importDataOwnFile() {
 		data.runOwnFile();
 		this.fileName = Import.fileName + "";
-		
+	}
+	
+	public String[] getKeplerDropDown() {
+		String info[] = new String[hostList.size()];
+		for(int i = 0; i < info.length; i++) {
+			info[i] = hostList.get(i);
+		}
+		return info;
 	}
 	
 	/*
@@ -111,6 +117,10 @@ public class Manager {
 	
 	public String[] keplerData(int i) {
 		return data.keplerData(i);
+	}
+	
+	public String[] kStarInfo(int i) {
+		return data.kStarInfo(i);
 	}
 	
 	public void calcGravitationalModel(){
