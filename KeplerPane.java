@@ -45,6 +45,7 @@ public class KeplerPane extends Pane {
 	Menu Stars = new Menu("Stars");
 	Text[] display;
 	Label[] labels = new Label[8];
+	Button systemInput = new Button("Input Star System");
 	private Button SandboxMode;
 
 	public KeplerPane(){
@@ -145,7 +146,7 @@ public class KeplerPane extends Pane {
 		getChildren().add(str = mgr.addStars());//get star info from "star" class and display
 		Text scale = new Text("All measurements to scale");
 		scale.setLayoutY(40);
-		scale.setLayoutX(600);
+		scale.setLayoutX(700);
 		scale.setScaleX(1.5);
 		scale.setScaleY(1.5);
 		getChildren().add(scale);
@@ -163,6 +164,16 @@ public class KeplerPane extends Pane {
 	 * 
 	 */
 	public void earthLists() {
+		Button reset = new Button("Reset View");
+		reset.setLayoutX(190);
+		reset.setLayoutY(15);
+		reset.setScaleX(1.5);
+		reset.setScaleY(1.5);
+		getChildren().add(reset);
+		reset.setOnAction(e -> {
+			pressed = false;
+			Default();
+		});
 		String planetName[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		planet = new MenuItem[9];
 		for(int i =0; i < planetName.length; i++) {
@@ -173,9 +184,9 @@ public class KeplerPane extends Pane {
 		Stars.getItems().add(star);
 		display = new Text[4];
 		menuBar.getMenus().addAll(Planets, Stars);
-		getChildren().add(menuBar);
+		getChildren().addAll(menuBar);
 		menuBar.setLayoutY(15);
-		menuBar.setLayoutX(225);
+		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
 		planet[0].setOnAction( e-> {
@@ -472,7 +483,6 @@ public class KeplerPane extends Pane {
 	 * @param void
 	 */
 	public void drawKeplerData() {
-		Button systemInput = new Button("Input Star System");
 		TextField System = new TextField();
 		System.setPromptText("Input Star Sytem");
 		System.setLayoutX(600);
@@ -482,13 +492,24 @@ public class KeplerPane extends Pane {
 		getChildren().addAll(System, systemInput);
 		systemInput.setOnAction( e-> {
 			keplerSystemName = String.valueOf(System.getText());
+			try {
 			mgr.generatePlanetList(keplerSystemName);
 			getChildren().clear();
 			mainMenu();
 			menuBar.getMenus().clear();
 			Planets.getItems().clear();
 			Stars.getItems().clear();
+			drawKeplerDropDown();
 			drawKeplerDataCont();
+			}catch (Exception k) {
+				Text error = new Text("Star System Does Not Exist");
+				error.setLayoutX(643);
+				error.setLayoutY(30);
+				error.setScaleX(1.5);
+				error.setScaleY(1.5);
+				error.setFill(Color.RED);
+				getChildren().add(error);
+			}
 			drawKeplerData();
 		});
 	}
@@ -496,6 +517,23 @@ public class KeplerPane extends Pane {
 	 * @param void
 	 */
 	public void drawKeplerDataCont() {
+		Button reset = new Button("Reset View");
+		reset.setLayoutX(190);
+		reset.setLayoutY(15);
+		reset.setScaleX(1.5);
+		reset.setScaleY(1.5);
+		getChildren().add(reset);
+		reset.setOnAction(e -> {
+			mgr.generatePlanetList(keplerSystemName);
+			getChildren().clear();
+			mainMenu();
+			menuBar.getMenus().clear();
+			Planets.getItems().clear();
+			Stars.getItems().clear();
+			drawKeplerDropDown();
+			drawKeplerDataCont();
+			drawKeplerData();
+		});
 		plt = new Circle[mgr.planetList.size()];
 		String keplerSystem[] = new String[mgr.planetList.size()];
 		planet = new MenuItem[mgr.planetList.size()];
@@ -523,7 +561,7 @@ public class KeplerPane extends Pane {
 		menuBar.getMenus().addAll(Planets, Stars);
 		getChildren().add(menuBar);
 		menuBar.setLayoutY(15);
-		menuBar.setLayoutX(225);
+		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
 		planet[0].setOnAction( e-> {
@@ -677,5 +715,6 @@ public class KeplerPane extends Pane {
 			getChildren().remove(str);
 			getChildren().add(str);
 		});
+		
 	}
 }//end KeplerPane
