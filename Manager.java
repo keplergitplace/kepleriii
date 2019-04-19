@@ -15,6 +15,10 @@ public class Manager {
 	public ArrayList<String> hostList = new ArrayList<String>();
 	public ArrayList<String> planetList = new ArrayList<String>();
 	private String[] math;
+	final public long METERTOAU = 149600000000L; //Meters to AU conversion
+	final public double GRAVIT = (6.67*Math.pow(10, -11));
+	final public double EARTHMASS = 6*Math.pow(10, 24);
+	final public double SUNMASS = 1.9885*Math.pow(10,30);
 	
 	
 	public Circle addPlanets(int i) {
@@ -107,6 +111,20 @@ public class Manager {
 		math = data.mathData(i);
 	}*/
 	
+	public int findIndex(String planet)
+	{
+		int index =  -1;
+		for(int i = 0;i<Import.planetName.size();i++)
+		{
+			if(Import.planetName.get(i).contentEquals(planet))
+			{
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
+	
 	public Circle keplerPlanetData(int i) {
 		return data.sendPlanetData(i);
 	}
@@ -123,11 +141,80 @@ public class Manager {
 		return data.kStarInfo(i);
 	}
 	
-	public void calcGravitationalModel(){
-
+	public double perturbingEffects(String planet)
+	{
+		//Take out the planet in question
+		//Finding index
+		int index = -1;
+		for(int i = 0;i<planetList.size();i++)
+		{
+			if(planetList.get(i).contentEquals(planet))
+			{
+				index = i;
+				break;
+			}
+		}
+		//Removing the planet Index
+		planetList.remove(index);
+		
+		//Calculation of Perturbing Effects
+		double sum = 0;
+		for(int j =1;j<planetList.size();j++)
+		{
+			int index0 = findIndex(planetList.get(j));
+			int index1 = findIndex(planetList.get(j-1));
+			double mass0 = Import.planetMassNum.get(index0)*EARTHMASS;
+			double mass1 = Import.planetMassNum.get(index1)*EARTHMASS;
+			double r0 = Import.semiMajorNum.get(index0)*METERTOAU;
+			double r1 = Import.semiMajorNum.get(index1)*METERTOAU;
+			double massSum = mass0+mass1;
+			
+			//Calculation of Perturbation
+			double temp = (1/Math.pow(r0, 3))-(1/Math.pow(r1,3));
+			sum = sum +(GRAVIT*massSum*temp);
+		}
+		return sum;
+	}
+	
+	public boolean calcGravitationalModel(String planet)
+	{
+		int planetIndex = findIndex(planet); //Index of the planet in question
+		String host = Import.hostName.get(planetIndex); //Assigns host associated with planet
+		generatePlanetList(host); //Generates the list of relevant planets in system
+		double sum = perturbingEffects(planet);
+		
+		boolean collision = false;
+		double radius = Import.semiMajorNum.get(planetIndex)*METERTOAU;
+		double massTotal = (Import.planetMassNum.get(planetIndex)*EARTHMASS)+(Import.sMassNum.get(planetIndex)*SUNMASS);
+		double acceleration = ((-1*GRAVIT*massTotal)/(Math.pow(radius, 3)))-sum;
+		
+		if(acceleration == 0)
+		{
+			collision = true;
+		}
+		return collision;
 	}
 
 	public double getG(){
 		return 0;
+	}
+	
+	public static void main(String[] args)
+	{
+		Manager m = new Manager();
+		
+		m.importDataOwnFile();
+		m.getHostNameArray();
+		//System.out.println(m.findIndex("24 Sex b"));
+		/*for(String line:m.hostList) //Printing the data called
+		{
+			System.out.println(line);
+		}*/
+		
+		/*m.generatePlanetList("24 Sex");
+		for(String line:m.planetList) //Printing the data called
+		{
+			System.out.println(line);
+		}*/
 	}
 }//end Manager
