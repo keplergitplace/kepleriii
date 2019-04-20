@@ -15,6 +15,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.input.ScrollEvent;
 
 /**
  * This class creates the images for the planets and star and places them in a pane
@@ -33,7 +34,7 @@ public class KeplerPane extends Pane {
 	private Button Exit;
 	private Button Help;
 	private Button Import;
-	private Button Options;
+	Button Options;
 	private Circle plt[];
 	private Circle str;
 	private Button btmm = new Button("Main Menu");
@@ -131,7 +132,7 @@ public class KeplerPane extends Pane {
 	public void Default() {
 		getChildren().clear();
 
-		String solarSystem[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Satrun", "Uranus", "Neptune"};
+		String solarSystem[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		plt = new Circle[8];
 		//get planet info from "planet" class and display
 		//label planets using "labels" array and set location to planet location
@@ -150,6 +151,24 @@ public class KeplerPane extends Pane {
 		scale.setScaleX(1.5);
 		scale.setScaleY(1.5);
 		getChildren().add(scale);
+		/*
+		 * Scroll-Zoom feature
+		 * Changes the scaling of the planet parameters
+		 * based on how far in/out the user has already zoomed.
+		 */
+		setOnScroll((ScrollEvent event) -> {
+			double zoomFactor = 1.2;
+		    double deltaY = event.getDeltaY();
+		    if (deltaY < 0){
+		    	zoomFactor = 2.0 - zoomFactor;
+		    }
+		    for (int i=0; i<8; i++) {
+		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
+		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
+		    }
+		    str.setScaleX(str.getScaleX() * zoomFactor);
+		    str.setScaleY(str.getScaleY() * zoomFactor);
+			});
 		//prevent endless addition of items to menu bar if user selects the default view multiple times in one session.
 		if (pressed == false) {
 			menuBar.getMenus().clear();
@@ -212,6 +231,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[0], labels[0]);
 			labels[0].setLayoutX(960);
 			plt[0].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
+			    plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
+				});
 		});
 		planet[1].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -236,6 +269,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[1], labels[1]);
 			labels[1].setLayoutX(960);
 			plt[1].setLayoutX(960);
+			/*
+			 * Scroll-zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
+			    plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
+				});
 		});
 		planet[2].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -260,6 +307,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[2], labels[2]);
 			labels[2].setLayoutX(960);
 			plt[2].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
+			    plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
+				});
 		});
 		planet[3].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -284,6 +345,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[3], labels[3]);
 			labels[3].setLayoutX(960);
 			plt[3].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
+			    plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
+				});
 		});
 		planet[4].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -308,8 +383,21 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[4], labels[4]);
 			labels[4].setLayoutX(960);
 			plt[4].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
+			    plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
+				});
 		});
-
 		planet[5].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -333,6 +421,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[5], labels[5]);
 			labels[5].setLayoutX(960);
 			plt[5].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[5].setScaleX(plt[5].getScaleX() * zoomFactor);
+			    plt[5].setScaleY(plt[5].getScaleY() * zoomFactor);
+				});
 		});
 		planet[6].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -357,6 +459,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[6], labels[6]);
 			labels[6].setLayoutX(960);
 			plt[6].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[6].setScaleX(plt[6].getScaleX() * zoomFactor);
+			    plt[6].setScaleY(plt[6].getScaleY() * zoomFactor);
+				});
 		});
 		planet[7].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -381,6 +497,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[7], labels[7]);
 			labels[7].setLayoutX(960);
 			plt[7].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[7].setScaleX(plt[7].getScaleX() * zoomFactor);
+			    plt[7].setScaleY(plt[7].getScaleY() * zoomFactor);
+				});
 		});
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -403,6 +533,20 @@ public class KeplerPane extends Pane {
 			}
 			getChildren().remove(str);
 			getChildren().add(str);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    str.setScaleX(str.getScaleX() * zoomFactor);
+			    str.setScaleY(str.getScaleY() * zoomFactor);
+				});
 		});
 	}
 	/** Initiates the back to main menu button
@@ -587,6 +731,20 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[0], labels[0]);
 			labels[0].setLayoutX(960);
 			plt[0].setLayoutX(960);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
+			    plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
+				});
 		});
 		try {
 			planet[1].setOnAction( e-> {
@@ -612,6 +770,20 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[1], labels[1]);
 				labels[1].setLayoutX(960);
 				plt[1].setLayoutX(960);
+				/*
+				 * Scroll-Zoom feature
+				 * Changes the scaling of the planet parameters
+				 * based on how far in/out the user has already zoomed.
+				 */
+				setOnScroll((ScrollEvent event) -> {
+					double zoomFactor = 1.2;
+				    double deltaY = event.getDeltaY();
+				    if (deltaY < 0){
+				    	zoomFactor = 2.0 - zoomFactor;
+				    }
+				    plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
+				    plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
+					});
 			});
 		} catch (Exception e) {
 		}try {
@@ -638,6 +810,20 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[2], labels[2]);
 				labels[2].setLayoutX(960);
 				plt[2].setLayoutX(960);
+				/*
+				 * Scroll-Zoom feature
+				 * Changes the scaling of the planet parameters
+				 * based on how far in/out the user has already zoomed.
+				 */
+				setOnScroll((ScrollEvent event) -> {
+					double zoomFactor = 1.2;
+				    double deltaY = event.getDeltaY();
+				    if (deltaY < 0){
+				    	zoomFactor = 2.0 - zoomFactor;
+				    }
+				    plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
+				    plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
+					});
 			});
 		}catch (Exception e) {
 		} try {
@@ -664,6 +850,20 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[3], labels[3]);
 				labels[3].setLayoutX(960);
 				plt[3].setLayoutX(960);
+				/*
+				 * Scroll-Zoom feature
+				 * Changes the scaling of the planet parameters
+				 * based on how far in/out the user has already zoomed.
+				 */
+				setOnScroll((ScrollEvent event) -> {
+					double zoomFactor = 1.2;
+				    double deltaY = event.getDeltaY();
+				    if (deltaY < 0){
+				    	zoomFactor = 2.0 - zoomFactor;
+				    }
+				    plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
+				    plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
+					});
 			});
 		}catch (Exception e) {
 		} try {
@@ -690,6 +890,20 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[4], labels[4]);
 				labels[4].setLayoutX(960);
 				plt[4].setLayoutX(960);
+				/*
+				 * Scroll-Zoom feature
+				 * Changes the scaling of the planet parameters
+				 * based on how far in/out the user has already zoomed.
+				 */
+				setOnScroll((ScrollEvent event) -> {
+					double zoomFactor = 1.2;
+				    double deltaY = event.getDeltaY();
+				    if (deltaY < 0){
+				    	zoomFactor = 2.0 - zoomFactor;
+				    }
+				    plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
+				    plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
+					});
 			});
 		}catch (Exception e) {
 		}	
@@ -714,6 +928,20 @@ public class KeplerPane extends Pane {
 			}
 			getChildren().remove(str);
 			getChildren().add(str);
+			/*
+			 * Scroll-Zoom feature
+			 * Changes the scaling of the planet parameters
+			 * based on how far in/out the user has already zoomed.
+			 */
+			setOnScroll((ScrollEvent event) -> {
+				double zoomFactor = 1.2;
+			    double deltaY = event.getDeltaY();
+			    if (deltaY < 0){
+			    	zoomFactor = 2.0 - zoomFactor;
+			    }
+			    str.setScaleX(str.getScaleX() * zoomFactor);
+			    str.setScaleY(str.getScaleY() * zoomFactor);
+				});
 		});
 		
 	}
