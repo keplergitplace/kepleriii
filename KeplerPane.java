@@ -608,9 +608,11 @@ public class KeplerPane extends Pane {
 			setBackground(null);
 			if(runOwnImport == true) {
 				mgr.importDataOwnFile();
+				mgr.getHostNameArray();
 				runOwnImport = false;
 				runImport = true;
 			}
+			drawKeplerDropDown();
 			drawKeplerData();
 			mainMenu();
 		});
