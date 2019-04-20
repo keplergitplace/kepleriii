@@ -155,16 +155,23 @@ public class KeplerPane extends Pane {
 		 * Scroll-Zoom feature
 		 * Changes the scaling of the planet parameters
 		 * based on how far in/out the user has already zoomed.
+		 * This is custom-made for the default view.
 		 */
 		setOnScroll((ScrollEvent event) -> {
-			double zoomFactor = 1.2;
+			double zoomFactor = 1.05;
 		    double deltaY = event.getDeltaY();
 		    if (deltaY < 0){
 		    	zoomFactor = 2.0 - zoomFactor;
 		    }
+		    str.setLayoutX(str.getLayoutX() * zoomFactor);
 		    for (int i=0; i<8; i++) {
-		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
-		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
+		    plt[i].setScaleX(plt[i].getScaleX() / zoomFactor);
+		    plt[i].setScaleY(plt[i].getScaleY() / zoomFactor);
+		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
+		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    } else {
+		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    }
 		    }
 		    str.setScaleX(str.getScaleX() * zoomFactor);
 		    str.setScaleY(str.getScaleY() * zoomFactor);
