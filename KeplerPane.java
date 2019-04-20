@@ -169,10 +169,10 @@ public class KeplerPane extends Pane {
 		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
 		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
 		    } else {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
 		    }
 		    }
 		    str.setScaleX(str.getScaleX() * zoomFactor);
@@ -731,10 +731,10 @@ public class KeplerPane extends Pane {
 		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
 		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
 		    } else {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
 		    }
 		    }
 		    str.setScaleX(str.getScaleX() * zoomFactor);
