@@ -165,12 +165,14 @@ public class KeplerPane extends Pane {
 		    }
 		    str.setLayoutX(str.getLayoutX() * zoomFactor);
 		    for (int i=0; i<8; i++) {
-		    plt[i].setScaleX(plt[i].getScaleX() / zoomFactor);
-		    plt[i].setScaleY(plt[i].getScaleY() / zoomFactor);
+		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
+		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
 		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 		    } else {
 		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 		    }
 		    }
 		    str.setScaleX(str.getScaleX() * zoomFactor);
@@ -715,6 +717,27 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
+		setOnScroll((ScrollEvent event) -> {
+			double zoomFactor = 1.05;
+		    double deltaY = event.getDeltaY();
+		    if (deltaY < 0){
+		    	zoomFactor = 2.0 - zoomFactor;
+		    }
+		    str.setLayoutX(str.getLayoutX() * zoomFactor);
+		    for (int i=0; i<plt.length; i++) {
+		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
+		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
+		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
+		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    } else {
+		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    	labels[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+		    }
+		    }
+		    str.setScaleX(str.getScaleX() * zoomFactor);
+		    str.setScaleY(str.getScaleY() * zoomFactor);
+			});
 		planet[0].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -791,6 +814,7 @@ public class KeplerPane extends Pane {
 				    plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
 				    plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
 					});
+				
 			});
 		} catch (Exception e) {
 		}try {
