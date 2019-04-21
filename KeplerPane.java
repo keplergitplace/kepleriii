@@ -34,6 +34,11 @@ public class KeplerPane extends Pane {
 	private Button Exit;
 	private Button Help;
 	private Button Import;
+
+	// for sandbox mode only
+	private Button confirm = new Button("Confirm");
+	private int confirmClicked = 0;
+
 	Button Options;
 	private Circle plt[];
 	private Circle str;
@@ -47,7 +52,7 @@ public class KeplerPane extends Pane {
 	Text[] display;
 	Label[] labels = new Label[8];
 	Button systemInput = new Button("Input Star System");
-	private Button SandboxMode;
+	private Button sandBoxMode;
 
 	public KeplerPane(){
 		start();
@@ -56,14 +61,33 @@ public class KeplerPane extends Pane {
 	/** Initiates buttons for the main menu
 	 * @param void
 	 */
+
+	public void spawnConfirmButton(Pane pane, SandBox sb)
+	{
+
+		confirm.setMinSize(50, 25);
+		confirm.setLayoutX(115);
+		confirm.setLayoutY(700);
+		pane.getChildren().add(confirm);
+		confirm.setOnAction(e1-> {
+
+			confirmClicked++;
+			sb.initSandBox(pane, confirmClicked);
+			spawnConfirmButton(pane, sb);
+			mainMenu();
+
+		});
+
+	}
+
 	public void start(){
 		Image bk = new Image("lovejoy-comet.jpg");
 
-		BackgroundImage backgroundimage = new BackgroundImage(bk,  
-				BackgroundRepeat.NO_REPEAT,  
-				BackgroundRepeat.NO_REPEAT,  
-				BackgroundPosition.CENTER,  
-				BackgroundSize.DEFAULT); 
+		BackgroundImage backgroundimage = new BackgroundImage(bk,
+				BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT,
+				BackgroundPosition.CENTER,
+				BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundimage);
 		setBackground(background);
 
@@ -80,6 +104,7 @@ public class KeplerPane extends Pane {
 		Help = new Button("Help");
 		Import = new Button("Import");
 		Options = new Button("Options");
+		sandBoxMode = new Button("SandBox");
 
 		Import.setLayoutX(170);
 		Import.setLayoutY(900);
@@ -93,28 +118,45 @@ public class KeplerPane extends Pane {
 		Earth.setScaleY(2);
 		Earth.setMinSize(100,0);
 
-		Help.setLayoutX(870);
+		sandBoxMode.setLayoutX(870);
+		sandBoxMode.setLayoutY(900);
+		sandBoxMode.setScaleX(2);
+		sandBoxMode.setScaleY(2);
+		sandBoxMode.setMinSize(100,0);
+		sandBoxMode.setOnAction(e-> {
+
+			this.getChildren().clear();
+
+			SandBox sandBox = new SandBox();
+
+			sandBox.initSandBox(this, confirmClicked);
+			spawnConfirmButton(this, sandBox);
+			mainMenu();
+
+		});
+
+		Help.setLayoutX(1220);
 		Help.setLayoutY(900);
 		Help.setScaleX(2);
 		Help.setScaleY(2);
 		Help.setMinSize(100,0);
 
-		Options.setLayoutX(1220);
+		Options.setLayoutX(1570);
 		Options.setLayoutY(900);
 		Options.setScaleX(2);
 		Options.setScaleY(2);
 		Options.setMinSize(100,0);
 
-		Exit.setLayoutX(1570);
+		Exit.setLayoutX(1910);
 		Exit.setLayoutY(900);
 		Exit.setScaleX(2);
 		Exit.setScaleY(2);
-		Exit.setMinSize(100,0);			
+		Exit.setMinSize(100,0);
 
 		Exit.setOnAction( e-> {
 			System.exit(0);
 		});
-		getChildren().addAll(Earth, Exit, Help, Import, Options);
+		getChildren().addAll(Earth, Exit, Help, Import, Options, sandBoxMode);
 		Earth.setOnAction( e-> {
 			setBackground(null);
 			Default();
@@ -159,25 +201,25 @@ public class KeplerPane extends Pane {
 		 */
 		setOnScroll((ScrollEvent event) -> {
 			double zoomFactor = 1.05;
-		    double deltaY = event.getDeltaY();
-		    if (deltaY < 0){
-		    	zoomFactor = 2.0 - zoomFactor;
-		    }
-		    str.setLayoutX(str.getLayoutX() * zoomFactor);
-		    for (int i=0; i<8; i++) {
-		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
-		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
-		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
-		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-		    } else {
-		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-		    }
-		    }
-		    str.setScaleX(str.getScaleX() * zoomFactor);
-		    str.setScaleY(str.getScaleY() * zoomFactor);
-			});
+			double deltaY = event.getDeltaY();
+			if (deltaY < 0){
+				zoomFactor = 2.0 - zoomFactor;
+			}
+			str.setLayoutX(str.getLayoutX() * zoomFactor);
+			for (int i=0; i<8; i++) {
+				plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
+				plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
+				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
+					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				} else {
+					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				}
+			}
+			str.setScaleX(str.getScaleX() * zoomFactor);
+			str.setScaleY(str.getScaleY() * zoomFactor);
+		});
 		//prevent endless addition of items to menu bar if user selects the default view multiple times in one session.
 		if (pressed == false) {
 			menuBar.getMenus().clear();
@@ -189,7 +231,7 @@ public class KeplerPane extends Pane {
 		}
 	}
 	/** Creates drop down lists
-	 * 
+	 *
 	 */
 	public void earthLists() {
 		Button reset = new Button("Reset View");
@@ -247,13 +289,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
-			    plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
+				plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
+			});
 		});
 		planet[1].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -285,13 +327,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
-			    plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
+				plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
+			});
 		});
 		planet[2].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -323,13 +365,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
-			    plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
+				plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
+			});
 		});
 		planet[3].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -361,13 +403,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
-			    plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
+				plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
+			});
 		});
 		planet[4].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -399,13 +441,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
-			    plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
+				plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
+			});
 		});
 		planet[5].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -437,13 +479,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[5].setScaleX(plt[5].getScaleX() * zoomFactor);
-			    plt[5].setScaleY(plt[5].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[5].setScaleX(plt[5].getScaleX() * zoomFactor);
+				plt[5].setScaleY(plt[5].getScaleY() * zoomFactor);
+			});
 		});
 		planet[6].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -475,13 +517,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[6].setScaleX(plt[6].getScaleX() * zoomFactor);
-			    plt[6].setScaleY(plt[6].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[6].setScaleX(plt[6].getScaleX() * zoomFactor);
+				plt[6].setScaleY(plt[6].getScaleY() * zoomFactor);
+			});
 		});
 		planet[7].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -513,13 +555,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[7].setScaleX(plt[7].getScaleX() * zoomFactor);
-			    plt[7].setScaleY(plt[7].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[7].setScaleX(plt[7].getScaleX() * zoomFactor);
+				plt[7].setScaleY(plt[7].getScaleY() * zoomFactor);
+			});
 		});
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
@@ -549,17 +591,17 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    str.setScaleX(str.getScaleX() * zoomFactor);
-			    str.setScaleY(str.getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				str.setScaleX(str.getScaleX() * zoomFactor);
+				str.setScaleY(str.getScaleY() * zoomFactor);
+			});
 		});
 	}
 	/** Initiates the back to main menu button
-	 * 
+	 *
 	 */
 	public void mainMenu() {
 		btmm.setLayoutX(30);
@@ -573,6 +615,8 @@ public class KeplerPane extends Pane {
 			getChildren().clear();
 			start();
 			pressed = false;
+			if(confirmClicked > 3)
+				confirmClicked = 0;
 		});
 	}
 
@@ -618,12 +662,12 @@ public class KeplerPane extends Pane {
 		});
 		getChildren().addAll(defaultButton, ownFileButton);
 	}
-	
+
 	public void drawKeplerDropDown() {
 		String names[] = mgr.getKeplerDropDown();
 		MenuBar Stars = new MenuBar();
 		Menu Systems = new Menu("Kepler Systems");
-		for(int i = 0; i < names.length; i++) {			
+		for(int i = 0; i < names.length; i++) {
 			MenuItem name = new MenuItem(names[i]);
 			Systems.getItems().add(name);
 		}
@@ -633,7 +677,7 @@ public class KeplerPane extends Pane {
 		Stars.setScaleY(1.5);
 		getChildren().add(Stars);
 	}
-	
+
 	/**gets user input star name, then gets data from arraylists in import class.
 	 * @param void
 	 */
@@ -648,14 +692,14 @@ public class KeplerPane extends Pane {
 		systemInput.setOnAction( e-> {
 			keplerSystemName = String.valueOf(System.getText());
 			try {
-			mgr.generatePlanetList(keplerSystemName);
-			getChildren().clear();
-			mainMenu();
-			menuBar.getMenus().clear();
-			Planets.getItems().clear();
-			Stars.getItems().clear();
-			drawKeplerDropDown();
-			drawKeplerDataCont();
+				mgr.generatePlanetList(keplerSystemName);
+				getChildren().clear();
+				mainMenu();
+				menuBar.getMenus().clear();
+				Planets.getItems().clear();
+				Stars.getItems().clear();
+				drawKeplerDropDown();
+				drawKeplerDataCont();
 			}catch (Exception k) {
 				Text error = new Text("Star System Does Not Exist");
 				error.setLayoutX(643);
@@ -721,25 +765,25 @@ public class KeplerPane extends Pane {
 		menuBar.setScaleY(1.5);
 		setOnScroll((ScrollEvent event) -> {
 			double zoomFactor = 1.05;
-		    double deltaY = event.getDeltaY();
-		    if (deltaY < 0){
-		    	zoomFactor = 2.0 - zoomFactor;
-		    }
-		    str.setLayoutX(str.getLayoutX() * zoomFactor);
-		    for (int i=0; i<plt.length; i++) {
-		    plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
-		    plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
-		    if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
-		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-		    } else {
-		    	plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-		    	labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-		    }
-		    }
-		    str.setScaleX(str.getScaleX() * zoomFactor);
-		    str.setScaleY(str.getScaleY() * zoomFactor);
-			});
+			double deltaY = event.getDeltaY();
+			if (deltaY < 0){
+				zoomFactor = 2.0 - zoomFactor;
+			}
+			str.setLayoutX(str.getLayoutX() * zoomFactor);
+			for (int i=0; i<plt.length; i++) {
+				plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
+				plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
+				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
+					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				} else {
+					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				}
+			}
+			str.setScaleX(str.getScaleX() * zoomFactor);
+			str.setScaleY(str.getScaleY() * zoomFactor);
+		});
 		planet[0].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -770,13 +814,13 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
-			    plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				plt[0].setScaleX(plt[0].getScaleX() * zoomFactor);
+				plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
+			});
 		});
 		try {
 			planet[1].setOnAction( e-> {
@@ -809,14 +853,14 @@ public class KeplerPane extends Pane {
 				 */
 				setOnScroll((ScrollEvent event) -> {
 					double zoomFactor = 1.2;
-				    double deltaY = event.getDeltaY();
-				    if (deltaY < 0){
-				    	zoomFactor = 2.0 - zoomFactor;
-				    }
-				    plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
-				    plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
-					});
-				
+					double deltaY = event.getDeltaY();
+					if (deltaY < 0){
+						zoomFactor = 2.0 - zoomFactor;
+					}
+					plt[1].setScaleX(plt[1].getScaleX() * zoomFactor);
+					plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
+				});
+
 			});
 		} catch (Exception e) {
 		}try {
@@ -850,13 +894,13 @@ public class KeplerPane extends Pane {
 				 */
 				setOnScroll((ScrollEvent event) -> {
 					double zoomFactor = 1.2;
-				    double deltaY = event.getDeltaY();
-				    if (deltaY < 0){
-				    	zoomFactor = 2.0 - zoomFactor;
-				    }
-				    plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
-				    plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
-					});
+					double deltaY = event.getDeltaY();
+					if (deltaY < 0){
+						zoomFactor = 2.0 - zoomFactor;
+					}
+					plt[2].setScaleX(plt[2].getScaleX() * zoomFactor);
+					plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
+				});
 			});
 		}catch (Exception e) {
 		} try {
@@ -890,13 +934,13 @@ public class KeplerPane extends Pane {
 				 */
 				setOnScroll((ScrollEvent event) -> {
 					double zoomFactor = 1.2;
-				    double deltaY = event.getDeltaY();
-				    if (deltaY < 0){
-				    	zoomFactor = 2.0 - zoomFactor;
-				    }
-				    plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
-				    plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
-					});
+					double deltaY = event.getDeltaY();
+					if (deltaY < 0){
+						zoomFactor = 2.0 - zoomFactor;
+					}
+					plt[3].setScaleX(plt[3].getScaleX() * zoomFactor);
+					plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
+				});
 			});
 		}catch (Exception e) {
 		} try {
@@ -930,16 +974,16 @@ public class KeplerPane extends Pane {
 				 */
 				setOnScroll((ScrollEvent event) -> {
 					double zoomFactor = 1.2;
-				    double deltaY = event.getDeltaY();
-				    if (deltaY < 0){
-				    	zoomFactor = 2.0 - zoomFactor;
-				    }
-				    plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
-				    plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
-					});
+					double deltaY = event.getDeltaY();
+					if (deltaY < 0){
+						zoomFactor = 2.0 - zoomFactor;
+					}
+					plt[4].setScaleX(plt[4].getScaleX() * zoomFactor);
+					plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
+				});
 			});
 		}catch (Exception e) {
-		}	
+		}
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -968,14 +1012,14 @@ public class KeplerPane extends Pane {
 			 */
 			setOnScroll((ScrollEvent event) -> {
 				double zoomFactor = 1.2;
-			    double deltaY = event.getDeltaY();
-			    if (deltaY < 0){
-			    	zoomFactor = 2.0 - zoomFactor;
-			    }
-			    str.setScaleX(str.getScaleX() * zoomFactor);
-			    str.setScaleY(str.getScaleY() * zoomFactor);
-				});
+				double deltaY = event.getDeltaY();
+				if (deltaY < 0){
+					zoomFactor = 2.0 - zoomFactor;
+				}
+				str.setScaleX(str.getScaleX() * zoomFactor);
+				str.setScaleY(str.getScaleY() * zoomFactor);
+			});
 		});
-		
+
 	}
 }//end KeplerPane

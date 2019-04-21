@@ -18,7 +18,6 @@ import javafx.scene.media.MediaPlayer;
 public class KeplerGUI extends Application{
 
 	KeplerPane keplerPane = new KeplerPane();
-	//private SandBox sbPane = new SandBox();
 	private Stage mainStage;
 	private Scene mmScene;
 
