@@ -161,7 +161,7 @@ public class Manager {
 		double sum = 0;
 		for(int j =1;j<planetList.size();j++)
 		{
-			int index0 = findIndex(planetList.get(j));
+			int index0 = findIndex(planetList.get(j)); //System.out.println(index0);
 			int index1 = findIndex(planetList.get(j-1));
 			double mass0 = Import.planetMassNum.get(index0)*EARTHMASS;
 			double mass1 = Import.planetMassNum.get(index1)*EARTHMASS;
@@ -170,23 +170,25 @@ public class Manager {
 			double massSum = mass0+mass1;
 			
 			//Calculation of Perturbation
-			double temp = (1/Math.pow(r0, 3))-(1/Math.pow(r1,3));
+			double temp = (1/Math.pow(r1, 3))-(1/Math.pow(r0,3));
 			sum = sum +(GRAVIT*massSum*temp);
 		}
 		return sum;
 	}
 	
-	public boolean calcGravitationalModel(String planet)
+	public boolean calcGravitationalModel(String planet, int planetIndex)
 	{
-		int planetIndex = findIndex(planet); //Index of the planet in question
+		//int planetIndex = findIndex(planet); //Index of the planet in question
 		String host = Import.hostName.get(planetIndex); //Assigns host associated with planet
+		//System.out.println(host); //Used for Testing Only
 		generatePlanetList(host); //Generates the list of relevant planets in system
 		double sum = perturbingEffects(planet);
+		//double sum = 0.0;
 		
 		boolean collision = false;
 		double radius = Import.semiMajorNum.get(planetIndex)*METERTOAU;
 		double massTotal = (Import.planetMassNum.get(planetIndex)*EARTHMASS)+(Import.sMassNum.get(planetIndex)*SUNMASS);
-		double acceleration = ((-1*GRAVIT*massTotal)/(Math.pow(radius, 3)))-sum;
+		double acceleration = ((-1*GRAVIT*massTotal)/(Math.pow(radius, 3)))-sum; //System.out.println(acceleration); //Only used for testing
 		
 		if(acceleration == 0)
 		{
@@ -205,7 +207,9 @@ public class Manager {
 		
 		m.importDataOwnFile();
 		m.getHostNameArray();
-		//System.out.println(m.findIndex("24 Sex b"));
+		//System.out.println(m.findIndex("47 UMa b"));
+		boolean collide = m.calcGravitationalModel("47 UMa b",m.findIndex("47 UMa b"));
+		System.out.println(collide); 
 		/*for(String line:m.hostList) //Printing the data called
 		{
 			System.out.println(line);
@@ -216,5 +220,6 @@ public class Manager {
 		{
 			System.out.println(line);
 		}*/
+		//System.out.println("test");
 	}
 }//end Manager
