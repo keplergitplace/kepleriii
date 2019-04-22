@@ -30,6 +30,14 @@ public class Planet extends CelestialObject {
 		planets.setLayoutY(540);
 		return planets;
 	}
+	
+	public Circle earthOrbitalRadius(int i){
+		Circle orbits = new Circle();
+		orbits.setRadius(semiMajor[i]);
+		orbits.setLayoutX(960);
+		orbits.setLayoutY(540);
+		return orbits;
+	}
 
 	public String[] earthData(int i) { 
 	String info[] = {"Planet Name: " + planetName[i], "Discovery Method: " + discoverMethod[i], 

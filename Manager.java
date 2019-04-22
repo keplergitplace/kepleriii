@@ -141,6 +141,14 @@ public class Manager {
 		return data.kStarInfo(i);
 	}
 	
+	public Circle orbitalRadius(int i) {
+		return data.orbitalRadius(i);
+	}
+	
+	public Circle earthOrbitalRadius(int i) {
+		return planet.earthOrbitalRadius(i);
+	}
+	
 	public double perturbingEffects(String planet)
 	{
 		//Take out the planet in question

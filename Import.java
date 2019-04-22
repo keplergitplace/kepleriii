@@ -550,6 +550,14 @@ public class Import
 		return info;
 	}
 	
+	public Circle orbitalRadius(int i) {
+		Circle orbit = new Circle();
+		orbit.setRadius(semiMajorNum.get(i));
+		orbit.setLayoutX(960);
+		orbit.setLayoutY(540);
+		return orbit;
+	}
+	
 	/*
 	 * @Purpose: Creates the list of the planets in a solar system
 	 */

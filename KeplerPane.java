@@ -45,6 +45,7 @@ public class KeplerPane extends Pane {
 
 	Button Options;
 	private Circle plt[];
+	private Circle orbit[];
 	private Circle str;
 	private Button btmm = new Button("Main Menu");
 	private MenuItem[] planet;
@@ -184,15 +185,20 @@ public class KeplerPane extends Pane {
 
 		String solarSystem[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		plt = new Circle[8];
+		orbit = new Circle[8];
 		//get planet info from "planet" class and display
 		//label planets using "labels" array and set location to planet location
 		for (int i = 0; i < 8; i++) {
 			labels[i] = new Label(solarSystem[i]);
 			plt[i] =  mgr.addPlanets(i);
+			orbit[i] = mgr.earthOrbitalRadius(i);
+			orbit[i].setStroke(Color.BLACK);
+			orbit[i].setStrokeWidth(5);
+			orbit[i].setFill(null);
 			labels[i].setLayoutX(mgr.addPlanets(i).getLayoutX());
 			labels[i].setLayoutY(mgr.addPlanets(i).getLayoutY());
 			labels[i].setTextFill(Color.RED);
-			getChildren().addAll(plt[i], labels[i]);
+			getChildren().addAll(plt[i], labels[i], orbit[i]);
 		}
 		getChildren().add(str = mgr.addStars());//get star info from "star" class and display
 		Text scale = new Text("All measurements to scale");
@@ -208,6 +214,7 @@ public class KeplerPane extends Pane {
 		 * This is custom-made for the default view.
 		 */
 		setOnScroll((ScrollEvent event) -> {
+			double thicc = 8.0;
 			double zoomFactor = 1.05;
 			double deltaY = event.getDeltaY();
 			if (deltaY < 0){
@@ -220,10 +227,15 @@ public class KeplerPane extends Pane {
 				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
 					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
 				} else {
 					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
 				}
+				orbit[i].setScaleX(str.getScaleX() * zoomFactor);
+				orbit[i].setScaleY(str.getScaleY() * zoomFactor);
+				orbit[i].setStrokeWidth(thicc * 2 * zoomFactor);
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
@@ -753,6 +765,7 @@ public class KeplerPane extends Pane {
 			drawKeplerData();
 		});
 		plt = new Circle[mgr.planetList.size()];
+		orbit = new Circle[mgr.planetList.size()];
 		String keplerSystem[] = new String[mgr.planetList.size()];
 		planet = new MenuItem[mgr.planetList.size()];
 		for(int i = 0; i < mgr.planetList.size(); i++) {
@@ -770,11 +783,14 @@ public class KeplerPane extends Pane {
 			}else {
 				plt[i].setFill(Color.DARKORANGE);
 			}
-			
+			orbit[i] = mgr.orbitalRadius(i+num);
+			orbit[i].setStroke(Color.WHITE);
+			orbit[i].setStrokeWidth(5);
+			orbit[i].setFill(null);
 			labels[i].setLayoutX(mgr.keplerPlanetData(i + num).getLayoutX());
 			labels[i].setLayoutY(mgr.keplerPlanetData(i + num).getLayoutY());
 			labels[i].setTextFill(Color.RED);
-			getChildren().addAll(plt[i], labels[i]);
+			getChildren().addAll(plt[i], labels[i], orbit[i]);
 		}
 		getChildren().add(str = mgr.keplerStarData(num));
 		for(int i = 0; i < keplerSystem.length; i++) {
@@ -790,7 +806,9 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
+		//ZOOM FUNCTION
 		setOnScroll((ScrollEvent event) -> {
+			double thicc = 8.0;
 			double zoomFactor = 1.05;
 			double deltaY = event.getDeltaY();
 			if (deltaY < 0){
@@ -803,10 +821,15 @@ public class KeplerPane extends Pane {
 				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
 					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
 				} else {
 					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
 					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
 				}
+				orbit[i].setScaleX(str.getScaleX() * zoomFactor);
+				orbit[i].setScaleY(str.getScaleY() * zoomFactor);
+				orbit[i].setStrokeWidth(thicc * 2 * zoomFactor);
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
