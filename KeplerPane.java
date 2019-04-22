@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -9,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -33,7 +37,7 @@ public class KeplerPane extends Pane {
 	private Button Earth;
 	private Button Exit;
 	private Button Help;
-	private Button Import;
+	private Button ImportBt;
 
 	// for sandbox mode only
 	private Button confirm = new Button("Confirm");
@@ -102,23 +106,23 @@ public class KeplerPane extends Pane {
 		Earth = new Button("Earth");
 		Exit = new Button("Exit");
 		Help = new Button("Help");
-		Import = new Button("Import");
+		ImportBt = new Button("Import");
 		Options = new Button("Options");
 		sandBoxMode = new Button("SandBox");
 
-		Import.setLayoutX(170);
-		Import.setLayoutY(900);
-		Import.setScaleX(2);
-		Import.setScaleY(2);
-		Import.setMinSize(100,0);
+		ImportBt.setLayoutX(75);
+		ImportBt.setLayoutY(900);
+		ImportBt.setScaleX(2);
+		ImportBt.setScaleY(2);
+		ImportBt.setMinSize(100,0);
 
-		Earth.setLayoutX(520);
+		Earth.setLayoutX(375);
 		Earth.setLayoutY(900);
 		Earth.setScaleX(2);
 		Earth.setScaleY(2);
 		Earth.setMinSize(100,0);
 
-		sandBoxMode.setLayoutX(870);
+		sandBoxMode.setLayoutX(675);
 		sandBoxMode.setLayoutY(900);
 		sandBoxMode.setScaleX(2);
 		sandBoxMode.setScaleY(2);
@@ -135,19 +139,19 @@ public class KeplerPane extends Pane {
 
 		});
 
-		Help.setLayoutX(1220);
+		Help.setLayoutX(975);
 		Help.setLayoutY(900);
 		Help.setScaleX(2);
 		Help.setScaleY(2);
 		Help.setMinSize(100,0);
 
-		Options.setLayoutX(1570);
+		Options.setLayoutX(1275);
 		Options.setLayoutY(900);
 		Options.setScaleX(2);
 		Options.setScaleY(2);
 		Options.setMinSize(100,0);
 
-		Exit.setLayoutX(1910);
+		Exit.setLayoutX(1575);
 		Exit.setLayoutY(900);
 		Exit.setScaleX(2);
 		Exit.setScaleY(2);
@@ -156,14 +160,18 @@ public class KeplerPane extends Pane {
 		Exit.setOnAction( e-> {
 			System.exit(0);
 		});
-		getChildren().addAll(Earth, Exit, Help, Import, Options, sandBoxMode);
+		getChildren().addAll(Earth, Exit, Help, ImportBt, Options, sandBoxMode);
 		Earth.setOnAction( e-> {
 			setBackground(null);
 			Default();
 		});
-		Import.setOnAction(e -> {
+		ImportBt.setOnAction(e -> {
 			getChildren().clear();
 			importButton();
+		});
+		Help.setOnAction(e -> {
+			getChildren().clear();
+			Text text = new Text();
 		});
 	}
 
@@ -630,6 +638,17 @@ public class KeplerPane extends Pane {
 		defaultButton.setOnAction(e -> {
 			getChildren().clear();
 			setBackground(null);
+			
+			Image bg = new Image("seamless_space.png");
+
+			BackgroundImage backgroundimage = new BackgroundImage(bg,
+					BackgroundRepeat.REPEAT,
+					BackgroundRepeat.REPEAT,
+					BackgroundPosition.CENTER,
+					BackgroundSize.DEFAULT);
+			Background background = new Background(backgroundimage);
+			setBackground(background);
+						
 			if(runImport == true) {
 				mgr.importDataImport();
 				mgr.getHostNameArray();
@@ -744,6 +763,14 @@ public class KeplerPane extends Pane {
 		for (int i = 0; i < mgr.planetList.size(); i++) {
 			labels[i] = new Label(keplerSystem[i]);
 			plt[i] = mgr.keplerPlanetData(i + num);
+			
+			double density = Import.planetDensityNum.get(num);
+			if (density < 2.0) {
+				plt[i].setFill(Color.PALETURQUOISE);
+			}else {
+				plt[i].setFill(Color.DARKORANGE);
+			}
+			
 			labels[i].setLayoutX(mgr.keplerPlanetData(i + num).getLayoutX());
 			labels[i].setLayoutY(mgr.keplerPlanetData(i + num).getLayoutY());
 			labels[i].setTextFill(Color.RED);
@@ -794,12 +821,18 @@ public class KeplerPane extends Pane {
 			}
 			int x = 200;
 			int y = 100;
+			
+			Rectangle rect = new Rectangle(190, 75, 300, 100);
+			rect.setFill(Color.WHITE);
+			getChildren().add(rect);
+			
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
+			
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -807,6 +840,8 @@ public class KeplerPane extends Pane {
 			getChildren().addAll(plt[0], labels[0]);
 			labels[0].setLayoutX(960);
 			plt[0].setLayoutX(960);
+			
+			
 			/*
 			 * Scroll-Zoom feature
 			 * Changes the scaling of the planet parameters
@@ -1005,6 +1040,13 @@ public class KeplerPane extends Pane {
 			}
 			getChildren().remove(str);
 			getChildren().add(str);
+			
+			double zeroStarAlert = Import.sRadiusNum.get(num);
+			
+			if (zeroStarAlert == 0) {
+				starAlert();
+			}
+			
 			/*
 			 * Scroll-Zoom feature
 			 * Changes the scaling of the planet parameters
@@ -1021,5 +1063,14 @@ public class KeplerPane extends Pane {
 			});
 		});
 
+		
+	}
+	
+	public void starAlert() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Warning");
+		alert.setHeaderText(null);
+		alert.setContentText("The data for this star is not avaliable");
+		alert.showAndWait();
 	}
 }//end KeplerPane

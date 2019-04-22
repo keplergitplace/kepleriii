@@ -515,7 +515,17 @@ public class Import
 	public Circle sendStarData(int i) {
 		Circle star = new Circle();
 		star.setRadius(sRadiusNum.get(i));
-		star.setFill(Color.ORANGE);
+		
+		if (sTempNum.get(i) < 2000) {
+			star.setFill(Color.CHOCOLATE);
+		}else if (sTempNum.get(i) < 4000 && sTempNum.get(i) >= 2000) {
+			star.setFill(Color.ORANGERED);
+		}else if (sTempNum.get(i) < 10000 && sTempNum.get(i) >= 4000) {
+			star.setFill(Color.GOLD);
+		}else {
+			star.setFill(Color.CORNFLOWERBLUE);
+		}
+		
 		star.setLayoutX(960);
 		star.setLayoutY(540);
 		//System.out.println(sRadiusNum.get(i));
