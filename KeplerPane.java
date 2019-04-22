@@ -198,7 +198,8 @@ public class KeplerPane extends Pane {
 			labels[i].setLayoutX(mgr.addPlanets(i).getLayoutX());
 			labels[i].setLayoutY(mgr.addPlanets(i).getLayoutY());
 			labels[i].setTextFill(Color.RED);
-			getChildren().addAll(plt[i], labels[i], orbit[i]);
+			getChildren().add(orbit[i]);
+			getChildren().addAll(plt[i], labels[i]);
 		}
 		getChildren().add(str = mgr.addStars());//get star info from "star" class and display
 		Text scale = new Text("All measurements to scale");
@@ -214,7 +215,7 @@ public class KeplerPane extends Pane {
 		 * This is custom-made for the default view.
 		 */
 		setOnScroll((ScrollEvent event) -> {
-			double thicc = 8.0;
+			double thicc = 12.0;
 			double zoomFactor = 1.05;
 			double deltaY = event.getDeltaY();
 			if (deltaY < 0){
@@ -790,7 +791,8 @@ public class KeplerPane extends Pane {
 			labels[i].setLayoutX(mgr.keplerPlanetData(i + num).getLayoutX());
 			labels[i].setLayoutY(mgr.keplerPlanetData(i + num).getLayoutY());
 			labels[i].setTextFill(Color.RED);
-			getChildren().addAll(plt[i], labels[i], orbit[i]);
+			getChildren().add(orbit[i]);
+			getChildren().addAll(plt[i], labels[i]);
 		}
 		getChildren().add(str = mgr.keplerStarData(num));
 		for(int i = 0; i < keplerSystem.length; i++) {
@@ -808,7 +810,7 @@ public class KeplerPane extends Pane {
 		menuBar.setScaleY(1.5);
 		//ZOOM FUNCTION
 		setOnScroll((ScrollEvent event) -> {
-			double thicc = 8.0;
+			double thicc = 12.0;
 			double zoomFactor = 1.05;
 			double deltaY = event.getDeltaY();
 			if (deltaY < 0){
