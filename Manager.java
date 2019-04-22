@@ -201,6 +201,39 @@ public class Manager {
 		return 0;
 	}
 	
+	/*
+	 * @Purpose: Sets the color of the planet depending on the density of the planet
+	 */
+	/*public int setColorPlanet(String planet)
+	{
+		//String color = "";
+		int color; 
+		int planetIndex = findIndex(planet);
+		if(Import.planetDensityNum.get(planetIndex)>=2)
+		{
+			//The planet is a terrestial object
+			//color = "brown";
+			color = 0x9b6801;
+		}
+		else
+		{
+			//The planet is a gas giant
+			//color = "blue";
+			color = 0x205fd6;
+		}
+		return color;
+	}*/
+	/*
+	 * @Purpose: sets the color of star based on its effective temperature
+	 * @Parameter: only requires the planet name. Then it will find the host
+	 */
+	/*public int setColorStar(String planet)
+	{
+		int color;
+		int starIndex = findIndex(planet);
+		
+	}*/
+	
 	public static void main(String[] args)
 	{
 		Manager m = new Manager();

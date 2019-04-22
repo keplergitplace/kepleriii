@@ -37,6 +37,7 @@ public class Import
 	public static ArrayList<String> sRadius = new ArrayList<String>();
 	public static ArrayList<String> sMass = new ArrayList<String>();
 	public static ArrayList<String> sAge = new ArrayList<String>();
+	public static ArrayList<String> sTemp = new ArrayList<String>();
 
 	public static ArrayList<Double> orbitPeriodNum = new ArrayList<Double>();
 	public static ArrayList<Double> semiMajorNum = new ArrayList<Double>();
@@ -50,6 +51,7 @@ public class Import
 	public static ArrayList<Double> sRadiusNum = new ArrayList<Double>();
 	public static ArrayList<Double> sMassNum = new ArrayList<Double>();
 	public static ArrayList<Double> sAgeNum = new ArrayList<Double>();
+	public static ArrayList<Double> sTempNum = new ArrayList<Double>();
 
 	public static void convertToOrbitDouble()
 	{
@@ -278,6 +280,25 @@ public class Import
 			}
 		}
 	}
+	
+	public static void convertToSTemp()
+	{
+		//System.out.println("Test"); //Used for Debugging
+		sTempNum.add(null); //First index is non-essential
+		for(int i = 1; i < sTemp.size(); i++)
+		{
+			//orbitPeriodNum[i] = Double.parseDouble(orbitPeriod[i]);
+			//orbitPeriodNum.add(Double.parseDouble(orbitPeriod.get(i)));
+			if(sTemp.get(i).length()!=0)
+			{
+				sTempNum.add(Double.parseDouble(sTemp.get(i)));
+			}
+			else
+			{
+				sTempNum.add(null);
+			}
+		}
+	}
 	/**
 	 * Method store default data from the exoplanets.csv data
 	 * @param void
@@ -349,6 +370,7 @@ public class Import
 			sRadius.add(splitLin[46]);
 			sMass.add(splitLin[44]);
 			sAge.add(splitLin[51]);
+			sTemp.add(splitLin[38]);
 		}
 		reader.close();
 	}
@@ -404,6 +426,10 @@ public class Import
 				sAge.add(splitLin[51]);
 			else
 				sAge.add("0");
+			if((splitLin[38].length() != 0)&&(splitLin[38].length()<5))
+				sTemp.add(splitLin[38]);
+			else
+				sTemp.add("0");
 			
 			/*if((splitLin[46].length()==0))
 				sRadius.add("0");
@@ -502,6 +528,7 @@ public class Import
 		sRadius.clear();
 		sMass.clear();
 		sAge.clear();
+		sTemp.clear();
 		orbitPeriodNum.clear();
 		semiMajorNum.clear();
 		eccentricityNum.clear();
@@ -514,6 +541,8 @@ public class Import
 		sRadiusNum.clear();
 		sMassNum.clear();
 		sAgeNum.clear();
+		sTemp.clear();
+		sTempNum.clear();
 
 		try {//Reading File
 			storeData(filePath);
@@ -532,6 +561,7 @@ public class Import
 		convertToSLuminDouble();
 		convertToSRadiusDouble();
 		convertToSMassDouble();
+		convertToSTemp();
 	}
 	
 	/** The "main" method of the Import function, call this to run everything else.
@@ -572,6 +602,8 @@ public class Import
 		sRadiusNum.clear();
 		sMassNum.clear();
 		sAgeNum.clear();
+		sTemp.clear();
+		sTempNum.clear();
 		//Calls the method Name and saves the returned file path to a string.
 		String filePath = Name();
 		//I/O Exception handling; if the user did not select anything and closed the window it is handled in the if statement.
@@ -585,10 +617,10 @@ public class Import
 		}catch(Exception e1) {
 			e1.printStackTrace();
 		}
-		/*for(String line:sAge) //Printing the data called
+		for(String line:sTemp) //Printing the data called
 		{
 			System.out.println(line);
-		}*/
+		}
 		
 
 		convertToOrbitDouble();
@@ -602,6 +634,7 @@ public class Import
 		convertToSLuminDouble();
 		convertToSRadiusDouble();
 		convertToSMassDouble();
+		convertToSTemp();
 
 		/*for(int j = 1;j<orbitPeriodNum.size();j++)
 		{
