@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.scene.control.Alert;
@@ -10,6 +11,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -58,6 +61,11 @@ public class KeplerPane extends Pane {
 	Label[] labels = new Label[8];
 	Button systemInput = new Button("Input Star System");
 	private Button sandBoxMode;
+
+	String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+	//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
+	Media music = new Media(new File(path).toURI().toString());
+	MediaPlayer song = new MediaPlayer(music);
 
 	public KeplerPane(){
 		start();
@@ -116,6 +124,18 @@ public class KeplerPane extends Pane {
 		ImportBt.setScaleX(2);
 		ImportBt.setScaleY(2);
 		ImportBt.setMinSize(100,0);
+
+		song.setVolume(10);
+		song.setAutoPlay(true);
+		song.setCycleCount(MediaPlayer.INDEFINITE);
+
+		Options.setOnAction(e -> {
+			getChildren().clear();
+
+			mute();
+
+			mainMenu();
+		});
 
 		Earth.setLayoutX(375);
 		Earth.setLayoutY(900);
@@ -176,6 +196,26 @@ public class KeplerPane extends Pane {
 		});
 	}
 
+	/**
+	 * This method draws a button that can be used to mute the music playing in the background.
+	 * @param void
+	 */
+	public void mute() {
+		Button muteB = new Button("Mute/Unmute Audio");
+		muteB.setLayoutX(200);
+		muteB.setLayoutY(15);
+		muteB.setScaleX(1.5);
+		muteB.setScaleY(1.5);
+		muteB.setMinSize(100, 0);
+		getChildren().add(muteB);
+		muteB.setOnAction(e1 -> {
+			if(song.isMute()) {
+				song.setMute(false);;
+			}else {
+				song.setMute(true);
+			}
+		});
+	}
 	/**
 	 * This method clears the pane and re-populates it with the planets for the Earth data
 	 * @see #start()
@@ -252,7 +292,7 @@ public class KeplerPane extends Pane {
 		}
 	}
 	/** Creates drop down lists
-	 *
+	 * @param void
 	 */
 	public void earthLists() {
 		Button reset = new Button("Reset View");
@@ -280,22 +320,29 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[0].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(0);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
 				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -318,22 +365,29 @@ public class KeplerPane extends Pane {
 				plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[1].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(1);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -356,22 +410,29 @@ public class KeplerPane extends Pane {
 				plt[1].setScaleY(plt[1].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[2].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(2);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -394,22 +455,29 @@ public class KeplerPane extends Pane {
 				plt[2].setScaleY(plt[2].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[3].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(3);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -432,22 +500,29 @@ public class KeplerPane extends Pane {
 				plt[3].setScaleY(plt[3].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[4].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(4);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -470,22 +545,29 @@ public class KeplerPane extends Pane {
 				plt[4].setScaleY(plt[4].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[5].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(5);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -508,22 +590,29 @@ public class KeplerPane extends Pane {
 				plt[5].setScaleY(plt[5].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[6].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(6);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -546,22 +635,29 @@ public class KeplerPane extends Pane {
 				plt[6].setScaleY(plt[6].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		planet[7].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets about selected object from planet class
 			String dat[] = mgr.earthData(7);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//adds info to the screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
-				getChildren().add(display[i]);
+				getChildren().add(display[i] );
 				y = y + 20;
 			}
+			//removes all objects from screen and centers selected object
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -584,22 +680,29 @@ public class KeplerPane extends Pane {
 				plt[7].setScaleY(plt[7].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 * set on action feature for drop down lists
+		 * centers the selected object and displays information about said object
+		 */
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets data from star class
 			String dat[] = mgr.sunData();
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//displays data
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
+			//clears other objects and centers on star
 			for(int i = 0; i < plt.length; i++) {
 				getChildren().removeAll(plt[i], labels[i]);
 			}
@@ -651,7 +754,7 @@ public class KeplerPane extends Pane {
 		defaultButton.setOnAction(e -> {
 			getChildren().clear();
 			setBackground(null);
-			
+
 			Image bg = new Image("seamless_space.png");
 
 			BackgroundImage backgroundimage = new BackgroundImage(bg,
@@ -661,7 +764,7 @@ public class KeplerPane extends Pane {
 					BackgroundSize.DEFAULT);
 			Background background = new Background(backgroundimage);
 			setBackground(background);
-						
+
 			if(runImport == true) {
 				mgr.importDataImport();
 				mgr.getHostNameArray();
@@ -777,7 +880,7 @@ public class KeplerPane extends Pane {
 		for (int i = 0; i < mgr.planetList.size(); i++) {
 			labels[i] = new Label(keplerSystem[i]);
 			plt[i] = mgr.keplerPlanetData(i + num);
-			
+
 			double density = Import.planetDensityNum.get(num);
 			if (density < 2.0) {
 				plt[i].setFill(Color.PALETURQUOISE);
@@ -808,7 +911,12 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
-		//ZOOM FUNCTION
+		/*
+		 * Scroll-Zoom feature
+		 * Changes the scaling of the planet parameters
+		 * based on how far in/out the user has already zoomed.
+		 * This is custom-made for the default view.
+		 */
 		setOnScroll((ScrollEvent event) -> {
 			double thicc = 12.0;
 			double zoomFactor = 1.05;
@@ -836,37 +944,42 @@ public class KeplerPane extends Pane {
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
 		});
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
 		planet[0].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets data about selected object from arraylists in Import class
 			String dat[] = mgr.keplerData(num);
 			for ( int i =0; i < dat.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
-			
+			//draws rectangle backdrop for text
 			Rectangle rect = new Rectangle(190, 75, 300, 100);
 			rect.setFill(Color.WHITE);
 			getChildren().add(rect);
-			
+			//displays data
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
-			
+			//clears other objects and centers on selected object
 			for(int i = 0; i < plt.length; i++) {
-				getChildren().removeAll(plt[i], labels[i]);
+				getChildren().removeAll(plt[i], labels[i], orbit[i]);
 			}
 			getChildren().remove(str);
 			getChildren().addAll(plt[0], labels[0]);
 			labels[0].setLayoutX(960);
 			plt[0].setLayoutX(960);
-			
-			
+
+
 			/*
 			 * Scroll-Zoom feature
 			 * Changes the scaling of the planet parameters
@@ -882,25 +995,36 @@ public class KeplerPane extends Pane {
 				plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
 			});
 		});
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
 		try {
 			planet[1].setOnAction( e-> {
 				for(int i = 0; i < display.length; i++) {
 					getChildren().remove(display[i]);
 				}
+				//gets data about selected object from arraylists in Import class
 				String dat[] = mgr.keplerData(num + 1);
 				for ( int i =0; i < dat.length; i ++) {
 					display[i] = new Text(dat[i]);
 				}
 				int x = 200;
 				int y = 100;
+				//draws rectangle backdrop for text
+				Rectangle rect = new Rectangle(190, 75, 300, 100);
+				rect.setFill(Color.WHITE);
+				getChildren().add(rect);
+				//displays data
 				for (int i = 0; i < display.length; i++) {
 					display[i].setLayoutX(x);
 					display[i].setLayoutY(y);
 					getChildren().add(display[i]);
 					y = y + 20;
 				}
+				//clears other objects and centers on selected object
 				for(int i = 0; i < plt.length; i++) {
-					getChildren().removeAll(plt[i], labels[i]);
+					getChildren().removeAll(plt[i], labels[i], orbit[i]);
 				}
 				getChildren().remove(str);
 				getChildren().addAll(plt[1], labels[1]);
@@ -923,25 +1047,38 @@ public class KeplerPane extends Pane {
 
 			});
 		} catch (Exception e) {
-		}try {
+		}
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
+		try {
+
 			planet[2].setOnAction( e-> {
 				for(int i = 0; i < display.length; i++) {
 					getChildren().remove(display[i]);
 				}
+				//gets data about selected object from arraylists in Import class
 				String dat[] = mgr.keplerData(num + 2);
 				for ( int i =0; i < dat.length; i ++) {
 					display[i] = new Text(dat[i]);
 				}
 				int x = 200;
 				int y = 100;
+				//draws rectangle backdrop for text
+				Rectangle rect = new Rectangle(190, 75, 300, 100);
+				rect.setFill(Color.WHITE);
+				getChildren().add(rect);
+				//displays data
 				for (int i = 0; i < display.length; i++) {
 					display[i].setLayoutX(x);
 					display[i].setLayoutY(y);
 					getChildren().add(display[i]);
 					y = y + 20;
 				}
+				//clears other objects and centers on selected object
 				for(int i = 0; i < plt.length; i++) {
-					getChildren().removeAll(plt[i], labels[i]);
+					getChildren().removeAll(plt[i], labels[i], orbit[i]);
 				}
 				getChildren().remove(str);
 				getChildren().addAll(plt[2], labels[2]);
@@ -963,25 +1100,37 @@ public class KeplerPane extends Pane {
 				});
 			});
 		}catch (Exception e) {
-		} try {
+		} 
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
+		try {
 			planet[3].setOnAction( e-> {
 				for(int i = 0; i < display.length; i++) {
 					getChildren().remove(display[i]);
 				}
+				//gets data about selected object from arraylists in Import class
 				String dat[] = mgr.keplerData(num + 3);
 				for ( int i =0; i < dat.length; i ++) {
 					display[i] = new Text(dat[i]);
 				}
 				int x = 200;
 				int y = 100;
+				//draws rectangle backdrop for text
+				Rectangle rect = new Rectangle(190, 75, 300, 100);
+				rect.setFill(Color.WHITE);
+				getChildren().add(rect);
+				//displays data
 				for (int i = 0; i < display.length; i++) {
 					display[i].setLayoutX(x);
 					display[i].setLayoutY(y);
 					getChildren().add(display[i]);
 					y = y + 20;
 				}
+				//clears other objects and centers on selected object
 				for(int i = 0; i < plt.length; i++) {
-					getChildren().removeAll(plt[i], labels[i]);
+					getChildren().removeAll(plt[i], labels[i], orbit[i]);
 				}
 				getChildren().remove(str);
 				getChildren().addAll(plt[3], labels[3]);
@@ -1003,25 +1152,37 @@ public class KeplerPane extends Pane {
 				});
 			});
 		}catch (Exception e) {
-		} try {
+		} 
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
+		try {
 			planet[4].setOnAction( e-> {
 				for(int i = 0; i < display.length; i++) {
 					getChildren().remove(display[i]);
 				}
+				//gets data about selected object from arraylists in Import class
 				String dat[] = mgr.keplerData(num + 4);
 				for ( int i =0; i < dat.length; i ++) {
 					display[i] = new Text(dat[i]);
 				}
 				int x = 200;
 				int y = 100;
+				//draws rectangle backdrop for text
+				Rectangle rect = new Rectangle(190, 75, 300, 100);
+				rect.setFill(Color.WHITE);
+				getChildren().add(rect);
+				//displays data
 				for (int i = 0; i < display.length; i++) {
 					display[i].setLayoutX(x);
 					display[i].setLayoutY(y);
 					getChildren().add(display[i]);
 					y = y + 20;
 				}
+				//clears other objects and centers on selected object
 				for(int i = 0; i < plt.length; i++) {
-					getChildren().removeAll(plt[i], labels[i]);
+					getChildren().removeAll(plt[i], labels[i], orbit[i]);
 				}
 				getChildren().remove(str);
 				getChildren().addAll(plt[4], labels[4]);
@@ -1044,34 +1205,45 @@ public class KeplerPane extends Pane {
 			});
 		}catch (Exception e) {
 		}
+		/**
+		 *set on action for drop down menus
+		 *this code centers the selected object and displays information about said object
+		 */
 		star.setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
 			}
+			//gets data about star from array list in Import class
 			String dat[] = mgr.kStarInfo(num);
 			for ( int i =0; i < display.length; i ++) {
 				display[i] = new Text(dat[i]);
 			}
 			int x = 200;
 			int y = 100;
+			//draws rectangle backdrop for text
+			Rectangle rect = new Rectangle(190, 75, 300, 100);
+			rect.setFill(Color.WHITE);
+			getChildren().add(rect);
+			//displays info on screen
 			for (int i = 0; i < display.length; i++) {
 				display[i].setLayoutX(x);
 				display[i].setLayoutY(y);
 				getChildren().add(display[i]);
 				y = y + 20;
 			}
+			//clears other objects and centers on selected object
 			for(int i = 0; i < plt.length; i++) {
-				getChildren().removeAll(plt[i], labels[i]);
+				getChildren().removeAll(plt[i], labels[i], orbit[i]);
 			}
 			getChildren().remove(str);
 			getChildren().add(str);
-			
+
 			double zeroStarAlert = Import.sRadiusNum.get(num);
-			
+
 			if (zeroStarAlert == 0) {
 				starAlert();
 			}
-			
+
 			/*
 			 * Scroll-Zoom feature
 			 * Changes the scaling of the planet parameters
@@ -1088,9 +1260,9 @@ public class KeplerPane extends Pane {
 			});
 		});
 
-		
+
 	}
-	
+
 	public void starAlert() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Warning");

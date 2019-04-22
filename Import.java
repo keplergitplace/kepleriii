@@ -549,6 +549,11 @@ public class Import
 				+ sMass.get(i) + " * solar mass", "Age: " + sAge.get(i) + " Billion Years"};
 		return info;
 	}
+	/**
+	 * @purpose: creates circles to be drawn as orbits
+	 * @param i
+	 * @return
+	 */
 	
 	public Circle orbitalRadius(int i) {
 		Circle orbit = new Circle();

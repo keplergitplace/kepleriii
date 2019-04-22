@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
  * @created 13-Feb-2019 5:09:34 PM
  */
 public class Manager {
-	
+
 	Planet planet = new Planet();
 	Star star = new Star(); 
 	Import data = new Import();
@@ -19,43 +19,78 @@ public class Manager {
 	final public double GRAVIT = (6.67*Math.pow(10, -11));
 	final public double EARTHMASS = 6*Math.pow(10, 24);
 	final public double SUNMASS = 1.9885*Math.pow(10,30);
-	
-	
+
+	/**
+	 * @purpose: gets info for planets from Import when called from KeplerPane
+	 * @param i
+	 * @return Circle
+	 */
 	public Circle addPlanets(int i) {
-			return planet.earthSystem(i);
+		return planet.earthSystem(i);
 	}
+	/**
+	 * @purpose: gets info for stars from Import when called from KeplerPane
+	 * @return Circle
+	 */
 	public Circle addStars() {
 		return star.earthSystem();
 	}
-	
+	/**
+	 * @purpose: gets text for planets from Planet when called from KeplerPane
+	 * @param i
+	 * @return String[]
+	 */
 	public String[] earthData(int i) {
 		return planet.earthData(i);
 	}
+	/**
+	 * @purpose: gets text for stars from Star when called from KeplerPane
+	 * @return String[]
+	 */
 	public String[] sunData() {
 		return star.sunData();
 	}
-	
-	public void importDataImport() {
-		data.runDefault("exoplanets2.csv");
-	}
-	
+	/**
+	 * @purpose: gets a list of planet names in a system from Import when called from KeplerPane
+	 * @param i
+	 * @return String[]
+	 */
 	public String[] listPltNames(int i) {
 		return data.listPltNames(i);
 	}
-	
+	/**
+	 * @purpose: gets  star name in a system from Import when called from KeplerPane
+	 * @param i
+	 * @return String
+	 */
 	public String listStrName(int i) {
 		return data.listStrName(i);
 	}
-		
+	/**
+	 * @purpose: gets array list index of star system from Import when called from KeplerPane
+	 * @param name
+	 * @return int
+	 */
 	public int getIndex(String name) {
 		return data.getIndex(name);
 	}
-	
+	/**
+	 * @purpose: initializes Import class for Kepler Data
+	 */
+	public void importDataImport() {
+		data.runDefault("exoplanets2.csv");
+	}
+	/**
+	 * @purpose: initializes import of own csv file to run Import
+	 */
 	public void importDataOwnFile() {
 		data.runOwnFile();
 		this.fileName = Import.fileName + "";
 	}
-	
+	/**
+	 * @purpose: gets system list for drop down menu
+	 * @return String[]
+	 */
 	public String[] getKeplerDropDown() {
 		String info[] = new String[hostList.size()];
 		for(int i = 0; i < info.length; i++) {
@@ -63,7 +98,7 @@ public class Manager {
 		}
 		return info;
 	}
-	
+
 	/*
 	 * @purpose: To return an arraylist that contains all the system names
 	 */
@@ -90,7 +125,7 @@ public class Manager {
 			}
 		}
 	}
-	
+
 	/*
 	 * @purpose: To go through planet name data and select the relevant planets
 	 * @parameter: Input string for host (star)
@@ -106,11 +141,11 @@ public class Manager {
 			}
 		}
 	}
-	
+
 	/*public void mathData(int i) {
 		math = data.mathData(i);
 	}*/
-	
+
 	public int findIndex(String planet)
 	{
 		int index =  -1;
@@ -124,31 +159,55 @@ public class Manager {
 		}
 		return index;
 	}
-	
+	/**
+	 * @purpose: return circles to be drawn as planets
+	 * @param i
+	 * @return Circle
+	 */
 	public Circle keplerPlanetData(int i) {
 		return data.sendPlanetData(i);
 	}
-	
+	/**
+	 * @purpose: returns circle to drawn as star
+	 * @param i
+	 * @return Circle
+	 */
 	public Circle keplerStarData(int i) {
 		return data.sendStarData(i);
 	}
-	
+	/**
+	 * @purpose: gets text from info display from Import when called from KeplerPane
+	 * @param i
+	 * @return String[]
+	 */
 	public String[] keplerData(int i) {
 		return data.keplerData(i);
 	}
-	
+	/**
+	 * @purpose: gets text from info display from Import when called from KeplerPane
+	 * @param i
+	 * @return String[]
+	 */
 	public String[] kStarInfo(int i) {
 		return data.kStarInfo(i);
 	}
-	
+	/**
+	 * @purpose: returns orbital radius to draw orbits
+	 * @param i
+	 * @return Circle
+	 */
 	public Circle orbitalRadius(int i) {
 		return data.orbitalRadius(i);
 	}
-	
+	/**
+	 * @purpose: returns earth system orbital radius to draw orbits
+	 * @param i
+	 * @return Circle
+	 */
 	public Circle earthOrbitalRadius(int i) {
 		return planet.earthOrbitalRadius(i);
 	}
-	
+
 	public double perturbingEffects(String planet)
 	{
 		//Take out the planet in question
@@ -164,7 +223,7 @@ public class Manager {
 		}
 		//Removing the planet Index
 		planetList.remove(index);
-		
+
 		//Calculation of Perturbing Effects
 		double sum = 0;
 		for(int j =1;j<planetList.size();j++)
@@ -176,14 +235,14 @@ public class Manager {
 			double r0 = Import.semiMajorNum.get(index0)*METERTOAU;
 			double r1 = Import.semiMajorNum.get(index1)*METERTOAU;
 			double massSum = mass0+mass1;
-			
+
 			//Calculation of Perturbation
 			double temp = (1/Math.pow(r1, 3))-(1/Math.pow(r0,3));
 			sum = sum +(GRAVIT*massSum*temp);
 		}
 		return sum;
 	}
-	
+
 	public boolean calcGravitationalModel(String planet, int planetIndex)
 	{
 		//int planetIndex = findIndex(planet); //Index of the planet in question
@@ -192,12 +251,12 @@ public class Manager {
 		generatePlanetList(host); //Generates the list of relevant planets in system
 		double sum = perturbingEffects(planet);
 		//double sum = 0.0;
-		
+
 		boolean collision = false;
 		double radius = Import.semiMajorNum.get(planetIndex)*METERTOAU;
 		double massTotal = (Import.planetMassNum.get(planetIndex)*EARTHMASS)+(Import.sMassNum.get(planetIndex)*SUNMASS);
 		double acceleration = ((-1*GRAVIT*massTotal)/(Math.pow(radius, 3)))-sum; //System.out.println(acceleration); //Only used for testing
-		
+
 		if(acceleration == 0)
 		{
 			collision = true;
@@ -208,7 +267,7 @@ public class Manager {
 	public double getG(){
 		return 0;
 	}
-	
+
 	/*
 	 * @Purpose: Sets the color of the planet depending on the density of the planet
 	 */
@@ -239,13 +298,13 @@ public class Manager {
 	{
 		int color;
 		int starIndex = findIndex(planet);
-		
+
 	}*/
-	
+
 	public static void main(String[] args)
 	{
 		Manager m = new Manager();
-		
+
 		m.importDataOwnFile();
 		m.getHostNameArray();
 		//System.out.println(m.findIndex("47 UMa b"));
@@ -255,7 +314,7 @@ public class Manager {
 		{
 			System.out.println(line);
 		}*/
-		
+
 		/*m.generatePlanetList("24 Sex");
 		for(String line:m.planetList) //Printing the data called
 		{
