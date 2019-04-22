@@ -53,6 +53,9 @@ public class Import
 	public static ArrayList<Double> sAgeNum = new ArrayList<Double>();
 	public static ArrayList<Double> sTempNum = new ArrayList<Double>();
 
+	/*
+	 * @Purpose: Converts orbit from a string to a double
+	 */
 	public static void convertToOrbitDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -72,6 +75,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Converts eccentricity from string to double
+	 */
 	public static void convertToEccentricityDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -91,6 +97,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert planet radius from string to double
+	 */
 	public static void convertToPlanetRadDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -129,6 +138,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert planet radius from string to double
+	 */
 	public static void convertToPlanetDensityDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -148,6 +160,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert planet mass from string to double
+	 */
 	public static void convertToPlanetMassDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -167,6 +182,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert planet semi-major from string to double
+	 */
 	public static void convertToSemiDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -186,6 +204,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert star gravity from string to double
+	 */
 	public static void convertToSsGravityDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -205,6 +226,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert star lumonisty from string to double
+	 */
 	public static void convertToSLuminDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -224,6 +248,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert star radius from string to double
+	 */
 	public static void convertToSRadiusDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -243,6 +270,9 @@ public class Import
 		}
 	}
 
+	/*
+	 * @Purpose: Convert star mass from string to double
+	 */
 	public static void convertToSMassDouble()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -281,6 +311,9 @@ public class Import
 		}
 	}
 	
+	/*
+	 * @Purpose: Convert star temperature from string to double
+	 */
 	public static void convertToSTemp()
 	{
 		//System.out.println("Test"); //Used for Debugging
@@ -341,13 +374,13 @@ public class Import
 	}*/
 
 	/**
-	 * Stores default values for exoplanets.csv
+	 * Stores default values for exoplanets2.csv
 	 * @param void
 	 */
 	public static void storeDataDefault() throws Exception
 	{
 		//Import.planetData.clear();
-		BufferedReader reader = new BufferedReader(new FileReader("exoplanets.csv"));
+		BufferedReader reader = new BufferedReader(new FileReader("exoplanets2.csv"));
 		String line;
 		while ((line = reader.readLine()) != null)
 		{
@@ -406,6 +439,8 @@ public class Import
 			//sRadius.add(splitLin[46]);
 			//sMass.add(splitLin[44]);
 			//sAge.add(splitLin[51]);
+			
+			//If Else statements used for error checking in the csv file
 			if((splitLin[40].length() != 0)&&(splitLin[40].length()<5))
 				ssGravity.add(splitLin[40]);
 			else
@@ -463,6 +498,9 @@ public class Import
 		return fileName;
 	}
 	
+	/*
+	 * @Purpose: Taking in the data and converting it into object planet
+	 */
 	public Circle sendPlanetData(int i) {
 		Circle planets = new Circle();
 		planets.setRadius(planetRadNum.get(i));
@@ -471,6 +509,9 @@ public class Import
 		return planets;
 	}
 	
+	/*
+	 * @Purpose: Taking in the data and converting it into object star
+	 */
 	public Circle sendStarData(int i) {
 		Circle star = new Circle();
 		star.setRadius(sRadiusNum.get(i));
@@ -481,34 +522,50 @@ public class Import
 		return star;
 	}
 	
+	/*
+	 * @Purpose: Creates a string with useful information on the planet
+	 */
 	public String[] keplerData(int i) {
 		String info[] = {/*"Host Name " + hostName.get(i), */"Planet Name: " + planetName.get(i), "Discover Method: " + discoveryMethod.get(i), 
 				"Year Discovered: " + yearDisc.get(i), "Orbital Period: " + orbitPeriod.get(i) + " Days"};
 		return info;
 	}
 	
+	/*
+	 * @Purpose: Creates a string with useful information of the star
+	 */
 	public String[] kStarInfo(int i) {
 		String info[] = {"Gravity: " + ssGravity.get(i) + " log10 cm/s^2", "Radius: " + sRadius.get(i) + " solar radii", "Mass: "
 				+ sMass.get(i) + " * solar mass", "Age: " + sAge.get(i) + " Billion Years"};
 		return info;
 	}
 	
+	/*
+	 * @Purpose: Creates the list of the planets in a solar system
+	 */
 	public String[] listPltNames(int i) {
 		String info[] = {planetName.get(i), planetName.get(i+1)};
 		return info;
 	}
 	
+	/*
+	 * @Purpose: Returns the star host name
+	 */
 	public String listStrName(int i) {
 		String info = hostName.get(i);
 		return info;
 	}
 	
+	/*
+	 * @return: the index of the planet given in the array list
+	 */
 	public int getIndex(String name) {
 		int loc = hostName.indexOf(name);
 		return loc;
 	}
 
 	public void runDefault(String filePath) {
+		//Clearing the ArrayList before use
 		planetData.clear();
 		hostName.clear();
 		planetLetter.clear();
@@ -550,6 +607,7 @@ public class Import
 			e1.printStackTrace();
 		}
 		
+		//Converts all Strings to Double
 		convertToOrbitDouble();
 		convertToEccentricityDouble();
 		convertToPlanetRadDouble();
@@ -567,10 +625,10 @@ public class Import
 	/** The "main" method of the Import function, call this to run everything else.
 	 * @param void
 	 */
-	
 	public void runOwnFile()
 	//public static void main(String[] args)
 	{
+		//Clearing arraylist before use
 		planetData.clear();
 		hostName.clear();
 		planetLetter.clear();
@@ -623,6 +681,7 @@ public class Import
 		}
 		
 
+		//Conversion of Strings to Double
 		convertToOrbitDouble();
 		convertToEccentricityDouble();
 		convertToPlanetRadDouble();
@@ -636,6 +695,7 @@ public class Import
 		convertToSMassDouble();
 		convertToSTemp();
 
+		//From henceforth, this is all used for testing
 		/*for(int j = 1;j<orbitPeriodNum.size();j++)
 		{
 			System.out.println(orbitPeriodNum.get(j));
