@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.animation.PathTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,6 +24,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * This class creates the images for the planets and star and places them in a pane
@@ -1011,6 +1013,59 @@ public class KeplerPane extends Pane {
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
+			//Set (currently) the labels to move around their orbits.
+			//Based on how many planets there are in the system.
+			switch (plt.length) {	
+			case 0:
+				
+				break;
+			case 1:
+			
+				break;
+			case 2:
+				
+				break;
+				
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+			case 5:
+				PathTransition transition1 = new PathTransition();
+				PathTransition transition2 = new PathTransition();
+				PathTransition transition3 = new PathTransition();
+				PathTransition transition4 = new PathTransition();
+				PathTransition transition5 = new PathTransition();
+				transition1.setPath(orbit[0]);
+				transition1.setNode(labels[0]);
+				transition1.setDuration(Duration.seconds(10));
+				//transition1.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+				transition1.setCycleCount(PathTransition.INDEFINITE);
+				transition1.playFromStart();
+				transition2.setNode(labels[1]);
+				transition2.setDuration(Duration.seconds(10));
+				transition2.setPath(orbit[1]);
+				transition2.setCycleCount(PathTransition.INDEFINITE);
+				transition2.playFromStart();
+				transition3.setNode(labels[2]);
+				transition3.setDuration(Duration.seconds(10));
+				transition3.setPath(orbit[2]);
+				transition3.setCycleCount(PathTransition.INDEFINITE);
+				transition3.playFromStart();
+				transition4.setNode(labels[3]);
+				transition4.setDuration(Duration.seconds(10));
+				transition4.setPath(orbit[3]);
+				transition4.setCycleCount(PathTransition.INDEFINITE);
+				transition4.playFromStart();
+				transition5.setNode(labels[4]);
+				transition5.setDuration(Duration.seconds(10));
+				transition5.setPath(orbit[4]);
+				transition5.setCycleCount(PathTransition.INDEFINITE);
+				transition5.playFromStart();
+				break;
+			}
 		});
 		/**
 		 *set on action for drop down menus
