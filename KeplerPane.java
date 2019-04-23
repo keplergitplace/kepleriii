@@ -63,10 +63,10 @@ public class KeplerPane extends Pane {
 	Button systemInput = new Button("Input Star System");
 	private Button sandBoxMode;
 
-	//String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+	String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
 	//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
-	//Media music = new Media(new File(path).toURI().toString());
-	//MediaPlayer song = new MediaPlayer(music);
+	Media music = new Media(new File(path).toURI().toString());
+	MediaPlayer song = new MediaPlayer(music);
 
 	public KeplerPane(){
 		start();
@@ -193,14 +193,14 @@ public class KeplerPane extends Pane {
 		ImportBt.setScaleY(2);
 		ImportBt.setMinSize(100,0);
 
-		//song.setVolume(10);
-		//song.setAutoPlay(true);
-		//song.setCycleCount(MediaPlayer.INDEFINITE);
+		song.setVolume(10);
+		song.setAutoPlay(true);
+		song.setCycleCount(MediaPlayer.INDEFINITE);
 
 		Options.setOnAction(e -> {
 			getChildren().clear();
 
-			//mute();
+			mute();
 
 			mainMenu();
 		});
@@ -268,7 +268,7 @@ public class KeplerPane extends Pane {
 	 * This method draws a button that can be used to mute the music playing in the background.
 	 * @param void
 	 */
-	/*public void mute() {
+	public void mute() {
 		Button muteB = new Button("Mute/Unmute Audio");
 		muteB.setLayoutX(200);
 		muteB.setLayoutY(15);
@@ -283,7 +283,7 @@ public class KeplerPane extends Pane {
 				song.setMute(true);
 			}
 		});
-	}*/
+	}
 	/**
 	 * This method clears the pane and re-populates it with the planets for the Earth data
 	 * @see #start()
