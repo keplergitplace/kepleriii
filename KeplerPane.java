@@ -1,6 +1,8 @@
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -10,19 +12,17 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * This class creates the images for the planets and star and places them in a pane
@@ -45,6 +45,7 @@ public class KeplerPane extends Pane {
 	// for sandbox mode only
 	private Button confirm = new Button("Confirm");
 	private int confirmClicked = 0;
+	private boolean addPlanets = false;
 
 	Button Options;
 	private Circle plt[];
@@ -62,10 +63,10 @@ public class KeplerPane extends Pane {
 	Button systemInput = new Button("Input Star System");
 	private Button sandBoxMode;
 
-	String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+	//String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
 	//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
-	Media music = new Media(new File(path).toURI().toString());
-	MediaPlayer song = new MediaPlayer(music);
+	//Media music = new Media(new File(path).toURI().toString());
+	//MediaPlayer song = new MediaPlayer(music);
 
 	public KeplerPane(){
 		start();
@@ -75,6 +76,49 @@ public class KeplerPane extends Pane {
 	 * @param void
 	 */
 
+	// custom alert box for the sandbox to ask if user wants to add another planet
+	public void display(String title, String message, int width, int height){
+
+		Stage window = new Stage();
+		//block input and usr interaction with other windows until this window is closed
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle(title);
+		window.setMinWidth(width);
+		window.setMinHeight(height);
+
+		Label label = new Label(message);
+
+		// sends user back to planet creation screen
+		Button addPlanet = new Button("yes");
+		addPlanet.setOnAction(e-> {
+
+			addPlanets = true;
+			addPlanet.setOnAction(event -> window.close());
+
+		});
+
+		// sends user to save screen
+		Button sBtn = new Button("save");
+		sBtn.setOnAction(e -> {
+
+			addPlanets = false;
+			sBtn.setOnAction(event -> window.close());
+
+		});
+
+		VBox layout = new VBox(10);
+		layout.setAlignment(Pos.CENTER);
+		layout.getChildren().addAll( label, addPlanet, sBtn);
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+
+
+
+
+	}
+
+	// spawns the confirm button and handles the confirm button action when clicked
 	public void spawnConfirmButton(Pane pane, SandBox sb)
 	{
 
@@ -84,10 +128,34 @@ public class KeplerPane extends Pane {
 		pane.getChildren().add(confirm);
 		confirm.setOnAction(e1-> {
 
-			confirmClicked++;
-			sb.initSandBox(pane, confirmClicked);
-			spawnConfirmButton(pane, sb);
-			mainMenu();
+				confirmClicked++;
+				sb.initSandBox(pane, confirmClicked, true);
+				spawnConfirmButton(pane, sb);
+				mainMenu();
+				if(confirmClicked == 2)
+				{
+
+					pane.getChildren().clear();
+					display("Alert!", "Would you like to add another planet?", 200,200);
+
+					if(addPlanets)
+					{
+
+						sb.initSandBox(pane, 1, true);
+						confirmClicked = 1;
+						spawnConfirmButton(pane, sb);
+						mainMenu();
+
+					}
+					else
+					{
+						mainMenu();
+						// replace the print with the export call
+						System.out.println("false");
+
+					}
+
+				}
 
 		});
 
@@ -125,14 +193,14 @@ public class KeplerPane extends Pane {
 		ImportBt.setScaleY(2);
 		ImportBt.setMinSize(100,0);
 
-		song.setVolume(10);
-		song.setAutoPlay(true);
-		song.setCycleCount(MediaPlayer.INDEFINITE);
+		//song.setVolume(10);
+		//song.setAutoPlay(true);
+		//song.setCycleCount(MediaPlayer.INDEFINITE);
 
 		Options.setOnAction(e -> {
 			getChildren().clear();
 
-			mute();
+			//mute();
 
 			mainMenu();
 		});
@@ -153,8 +221,8 @@ public class KeplerPane extends Pane {
 			this.getChildren().clear();
 
 			SandBox sandBox = new SandBox();
-
-			sandBox.initSandBox(this, confirmClicked);
+			confirmClicked = 0;
+			sandBox.initSandBox(this, confirmClicked, true);
 			spawnConfirmButton(this, sandBox);
 			mainMenu();
 
@@ -200,7 +268,7 @@ public class KeplerPane extends Pane {
 	 * This method draws a button that can be used to mute the music playing in the background.
 	 * @param void
 	 */
-	public void mute() {
+	/*public void mute() {
 		Button muteB = new Button("Mute/Unmute Audio");
 		muteB.setLayoutX(200);
 		muteB.setLayoutY(15);
@@ -215,7 +283,7 @@ public class KeplerPane extends Pane {
 				song.setMute(true);
 			}
 		});
-	}
+	}*/
 	/**
 	 * This method clears the pane and re-populates it with the planets for the Earth data
 	 * @see #start()
@@ -1100,7 +1168,7 @@ public class KeplerPane extends Pane {
 				});
 			});
 		}catch (Exception e) {
-		} 
+		}
 		/**
 		 *set on action for drop down menus
 		 *this code centers the selected object and displays information about said object
@@ -1152,7 +1220,7 @@ public class KeplerPane extends Pane {
 				});
 			});
 		}catch (Exception e) {
-		} 
+		}
 		/**
 		 *set on action for drop down menus
 		 *this code centers the selected object and displays information about said object
