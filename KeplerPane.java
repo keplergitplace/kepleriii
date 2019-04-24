@@ -36,6 +36,8 @@ import javafx.util.Duration;
 public class KeplerPane extends Pane {
 
 	Manager mgr = new Manager();
+	Export ex = new Export();
+	SandBox sbx = new SandBox();
 	private boolean pressed = false;
 	private boolean runImport = true;
 	private boolean runOwnImport = true;
@@ -105,6 +107,7 @@ public class KeplerPane extends Pane {
 
 			addPlanets = false;
 			sBtn.setOnAction(event -> window.close());
+			ex.printData(sbx);
 
 		});
 
@@ -133,7 +136,6 @@ public class KeplerPane extends Pane {
 
 			if(confirmClicked == 2)
 			{
-
 				pane.getChildren().clear();
 				display("Alert!", "Would you like to add another planet?", 200,200);
 
@@ -154,19 +156,18 @@ public class KeplerPane extends Pane {
 					//Export ex = new Export();
 
 				}
+				
 
-			}else 
+			}else
 			{
 
 				confirmClicked++;
 				sb.initSandBox(pane, confirmClicked, true);
 				spawnConfirmButton(pane, sb);
-				Export ex = new Export();
-				ex.printData(sb);
 				mainMenu();
 
 			}
-
+			sbx = sb;			
 		});
 
 	}
@@ -1119,6 +1120,7 @@ public class KeplerPane extends Pane {
 		 *set on action for drop down menus
 		 *this code centers the selected object and displays information about said object
 		 */
+		try {
 		planet[0].setOnAction( e-> {
 			for(int i = 0; i < display.length; i++) {
 				getChildren().remove(display[i]);
@@ -1174,6 +1176,8 @@ public class KeplerPane extends Pane {
 				plt[0].setScaleY(plt[0].getScaleY() * zoomFactor);
 			});
 		});
+		} catch (Exception e) {	
+		}
 		/**
 		 *set on action for drop down menus
 		 *this code centers the selected object and displays information about said object
