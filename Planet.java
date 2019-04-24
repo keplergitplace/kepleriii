@@ -34,8 +34,8 @@ public class Planet extends CelestialObject {
 	public Circle earthOrbitalRadius(int i){
 		Circle orbits = new Circle();
 		orbits.setRadius(semiMajor[i]);
-		orbits.setLayoutX(960);
-		orbits.setLayoutY(540);
+		orbits.setCenterX(960);
+		orbits.setCenterY(540);
 		return orbits;
 	}
 

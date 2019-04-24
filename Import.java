@@ -526,8 +526,8 @@ public class Import
 			star.setFill(Color.CORNFLOWERBLUE);
 		}
 		
-		star.setLayoutX(960);
-		star.setLayoutY(540);
+		star.setCenterX(960);
+		star.setCenterY(540);
 		//System.out.println(sRadiusNum.get(i));
 		return star;
 	}
@@ -558,8 +558,8 @@ public class Import
 	public Circle orbitalRadius(int i) {
 		Circle orbit = new Circle();
 		orbit.setRadius(semiMajorNum.get(i));
-		orbit.setLayoutX(960);
-		orbit.setLayoutY(540);
+		orbit.setCenterX(960);
+		orbit.setCenterY(540);
 		return orbit;
 	}
 	

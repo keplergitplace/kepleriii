@@ -65,7 +65,7 @@ public class KeplerPane extends Pane {
 	Button systemInput = new Button("Input Star System");
 	private Button sandBoxMode;
 
-	String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
+	String path = "The Imitation Game - Main Theme (Piano Version).mp3";
 	//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
 	Media music = new Media(new File(path).toURI().toString());
 	MediaPlayer song = new MediaPlayer(music);
@@ -129,35 +129,40 @@ public class KeplerPane extends Pane {
 		confirm.setLayoutY(700);
 		pane.getChildren().add(confirm);
 		confirm.setOnAction(e1-> {
+			pane.getChildren().clear();
+
+			if(confirmClicked == 2)
+			{
+
+				pane.getChildren().clear();
+				display("Alert!", "Would you like to add another planet?", 200,200);
+
+				if(addPlanets)
+				{
+
+					sb.initSandBox(pane, 1, true);
+					confirmClicked = 1;
+					spawnConfirmButton(pane, sb);
+					mainMenu();
+
+				}
+				else
+				{
+					mainMenu();
+					// replace the print with the export call
+					System.out.println("false");
+
+				}
+
+			}else 
+			{
 
 				confirmClicked++;
 				sb.initSandBox(pane, confirmClicked, true);
 				spawnConfirmButton(pane, sb);
 				mainMenu();
-				if(confirmClicked == 2)
-				{
 
-					pane.getChildren().clear();
-					display("Alert!", "Would you like to add another planet?", 200,200);
-
-					if(addPlanets)
-					{
-
-						sb.initSandBox(pane, 1, true);
-						confirmClicked = 1;
-						spawnConfirmButton(pane, sb);
-						mainMenu();
-
-					}
-					else
-					{
-						mainMenu();
-						// replace the print with the export call
-						System.out.println("false");
-
-					}
-
-				}
+			}
 
 		});
 
@@ -176,7 +181,7 @@ public class KeplerPane extends Pane {
 
 		Text welcome = new Text("Welcome to Kepler III");
 		welcome.setFill(Color.WHITE);
-		welcome.setLayoutX(900);
+		welcome.setLayoutX(950);
 		welcome.setLayoutY(100);
 		welcome.setScaleX(3);
 		welcome.setScaleY(3);
@@ -189,7 +194,7 @@ public class KeplerPane extends Pane {
 		Options = new Button("Options");
 		sandBoxMode = new Button("SandBox");
 
-		ImportBt.setLayoutX(75);
+		ImportBt.setLayoutX(125);
 		ImportBt.setLayoutY(900);
 		ImportBt.setScaleX(2);
 		ImportBt.setScaleY(2);
@@ -201,19 +206,17 @@ public class KeplerPane extends Pane {
 
 		Options.setOnAction(e -> {
 			getChildren().clear();
-
 			mute();
-
 			mainMenu();
 		});
 
-		Earth.setLayoutX(375);
+		Earth.setLayoutX(425);
 		Earth.setLayoutY(900);
 		Earth.setScaleX(2);
 		Earth.setScaleY(2);
 		Earth.setMinSize(100,0);
 
-		sandBoxMode.setLayoutX(675);
+		sandBoxMode.setLayoutX(725);
 		sandBoxMode.setLayoutY(900);
 		sandBoxMode.setScaleX(2);
 		sandBoxMode.setScaleY(2);
@@ -230,19 +233,44 @@ public class KeplerPane extends Pane {
 
 		});
 
-		Help.setLayoutX(975);
+		Help.setLayoutX(1025);
 		Help.setLayoutY(900);
 		Help.setScaleX(2);
 		Help.setScaleY(2);
 		Help.setMinSize(100,0);
+		Help.setOnAction( e-> {
+			this.getChildren().clear();
+			this.setBackground(null);
+			Text helpTxt = new Text("In order to create your own .csv file to upload you will need the"
+					+ "following data:\nHost Star Name in column 1\nPlanet Letter in column 2\nPlanet Name in column 3\n"
+					+ "Discovery Method in column 4\nControversy Flag in column 5\nYear of Discovery in column 6\n"
+					+ "Orbital Period in column 7\nSemi Major axis of orbit in column 9\nEccentricity of host star in "
+					+ "column 11\nPlanet Mass in column 13\nPlanet Radius in column 16\nPlanet Density in column 18\n"
+					+ "Stellar Temperature in column 39\nStellar Gravity in column 41\nStellar luminosity in column 43\n"
+					+ "Stellar Mass in column 45\nStellar radius in column 47\nStellar Age in column 52\n"
+					+ "All distance units are in relation to earth radii; i.e 1 = 1 earth radius = 6371km\n"
+					+ "Planet density is in G/cm^3; Planet mass in earth mass; Stellar temperature is in degrees Kelvin\n"
+					+ "Stellar gravity is in log10 cm/s^2, Stellar luminousity is in earth sun luminnoisty;"
+					+ "Stellar mass is in earth sun mass; Stellar radius is in earth radii\n"
+					+ "This can also be done using the sandbox function in this program.\n"
+					+ "If you have any questions or concerns, please consult NASA Exoplanet Archive at:\n"
+					+ "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=compositepars\n\n"
+					+ "Credit for Song: Alexandre Desplat - The Immitation Game Soundtrack");
+			helpTxt.setLayoutX(700);
+			helpTxt.setLayoutY(200);
+			helpTxt.setScaleX(1.5);
+			helpTxt.setScaleY(1.5);
+			getChildren().add(helpTxt);
+			mainMenu();
+		});
 
-		Options.setLayoutX(1275);
+		Options.setLayoutX(1325);
 		Options.setLayoutY(900);
 		Options.setScaleX(2);
 		Options.setScaleY(2);
 		Options.setMinSize(100,0);
 
-		Exit.setLayoutX(1575);
+		Exit.setLayoutX(1625);
 		Exit.setLayoutY(900);
 		Exit.setScaleX(2);
 		Exit.setScaleY(2);
@@ -259,10 +287,6 @@ public class KeplerPane extends Pane {
 		ImportBt.setOnAction(e -> {
 			getChildren().clear();
 			importButton();
-		});
-		Help.setOnAction(e -> {
-			getChildren().clear();
-			Text text = new Text();
 		});
 	}
 
@@ -331,25 +355,22 @@ public class KeplerPane extends Pane {
 			if (deltaY < 0){
 				zoomFactor = 2.0 - zoomFactor;
 			}
+
 			str.setLayoutX(str.getLayoutX() * zoomFactor);
-			for (int i=0; i<8; i++) {
+			for (int i=0; i<plt.length; i++) {
 				plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
 				plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
-				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
-					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
-				} else {
-					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
-				}
-				orbit[i].setScaleX(str.getScaleX() * zoomFactor);
-				orbit[i].setScaleY(str.getScaleY() * zoomFactor);
+				plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+				labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				orbit[i].setCenterX(orbit[i].getCenterX() * zoomFactor);
+				orbit[i].setScaleX(orbit[i].getScaleX() * zoomFactor);
+				orbit[i].setScaleY(orbit[i].getScaleY() * zoomFactor);
 				orbit[i].setStrokeWidth(thicc * 2 * zoomFactor);
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
+			//Set (currently) the labels to move around their orbits.
+			//Based on how many planets there are in the system.\;6
 		});
 		//prevent endless addition of items to menu bar if user selects the default view multiple times in one session.
 		if (pressed == false) {
@@ -855,15 +876,19 @@ public class KeplerPane extends Pane {
 		ownFileButton.setOnAction(e -> {
 			getChildren().clear();
 			setBackground(null);
-			if(runOwnImport == true) {
-				mgr.importDataOwnFile();
-				mgr.getHostNameArray();
-				runOwnImport = false;
-				runImport = true;
+			try {
+				if(runOwnImport == true) {
+					mgr.importDataOwnFile();
+					mgr.getHostNameArray();
+					runOwnImport = false;
+					runImport = true;
+				}
+				drawKeplerDropDown();
+				drawKeplerData();
+				mainMenu();
+			} catch (Exception k) {
+				mainMenu();
 			}
-			drawKeplerDropDown();
-			drawKeplerData();
-			mainMenu();
 		});
 		getChildren().addAll(defaultButton, ownFileButton);
 	}
@@ -871,13 +896,14 @@ public class KeplerPane extends Pane {
 	public void drawKeplerDropDown() {
 		String names[] = mgr.getKeplerDropDown();
 		MenuBar Stars = new MenuBar();
-		Menu Systems = new Menu("Kepler Systems");
+		Menu Systems = new Menu("View Systems");
 		for(int i = 0; i < names.length; i++) {
 			MenuItem name = new MenuItem(names[i]);
 			Systems.getItems().add(name);
 		}
 		Stars.getMenus().add(Systems);
 		Stars.setLayoutX(1700);
+		Stars.setLayoutY(15);
 		Stars.setScaleX(1.5);
 		Stars.setScaleY(1.5);
 		getChildren().add(Stars);
@@ -981,6 +1007,11 @@ public class KeplerPane extends Pane {
 		menuBar.setLayoutX(350);
 		menuBar.setScaleX(1.5);
 		menuBar.setScaleY(1.5);
+		/*Label test = new Label("TEST");
+		test.setLayoutX(960 + str.getRadius());
+		test.setLayoutY(540);
+		test.setTextFill(Color.RED);
+		getChildren().add(test);
 		/*
 		 * Scroll-Zoom feature
 		 * Changes the scaling of the planet parameters
@@ -994,56 +1025,70 @@ public class KeplerPane extends Pane {
 			if (deltaY < 0){
 				zoomFactor = 2.0 - zoomFactor;
 			}
-			str.setLayoutX(str.getLayoutX() * zoomFactor);
+			str.setCenterX(str.getCenterX() * zoomFactor);
 			for (int i=0; i<plt.length; i++) {
 				plt[i].setScaleX(plt[i].getScaleX() * zoomFactor);
 				plt[i].setScaleY(plt[i].getScaleY() * zoomFactor);
-				if ((plt[i].getLayoutX() / zoomFactor) > str.getLayoutX()) {
-					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
-				} else {
-					plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
-					labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
-					orbit[i].setLayoutX(orbit[i].getLayoutX() * zoomFactor);
-				}
+				plt[i].setLayoutX(plt[i].getLayoutX() * zoomFactor);
+				labels[i].setLayoutX(labels[i].getLayoutX() * zoomFactor);
+				orbit[i].setCenterX(orbit[i].getCenterX() * zoomFactor);
 				orbit[i].setScaleX(str.getScaleX() * zoomFactor);
 				orbit[i].setScaleY(str.getScaleY() * zoomFactor);
-				orbit[i].setStrokeWidth(thicc * 2 * zoomFactor);
+				orbit[i].setStrokeWidth(thicc * 5 * zoomFactor);
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);
 			//Set (currently) the labels to move around their orbits.
-			//Based on how many planets there are in the system.
+			//Based on how many planets there are in the system.\;6
+		});
+		//disfunctional movement code, issue in java library
+		/*PathTransition transition = new PathTransition();
+		PathTransition transition1 = new PathTransition();
+		PathTransition transition2 = new PathTransition();
+		PathTransition transition3 = new PathTransition();
+		PathTransition transition4 = new PathTransition();
+		PathTransition transition5 = new PathTransition();
+		Button move = new Button("Start Motion");
+		move.setLayoutX(1700);
+		move.setLayoutY(15);
+		move.setScaleX(1.5);
+		move.setScaleY(1.5);
+		move.setMinSize(100, 0);
+		getChildren().add(move);
+		move.setOnAction( e -> {
 			switch (plt.length) {	
 			case 0:
-				
+
 				break;
 			case 1:
-			
+
 				break;
 			case 2:
-				
+
 				break;
-				
+
 			case 3:
-				
+
 				break;
 			case 4:
-				
+
 				break;
 			case 5:
-				PathTransition transition1 = new PathTransition();
-				PathTransition transition2 = new PathTransition();
-				PathTransition transition3 = new PathTransition();
-				PathTransition transition4 = new PathTransition();
-				PathTransition transition5 = new PathTransition();
+				transition.setPath(str);
+				transition.setNode(test);
+				transition.setDuration(Duration.seconds(10));
+				//transition1.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+				transition.setCycleCount(PathTransition.INDEFINITE);
+				transition.playFromStart();
+				System.out.println(transition.getPath());
+				System.out.println(transition.getNode());
 				transition1.setPath(orbit[0]);
 				transition1.setNode(labels[0]);
 				transition1.setDuration(Duration.seconds(10));
 				//transition1.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
 				transition1.setCycleCount(PathTransition.INDEFINITE);
 				transition1.playFromStart();
+				System.out.println(transition1.getPath());
 				transition2.setNode(labels[1]);
 				transition2.setDuration(Duration.seconds(10));
 				transition2.setPath(orbit[1]);
@@ -1066,7 +1111,7 @@ public class KeplerPane extends Pane {
 				transition5.playFromStart();
 				break;
 			}
-		});
+		});*/
 		/**
 		 *set on action for drop down menus
 		 *this code centers the selected object and displays information about said object
@@ -1102,6 +1147,14 @@ public class KeplerPane extends Pane {
 			labels[0].setLayoutX(960);
 			plt[0].setLayoutX(960);
 
+			boolean collision = mgr.calcGravitationalModel(keplerSystem[0], num + 0);
+			if (collision) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Collision Imminent");
+				alert.setHeaderText(null);
+				alert.setContentText("This planet will collide the with another object in the system.");
+				alert.showAndWait();
+			}
 
 			/*
 			 * Scroll-Zoom feature
@@ -1153,6 +1206,14 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[1], labels[1]);
 				labels[1].setLayoutX(960);
 				plt[1].setLayoutX(960);
+				boolean collision = mgr.calcGravitationalModel(keplerSystem[1], num + 1);
+				if (collision) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Collision Imminent");
+					alert.setHeaderText(null);
+					alert.setContentText("This planet will collide the with another object in the system.");
+					alert.showAndWait();
+				}
 				/*
 				 * Scroll-Zoom feature
 				 * Changes the scaling of the planet parameters
@@ -1207,6 +1268,14 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[2], labels[2]);
 				labels[2].setLayoutX(960);
 				plt[2].setLayoutX(960);
+				boolean collision = mgr.calcGravitationalModel(keplerSystem[2], num + 2);
+				if (collision) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Collision Imminent");
+					alert.setHeaderText(null);
+					alert.setContentText("This planet will collide the with another object in the system.");
+					alert.showAndWait();
+				}
 				/*
 				 * Scroll-Zoom feature
 				 * Changes the scaling of the planet parameters
@@ -1259,6 +1328,14 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[3], labels[3]);
 				labels[3].setLayoutX(960);
 				plt[3].setLayoutX(960);
+				boolean collision = mgr.calcGravitationalModel(keplerSystem[3], num + 3);
+				if (collision) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Collision Imminent");
+					alert.setHeaderText(null);
+					alert.setContentText("This planet will collide the with another object in the system.");
+					alert.showAndWait();
+				}
 				/*
 				 * Scroll-Zoom feature
 				 * Changes the scaling of the planet parameters
@@ -1311,6 +1388,14 @@ public class KeplerPane extends Pane {
 				getChildren().addAll(plt[4], labels[4]);
 				labels[4].setLayoutX(960);
 				plt[4].setLayoutX(960);
+				boolean collision = mgr.calcGravitationalModel(keplerSystem[4], num + 4);
+				if (collision) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Collision Imminent");
+					alert.setHeaderText(null);
+					alert.setContentText("This planet will collide the with another object in the system.");
+					alert.showAndWait();
+				}
 				/*
 				 * Scroll-Zoom feature
 				 * Changes the scaling of the planet parameters
