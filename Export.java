@@ -37,7 +37,60 @@ public class Export {
 		try
 		{
 			out = new PrintWriter(new BufferedWriter(new FileWriter("SandBox.csv")));
-			out.println("This is a test to see if the print statement work");
+			out.println("fpl_hostname,fpl_letter,fpl_name,fpl_discmethod,fpl_controvflag,fpl_disc,fpl_orbper,fpl_orbperreflink,fpl_smax,fpl_smaxreflink,fpl_eccen,fpl_eccenreflink,fpl_bmasse,fpl_bmassprov,fpl_bmassreflink,fpl_rade,fpl_radreflink,fpl_dens,fpl_densreflink,fpl_eqt,fpl_eqtreflink,fpl_insol,fpl_insolreflink,ra_str,ra,dec_str,dec,fst_posreflink,fst_dist,fst_distreflink,fst_optmag,fst_optmagband,fst_optmagreflink,fst_nirmag,fst_nirmagband,fst_nirmagreflink,fst_spt,fst_sptreflink,fst_teff,fst_teffreflink,fst_logg,fst_loggreflink,fst_lum,fst_lumreflink,fst_mass,fst_massreflink,fst_rad,fst_radreflink,fst_met,fst_metratio,fst_metreflink,fst_age,fst_agereflink");
+			out.print("SandStar,");
+			out.print("s,");
+			out.print("SandBox,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,"); //Year Discovery Needs to be blank
+			out.print("0,");
+			out.print("0,");
+			out.print(sBox.getSemiMajor()+",");
+			out.print("0,");
+			out.print("0,");//Eccentricity
+			out.print(sBox.getPlanetMass()+",");
+			out.print("0,");
+			out.print("0,");
+			out.print(sBox.getPlanetRad()+",");
+			out.print("0,");
+			out.print(sBox.getPlanetDensity()+",");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,"); //24
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,"); //33
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print(sBox.sTemp()+","); //42
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print(sBox.sMass()+","); //48
+			out.print("0,");
+			out.print(sBox.sRadius()+","); //50
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.print("0,");
+			out.println("0,");
+			
 		}catch(IOException e2)
 		{
 			System.err.println(e2);
@@ -46,5 +99,4 @@ public class Export {
 				out.close();
 		}
 	}
-	
 }//end Export
