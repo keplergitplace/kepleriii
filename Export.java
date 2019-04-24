@@ -18,7 +18,7 @@ public class Export {
 
 	private File String;
 	public Manager m_Manager;
-	private SandBox sBox = new SandBox();
+	//private SandBox sBox = new SandBox();
 
 	public Export(){
 
@@ -31,11 +31,15 @@ public class Export {
 		return "";
 	}
 
-	public void printData()
+	public void printData(SandBox sBox)
 	{
 		PrintWriter out = null;
 		try
 		{
+			for(int i = 0; i<sBox.getSemiMajor().length;i++)
+			{
+			System.out.println("passed to writing method");
+			System.out.println(sBox.getSemiMajor());
 			out = new PrintWriter(new BufferedWriter(new FileWriter("SandBox.csv")));
 			out.println("fpl_hostname,fpl_letter,fpl_name,fpl_discmethod,fpl_controvflag,fpl_disc,fpl_orbper,fpl_orbperreflink,fpl_smax,fpl_smaxreflink,fpl_eccen,fpl_eccenreflink,fpl_bmasse,fpl_bmassprov,fpl_bmassreflink,fpl_rade,fpl_radreflink,fpl_dens,fpl_densreflink,fpl_eqt,fpl_eqtreflink,fpl_insol,fpl_insolreflink,ra_str,ra,dec_str,dec,fst_posreflink,fst_dist,fst_distreflink,fst_optmag,fst_optmagband,fst_optmagreflink,fst_nirmag,fst_nirmagband,fst_nirmagreflink,fst_spt,fst_sptreflink,fst_teff,fst_teffreflink,fst_logg,fst_loggreflink,fst_lum,fst_lumreflink,fst_mass,fst_massreflink,fst_rad,fst_radreflink,fst_met,fst_metratio,fst_metreflink,fst_age,fst_agereflink");
 			out.print("SandStar,");
@@ -46,15 +50,15 @@ public class Export {
 			out.print("0,"); //Year Discovery Needs to be blank
 			out.print("0,");
 			out.print("0,");
-			out.print(sBox.getSemiMajor()+",");
+			out.print(sBox.getSemiMajor()[i]+",");
 			out.print("0,");
 			out.print("0,");//Eccentricity
-			out.print(sBox.getPlanetMass()+",");
+			out.print(sBox.getPlanetMass()[i]+",");
 			out.print("0,");
 			out.print("0,");
-			out.print(sBox.getPlanetRad()+",");
+			out.print(sBox.getPlanetRad()[i]+",");
 			out.print("0,");
-			out.print(sBox.getPlanetDensity()+",");
+			out.print(sBox.getPlanetDensity()[i]+",");
 			out.print("0,");
 			out.print("0,");
 			out.print("0,"); //24
@@ -90,6 +94,7 @@ public class Export {
 			out.print("0,");
 			out.print("0,");
 			out.println("0,");
+			}
 			
 		}catch(IOException e2)
 		{

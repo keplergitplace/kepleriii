@@ -150,7 +150,8 @@ public class KeplerPane extends Pane {
 				{
 					mainMenu();
 					// replace the print with the export call
-					System.out.println("false");
+					//System.out.println("false");
+					//Export ex = new Export();
 
 				}
 
@@ -160,6 +161,8 @@ public class KeplerPane extends Pane {
 				confirmClicked++;
 				sb.initSandBox(pane, confirmClicked, true);
 				spawnConfirmButton(pane, sb);
+				Export ex = new Export();
+				ex.printData(sb);
 				mainMenu();
 
 			}
