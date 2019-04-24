@@ -21,6 +21,13 @@ public class SandBox extends Pane {
 
     private Circle planet = new Circle();
     private Circle star = new Circle();
+    public double setStarRadius;
+    public double[] setDensityRange;
+    public double[] setPlanetRadius;
+    public double setStarMass;
+    public double setStarTemp;
+    public double[] setPlanetSemiMajor;
+    public double[] setPlanetMass;
 
     //private Button confirm = new Button("Confirm");
     //private int confirmClicked = 0;
@@ -30,8 +37,13 @@ public class SandBox extends Pane {
     /****************************First Screen Code*********************************/
 
     private Slider sizeOfStar = new Slider();
+    private Slider massOfStar = new Slider();
+    private Slider tempOfStar = new Slider();
 
     private Label starSize = new Label("Size of star");
+    private Label starMass = new Label("Mass of star: Half Sun");
+    private Label starTemp = new Label("Temp of star: Cool");
+    
 
     /****************************First Screen Code*********************************/
 
@@ -39,10 +51,14 @@ public class SandBox extends Pane {
     /****************************Second Screen Code*********************************/
     private Slider planets = new Slider();
     private Slider sizeOfPlanet = new Slider();
+    private Slider semiMajorOfPlanet = new Slider();
+    private Slider massOfPlanet = new Slider();
 
-    private Label planetV = new Label("Planet Type: Default size");
+    private Label planetV = new Label("Planet Type: Small/Rocky");
     private Label starV = new Label("Size: Default (Earth size): ");
     private Label coloredBox = new Label();
+    private Label sMPlanet = new Label("Distance from Star to Planet: 1 AU");
+    private Label mPlanet = new Label("Mass of Planet: Mercury");    
 
     private int planetType;
     private boolean norm = false, tiny = false, gas = false;
@@ -52,9 +68,8 @@ public class SandBox extends Pane {
     private TextField distanceFS = new TextField();
 
     private Label numP = new Label("  planets to be spawned");
-    private Label distance = new Label("  km from the main star");
 
-    private int numOfPlanets;
+    private int numOfPlanets = 0;
     private float distanceFromSun;
     private double radius = 20;
 
@@ -94,7 +109,6 @@ public class SandBox extends Pane {
         star.setRadius(radius);
         star.setCenterX(960);
         star.setCenterY(540);
-        star.setFill(Color.YELLOW);
         pane.getChildren().add(star);
 
     }
@@ -105,7 +119,6 @@ public class SandBox extends Pane {
         planet.setRadius(radius);
         planet.setCenterX(960);
         planet.setCenterY(540);
-        planet.setFill(javafx.scene.paint.Color.RED);
         pane.getChildren().add(planet);
 
     }
@@ -117,7 +130,7 @@ public class SandBox extends Pane {
         coloredBox.setLayoutY(0);
         //coloredBox.setMaxSize(300, 1080);
         coloredBox.setMinSize(300, 1080);
-        coloredBox.setStyle("-fx-background-color: #616161");
+        coloredBox.setStyle("-fx-background-color: #FFFFFF");
     }
 
     /****************************First Screen Code*********************************/
@@ -129,7 +142,7 @@ public class SandBox extends Pane {
         sizeOfStar.setShowTickLabels(true);
         sizeOfStar.setSnapToTicks(true);
         sizeOfStar.setMinSize(290, 100);
-        sizeOfStar.setMax(5);
+        sizeOfStar.setMax(4);
         sizeOfStar.setMajorTickUnit(1);
         sizeOfStar.setMinorTickCount(0);
         sizeOfStar.setLayoutX(0);
@@ -142,23 +155,25 @@ public class SandBox extends Pane {
                 switch (starSize) {
                     case 0:
                         star.setRadius(150);
+                        setStarRadius = 0.5;
                         break;
 
                     case 1:
                         star.setRadius(150 * 1.5);
+                        setStarRadius = (1);
                         break;
                     case 2:
 
                         star.setRadius(150 * 2);
+                        setStarRadius = (25);
                         break;
                     case 3:
                         star.setRadius(150 * 3);
+                        setStarRadius = (50);
                         break;
                     case 4:
                         star.setRadius(150 * 4);
-                        break;
-                    case 5:
-                        star.setRadius(150 * 5);
+                        setStarRadius = (100);
                         break;
                     default:
                         System.out.println("something went wrong");
@@ -167,22 +182,112 @@ public class SandBox extends Pane {
             }
         });
 
-        pane.getChildren().add(sizeOfStar);
+        
+        massOfStar.setShowTickMarks(true);
+        massOfStar.setShowTickLabels(true);
+        massOfStar.setSnapToTicks(true);
+        massOfStar.setMinSize(290, 100);
+        massOfStar.setMax(3);
+        massOfStar.setMajorTickUnit(1);
+        massOfStar.setMinorTickCount(0);
+        massOfStar.setLayoutX(0);
+        massOfStar.setLayoutY(630);
+        massOfStar.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+            	int sMass = (int) massOfStar.getValue();
+            	
+            	switch (sMass) {
+            		case 0: 
+            			setStarMass = 0.5;
+            			starMass.setText("Mass of star: Half Sun");
+            			break;
+            		case 1:
+            			setStarMass = 1;
+            			starMass.setText("Mass of star: Sun");
+            			break;
+            		case 2:
+            			setStarMass = 5;
+            			starMass.setText("Mass of star: Five times Sun");
+            			break;
+            		case 3:
+            			setStarMass = 10;
+            			starMass.setText("Mass of star: Ten times Sun");
+            			break;
+            	}
+                                
+              }
+            }); 
+            
+            	
+            
+        
+        tempOfStar.setShowTickMarks(true);
+        tempOfStar.setShowTickLabels(true);
+        tempOfStar.setSnapToTicks(true);
+        tempOfStar.setMinSize(290, 100);
+        tempOfStar.setMax(3);
+        tempOfStar.setMajorTickUnit(1);
+        tempOfStar.setMinorTickCount(0);
+        tempOfStar.setLayoutX(0);
+        tempOfStar.setLayoutY(440);
+        tempOfStar.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+            	int sTemp = (int) tempOfStar.getValue();
+            	
+            	switch (sTemp) {
+            		case 0: 
+            			double temperature = 1000;
+            			setStarTemp = temperature;
+            			star.setFill(Color.DARKGOLDENROD);
+            			starTemp.setText("Temp of star: Cool");
+            			break;
+            		case 1:
+            			double temperature2 = 2500;
+            			setStarTemp = temperature2;
+            			star.setFill(Color.DARKORANGE);
+            			starTemp.setText("Temp of star: Warm");
+            			break;
+            		case 2:
+            			double temperature3 = 6000;
+            			setStarTemp = temperature3;
+            			star.setFill(Color.GOLD);
+            			starTemp.setText("Temp of star: Hot");
+            			break;
+            		case 3:
+            			double temperature4 = 20000;
+            			setStarTemp = temperature4;
+            			star.setFill(Color.CORNFLOWERBLUE);
+            			starTemp.setText("Temp of star: Very Hot");
+            			break;
+            	}
+                                
+              }
+            }); 
+        
+        
+        pane.getChildren().addAll(sizeOfStar, massOfStar, tempOfStar);
 
     }
 
     // initializes labels for first screen
     private void starScreenLabels(Pane pane) {
 
-        starSize.setLayoutX(115);
+        starSize.setLayoutX(75);
         starSize.setLayoutY(520);
-        starSize.setTextFill(Color.BLACK);
+        
+        starTemp.setLayoutX(75);
+        starTemp.setLayoutY(420);
 
-        pane.getChildren().add(starSize);
+        starMass.setLayoutX(75);
+        starMass.setLayoutY(620);
+        
+        pane.getChildren().addAll(starSize, starTemp, starMass);
 
     }
 
-    // init function of first scree (star screen)
+    // init function of first screen (star screen)
     public void starSizeAndName(Pane pane) {
 
         drawStar(pane, 150);
@@ -204,11 +309,11 @@ public class SandBox extends Pane {
         planets.setSnapToTicks(true);
         planets.setMaxSize(200, 100);
         planets.setMinSize(290, 100);
-        planets.setMax(3);
+        planets.setMax(1);
         planets.setMajorTickUnit(1);
         planets.setMinorTickCount(0);
         planets.setLayoutX(0);
-        planets.setLayoutY(440);
+        planets.setLayoutY(240);
         planets.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -217,36 +322,24 @@ public class SandBox extends Pane {
 
                 switch (planetType) {
                     case 0:
-                        planetV.setText("Planet Type: Default size");
-                        norm = true;
-                        tiny = false;
-                        gas = false;
-                        sizeOfPlanet.setValue(0);
-                        break;
-
-                    case 1:
-                        planetV.setText("Planet Type: Earth Like");
-                        norm = true;
-                        tiny = false;
-                        gas = false;
-                        planet.setRadius(20);
-                        sizeOfPlanet.setValue(0);
-                        break;
-                    case 2:
                         planetV.setText("Planet Type: Small/Rocky");
                         norm = false;
                         tiny = true;
                         gas = false;
                         planet.setRadius(10);
                         sizeOfPlanet.setValue(0);
+                        planet.setFill(Color.DARKORANGE);
+                        
                         break;
-                    case 3:
+                    case 1:
                         planetV.setText("Planet Type: Gas Giant");
                         norm = false;
                         tiny = false;
                         gas = true;
                         planet.setRadius(75);
                         sizeOfPlanet.setValue(0);
+                        planet.setFill(Color.PALETURQUOISE);
+                        
                         break;
                     default:
                         System.out.println("something went wrong");
@@ -273,120 +366,94 @@ public class SandBox extends Pane {
 
                 switch (planetSize) {
                     case 0:
-                        starV.setText("Size: Default (Earth size)");
-                        if (norm) {
-
-                            radius = 20;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        starV.setText("Size: Earth size");
+                        if (tiny) {
 
                             radius = 10;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else {
 
                             radius = 75;
                             planet.setRadius(radius);
-
                         }
-
+                        
                         break;
 
                     case 1:
                         starV.setText("Size: 1.5 times Earth size");
-                        if (norm) {
-
-                            radius = 20 * 1.5;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        if (tiny) {
 
                             radius = 10 * 1.5;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else {
 
                             radius = 75 * 1.5;
                             planet.setRadius(radius);
 
                         }
+
                         break;
                     case 2:
                         starV.setText("Size: 2 times Earth size");
-                        if (norm) {
-
-                            radius = 20 * 2;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        if (tiny) {
 
                             radius = 10 * 2;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else {
 
                             radius = 75 * 2;
                             planet.setRadius(radius);
 
                         }
+                        
                         break;
                     case 3:
                         starV.setText("Size: 3 times Earth size");
-                        if (norm) {
-
-                            radius = 20 * 3;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        if (tiny) {
 
                             radius = 10 * 3;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else{
 
                             radius = 75 * 3;
                             planet.setRadius(radius);
 
                         }
+
                         break;
                     case 4:
                         starV.setText("Size: 4 times Earth size");
-                        if (norm) {
-
-                            radius = 20 * 4;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        if (tiny) {
 
                             radius = 10 * 4;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else {
 
                             radius = 75 * 4;
                             planet.setRadius(radius);
 
                         }
+                        
                         break;
                     case 5:
                         starV.setText("Size: 5 times Earth size");
-                        if (norm) {
-
-                            radius = 20 * 5;
-                            planet.setRadius(radius);
-
-                        } else if (tiny) {
+                        if (tiny) {
 
                             radius = 10 * 5;
                             planet.setRadius(radius);
 
-                        } else if (gas) {
+                        } else {
 
                             radius = 75 * 5;
                             planet.setRadius(radius);
 
                         }
+                        
                         break;
                     default:
                         System.out.println("something went wrong");
@@ -394,51 +461,127 @@ public class SandBox extends Pane {
                 }
             }
         });
-
-        pane.getChildren().addAll(planets, sizeOfPlanet);
+        
+        
+        semiMajorOfPlanet.setShowTickMarks(true);
+        semiMajorOfPlanet.setShowTickLabels(true);
+        semiMajorOfPlanet.setSnapToTicks(true);
+        semiMajorOfPlanet.setMinSize(290, 100);
+        semiMajorOfPlanet.setMax(4);
+        semiMajorOfPlanet.setMajorTickUnit(1);
+        semiMajorOfPlanet.setMinorTickCount(0);
+        semiMajorOfPlanet.setLayoutX(0);
+        semiMajorOfPlanet.setLayoutY(440);
+        semiMajorOfPlanet.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+            		int sMValue = (int) semiMajorOfPlanet.getValue();
+            		switch(sMValue) {
+            			case 0:
+            				setPlanetSemiMajor = new double[5];
+            				setPlanetSemiMajor[(numOfPlanets -1)] = 1;
+            				sMPlanet.setText("Distance from Star to Planet: 1 AU");
+            				//1 AU
+            				break;
+            			case 1:
+            				setPlanetSemiMajor = new double[5];
+            				setPlanetSemiMajor[(numOfPlanets -1)] = 5;
+            				sMPlanet.setText("Distance from Star to Planet: 5 AU");
+            				//5 AU
+            				break;
+            			case 2:
+            				setPlanetSemiMajor = new double[5];
+            				setPlanetSemiMajor[(numOfPlanets -1)] = 25;
+            				sMPlanet.setText("Distance from Star to Planet: 25 AU");
+            				//25 AU
+            				break;
+            			case 3:
+            				setPlanetSemiMajor = new double[5];
+            				setPlanetSemiMajor[(numOfPlanets -1)] = 50;
+            				sMPlanet.setText("Distance from Star to Planet: 50 AU");
+            				//50 AU
+            				break;
+            			case 4:
+            				setPlanetSemiMajor = new double[5];
+            				setPlanetSemiMajor[(numOfPlanets -1)] = 100;
+            				sMPlanet.setText("Distance from Star to Planet: 100 AU");
+            				//100 AU
+            				break;
+            		}
+            	
+            }
+            });
+        
+        massOfPlanet.setShowTickMarks(true);
+        massOfPlanet.setShowTickLabels(true);
+        massOfPlanet.setSnapToTicks(true);
+        massOfPlanet.setMinSize(290, 100);
+        massOfPlanet.setMax(4);
+        massOfPlanet.setMajorTickUnit(1);
+        massOfPlanet.setMinorTickCount(0);
+        massOfPlanet.setLayoutX(0);
+        massOfPlanet.setLayoutY(340);
+        massOfPlanet.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+            		int mValue = (int) semiMajorOfPlanet.getValue();
+            		switch(mValue) {
+            			
+            			case 0:
+            				setPlanetMass = new double[5];
+            				setPlanetMass[(numOfPlanets - 1)] = 0.06;
+            				mPlanet.setText("Mass of Planet: Mercury");
+            				//mercury: 0.0553
+            				break;
+            			case 1:
+            				setPlanetMass = new double[5];
+            				setPlanetMass[(numOfPlanets - 1)] = 1;
+            				mPlanet.setText("Mass of Planet: Earth");
+            				//earth 1
+            				break;
+            			case 2:
+            				setPlanetMass = new double[5];
+            				setPlanetMass[(numOfPlanets - 1)] = 15;
+            				mPlanet.setText("Mass of Planet: Uranus");
+            				//uranus 14.5
+            				break;
+            			case 3:
+            				setPlanetMass = new double[5];
+            				setPlanetMass[(numOfPlanets - 1)] = 95;
+            				mPlanet.setText("Mass of Planet: Saturn");
+            				//saturn 95.2
+            				break;
+            			case 4:
+            				setPlanetMass = new double[5];
+            				setPlanetMass[(numOfPlanets - 1)] = 300;
+            				mPlanet.setText("Mass of Planet: Jupiter");
+            				//jupiter 317.8
+            				break;
+            			
+            		}
+            	
+            }
+            });
+        
+        pane.getChildren().addAll(planets, sizeOfPlanet, semiMajorOfPlanet, massOfPlanet);
     }
 
     // initialize labels for second Screen
     public void lablesForSecondScreen(Pane pane) {
 
         planetV.setLayoutX(75);
-        planetV.setLayoutY(420);
-        planetV.setTextFill(Color.BLACK);
+        planetV.setLayoutY(220);
 
         starV.setLayoutX(75);
         starV.setLayoutY(520);
-        starV.setTextFill(Color.BLACK);
+        
+        sMPlanet.setLayoutX(75);
+        sMPlanet.setLayoutY(420);
+        
+        mPlanet.setLayoutX(75);
+        mPlanet.setLayoutY(320);
 
-        distance.setLayoutX(75);
-        distance.setLayoutY(620);
-        distance.setTextFill(Color.BLACK);
-
-        pane.getChildren().addAll(planetV, starV, distance);
-    }
-
-    // initialies textfield for second screen
-    public void distanceTextField(Pane pane) {
-
-        distanceFS.setLayoutX(0);
-        distanceFS.setLayoutY(650);
-        distanceFS.setMinSize(290, 25);
-        distanceFS.setPromptText("Enter Distance: ");
-        distanceFS.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-
-                if (!newValue.matches("\\d*")) {
-                    distanceFS.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-
-                distance.setText(distanceFS.getText() + " km from the main star");
-                distanceFromSun = Float.parseFloat(distanceFS.getText());
-
-            }
-        });
-
-        pane.getChildren().add(distanceFS);
+        pane.getChildren().addAll(planetV, starV, sMPlanet, mPlanet);
     }
 
     // getters for values set using the sliders and text field
@@ -459,10 +602,79 @@ public class SandBox extends Pane {
         drawPlanet(pane, radius);
         initSlidersForSizeType(pane);
         lablesForSecondScreen(pane);
-        distanceTextField(pane);
+        numOfPlanets++;
+        
+        if(tiny) {
+        	setDensityRange = new double[5];
+        	setDensityRange[(numOfPlanets-1)] = 3;
+        }else if(gas) {
+        	setDensityRange = new double[5];
+            setDensityRange[(numOfPlanets-1)] = 1;
+
+        }
+        
+        setPlanetRadius = new double[5];
+        setPlanetRadius[(numOfPlanets - 1)] = radius;
 
     }
 
     /****************************Second Screen Code*********************************/
-
+    
+    public double[] getSemiMajor() {
+    	double[] semiMajor = new double[5];
+    	
+    	for (int i=0; i < 5; i++) {
+    		semiMajor[i] = setPlanetSemiMajor[i];
+    	}
+    	
+    	return semiMajor;
+    }
+    
+    public double[] getPlanetMass() {
+    	double[] planetMass = new double[5];
+    	
+    	for (int i=0; i < 5; i++) {
+    		planetMass[i] = setPlanetMass[i];
+    	}
+    	
+    	return planetMass;
+    }
+    
+    public double[] getPlanetRad() {
+    	double[] planetRadius = new double[5];
+    	
+    	for (int i=0; i < 5; i++) {
+    		planetRadius[i] = setPlanetRadius[i];
+    	}
+    	
+    	return planetRadius;
+    }
+    
+    public double[] getPlanetDensity() {
+    	double[] planetDensity = new double[5];
+    	
+    	for (int i=0; i < 5; i++) {
+    		planetDensity[i] = setDensityRange[i];
+    	}
+    	
+    	return planetDensity;
+    }
+    
+    public double sRadius() {
+    	double starRadius = setStarRadius;
+    	
+    	return starRadius;
+    }
+    
+    public double sMass() {
+    	double starMass = setStarMass;
+    	
+    	return starMass;
+    }
+    
+    public double sTemp() {
+    	double starTemp = setStarTemp;
+    	
+    	return starTemp;
+    }
 }

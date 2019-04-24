@@ -1,4 +1,4 @@
-
+import java.io.File;
 
 /**
  * @author Owner
@@ -17,7 +17,7 @@ public class Export {
 	public void finalize() throws Throwable {
 
 	}
-	public string nameFile(){
+	public String nameFile(){
 		return "";
 	}
 
