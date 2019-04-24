@@ -324,18 +324,46 @@ public class KeplerPane extends Pane {
 		String solarSystem[] = {"Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"};
 		plt = new Circle[8];
 		orbit = new Circle[8];
+		
+		Image bg = new Image("seamless_space.png");
+		BackgroundImage backgroundimage = new BackgroundImage(bg,
+				BackgroundRepeat.REPEAT,
+				BackgroundRepeat.REPEAT,
+				BackgroundPosition.CENTER,
+				BackgroundSize.DEFAULT);
+		Background background = new Background(backgroundimage);
+		setBackground(background);
 		//get planet info from "planet" class and display
 		//label planets using "labels" array and set location to planet location
 		for (int i = 0; i < 8; i++) {
 			labels[i] = new Label(solarSystem[i]);
 			plt[i] =  mgr.addPlanets(i);
 			orbit[i] = mgr.earthOrbitalRadius(i);
-			orbit[i].setStroke(Color.BLACK);
-			orbit[i].setStrokeWidth(5);
+			orbit[i].setStroke(Color.WHITE);
+			orbit[i].setStrokeWidth(15);
 			orbit[i].setFill(null);
 			labels[i].setLayoutX(mgr.addPlanets(i).getLayoutX());
 			labels[i].setLayoutY(mgr.addPlanets(i).getLayoutY());
 			labels[i].setTextFill(Color.RED);
+			
+			if(i==0) {
+				plt[i].setFill(Color.DARKGREY);
+			} else if(i == 1) {
+				plt[i].setFill(Color.BURLYWOOD);
+			} else if(i == 2) {
+				plt[i].setFill(Color.web("#4286f4"));
+			} else if(i == 3) {
+				plt[i].setFill(Color.CRIMSON);
+			} else if(i == 4) {
+				plt[i].setFill(Color.GOLDENROD);
+			} else if(i == 5) {
+				plt[i].setFill(Color.BISQUE);
+			} else if(i == 6) {
+				plt[i].setFill(Color.AQUAMARINE);
+			} else{
+				plt[i].setFill(Color.web("#2253a3"));
+			}
+			
 			getChildren().add(orbit[i]);
 			getChildren().addAll(plt[i], labels[i]);
 		}
@@ -369,7 +397,7 @@ public class KeplerPane extends Pane {
 				orbit[i].setCenterX(orbit[i].getCenterX() * zoomFactor);
 				orbit[i].setScaleX(orbit[i].getScaleX() * zoomFactor);
 				orbit[i].setScaleY(orbit[i].getScaleY() * zoomFactor);
-				orbit[i].setStrokeWidth(thicc * 2 * zoomFactor);
+				orbit[i].setStrokeWidth(thicc * 5 * zoomFactor);
 			}
 			str.setScaleX(str.getScaleX() * zoomFactor);
 			str.setScaleY(str.getScaleY() * zoomFactor);

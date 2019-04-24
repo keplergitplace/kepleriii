@@ -27,35 +27,6 @@ public class KeplerGUI extends Application{
 	 * @see KeplerPane
 	 */
 	public void start(Stage mmStage) throws Exception {
-	/*	String path = "Interstellar Main Theme - Extra Extended - Soundtrack by Hans Zimmer.mp3";
-		//String path = "C:\\Users\\Owner\\Desktop\\Creedence Clearwater Revival - Fortunate Son [Music Video].mp3";
-		Media music = new Media(new File(path).toURI().toString());
-		MediaPlayer song = new MediaPlayer(music);
-		song.setVolume(10);
-		song.setAutoPlay(true);
-		song.setCycleCount(MediaPlayer.INDEFINITE);
-		
-		keplerPane.Options.setOnAction(e -> {
-			keplerPane.getChildren().clear();
-			
-			Button muteB = new Button("Mute/Unmute Audio");
-			
-			muteB.setOnAction(e1 -> {
-				if(song.isMute()) {
-					song.setMute(false);;
-				}else {
-					song.setMute(true);
-				}
-			});
-			muteB.setLayoutX(200);
-			muteB.setLayoutY(15);
-			muteB.setScaleX(1.5);
-			muteB.setScaleY(1.5);
-			muteB.setMinSize(100, 0);
-			keplerPane.getChildren().add(muteB);
-			keplerPane.mainMenu();
-		});*/
-
 		// Set the stage for main menu
 		mainStage = mmStage;
 		//give a pane to the scene

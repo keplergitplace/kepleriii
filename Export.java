@@ -65,9 +65,8 @@ public class Export {
 			out.print(sBox.getPlanetMass(i)+",");
 			out.print("0,");
 			out.print("0,");
-			out.print(sBox.getPlanetRad(i)+",");
-			System.out.println(sBox.getPlanetRad(i));
 			out.print("0,");
+			out.print(sBox.getPlanetRad(i)+",");
 			out.print("0,");
 			out.print(sBox.getPlanetDensity(i)+",");
 			out.print("0,");

@@ -371,13 +371,11 @@ public class SandBox extends Pane {
 
                             radius = 10;
                             planet.setRadius(radius);
-                            //setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         } else {
 
                             radius = 75;
                             planet.setRadius(radius);
-                          //  setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
                         
@@ -389,13 +387,11 @@ public class SandBox extends Pane {
 
                             radius = 10 * 1.5;
                             planet.setRadius(radius);
-                           // setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         } else {
 
                             radius = 75 * 1.5;
                             planet.setRadius(radius);
-                         //   setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
 
@@ -406,13 +402,11 @@ public class SandBox extends Pane {
 
                             radius = 10 * 2;
                             planet.setRadius(radius);
-                          //  setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         } else {
 
                             radius = 75 * 2;
                             planet.setRadius(radius);
-                           // setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
                         
@@ -423,13 +417,11 @@ public class SandBox extends Pane {
 
                             radius = 10 * 3;
                             planet.setRadius(radius);
-                           // setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         } else{
 
                             radius = 75 * 3;
                             planet.setRadius(radius);
-                          //  setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
 
@@ -446,7 +438,6 @@ public class SandBox extends Pane {
 
                             radius = 75 * 4;
                             planet.setRadius(radius);
-                          //  setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
                         
@@ -457,14 +448,12 @@ public class SandBox extends Pane {
 
                             radius = 10 * 5;
                             planet.setRadius(radius);
-                          //  setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
 
                         } else {
 
                             radius = 75 * 5;
                             planet.setRadius(radius);
-                         //   setPlanetRadius = new double[5];
                             setPlanetRadius[(numOfPlanets - 1)] = radius;
                         }
                         
@@ -490,40 +479,33 @@ public class SandBox extends Pane {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
             		int sMValue = (int) semiMajorOfPlanet.getValue();
-            		System.out.println("1 " +sMValue);
             		switch(sMValue) {
             			case 0:
-            			//	setPlanetSemiMajor = new double[5];
             				setPlanetSemiMajor[(numOfPlanets -1)] = 1;
             				sMPlanet.setText("Distance from Star to Planet: 1 AU");
             				//1 AU
             				break;
             			case 1:
-            			//	setPlanetSemiMajor = new double[5];
             				setPlanetSemiMajor[(numOfPlanets -1)] = 5;
             				sMPlanet.setText("Distance from Star to Planet: 5 AU");
             				//5 AU
             				break;
             			case 2:
-            			//	setPlanetSemiMajor = new double[5];
             				setPlanetSemiMajor[(numOfPlanets -1)] = 25;
             				sMPlanet.setText("Distance from Star to Planet: 25 AU");
             				//25 AU
             				break;
             			case 3:
-            			//	setPlanetSemiMajor = new double[5];
             				setPlanetSemiMajor[(numOfPlanets -1)] = 50;
             				sMPlanet.setText("Distance from Star to Planet: 50 AU");
             				//50 AU
             				break;
             			case 4:
-            			//	setPlanetSemiMajor = new double[5];
             				setPlanetSemiMajor[(numOfPlanets -1)] = 100;
             				sMPlanet.setText("Distance from Star to Planet: 100 AU");
             				//100 AU
             				break;
             		}
-            	System.out.println(setPlanetSemiMajor[0]);
             }
             });
         
@@ -543,31 +525,26 @@ public class SandBox extends Pane {
             		switch(mValue) {
             			
             			case 0:
-            			//	setPlanetMass = new double[5];
             				setPlanetMass[(numOfPlanets - 1)] = 0.06;
             				mPlanet.setText("Mass of Planet: Mercury");
             				//mercury: 0.0553
             				break;
             			case 1:
-            			//	setPlanetMass = new double[5];
             				setPlanetMass[(numOfPlanets - 1)] = 1;
             				mPlanet.setText("Mass of Planet: Earth");
             				//earth 1
             				break;
             			case 2:
-            			//	setPlanetMass = new double[5];
             				setPlanetMass[(numOfPlanets - 1)] = 15;
             				mPlanet.setText("Mass of Planet: Uranus");
             				//uranus 14.5
             				break;
             			case 3:
-            			//	setPlanetMass = new double[5];
             				setPlanetMass[(numOfPlanets - 1)] = 95;
             				mPlanet.setText("Mass of Planet: Saturn");
             				//saturn 95.2
             				break;
             			case 4:
-            			//	setPlanetMass = new double[5];
             				setPlanetMass[(numOfPlanets - 1)] = 300;
             				mPlanet.setText("Mass of Planet: Jupiter");
             				//jupiter 317.8
@@ -620,16 +597,12 @@ public class SandBox extends Pane {
         numOfPlanets++;
         
         if(tiny) {
-        //	setDensityRange = new double[5];
         	setDensityRange[(numOfPlanets-1)] = 3;
         }else /*if(gas) */{
-        //	setDensityRange = new double[5];
             setDensityRange[(numOfPlanets-1)] = 1;
 
         }
         
-        /*setPlanetRadius = new double[5];
-        setPlanetRadius[(numOfPlanets - 1)] = radius;*/
 
     }
 
@@ -637,9 +610,7 @@ public class SandBox extends Pane {
     
     public double getSemiMajor(int n) {
     	double[] semiMajor = new double[5];
-    	//System.out.println("plt num " + numOfPlanets);
-    	for (int i=0; i < numOfPlanets; i++) {
-    	//	System.out.println("value 3" +setPlanetSemiMajor[i]);
+    	 for (int i=0; i < numOfPlanets; i++) {
     		semiMajor[i] = setPlanetSemiMajor[i];
     	}
     	

@@ -110,6 +110,7 @@ public class Manager {
 		{
 			System.out.println(line);
 		}*/
+		hostList.clear();
 		String temp = Import.hostName.get(1);
 		hostList.add(temp);
 		for(int counter = 2;counter<Import.hostName.size();counter++)
@@ -301,7 +302,7 @@ public class Manager {
 
 	}*/
 
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		Manager m = new Manager();
 
@@ -321,5 +322,5 @@ public class Manager {
 			System.out.println(line);
 		}*/
 		//System.out.println("test");
-	}
+	//}
 }//end Manager
